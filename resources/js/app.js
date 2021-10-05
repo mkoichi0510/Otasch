@@ -3,12 +3,17 @@ import Vue from 'vue'
 // ルーティングの定義をインポートする
 import router from './router'
 // ルートコンポーネントをインポートする
-import store from './store'
 import App from './App.vue'
+import store from './store/index'
 import ElementUI from 'element-ui';
+import axios from 'axios';
+import VueAxios from 'vue-axios'
+import VuePaginate from 'vue-paginate';
 import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.use(ElementUI);
+Vue.use(VuePaginate);
+//Vue.use(axios,VueAxios);
 
 const createApp = async () => {
   await store.dispatch('auth/currentUser')
