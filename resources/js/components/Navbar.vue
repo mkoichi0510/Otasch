@@ -1,5 +1,26 @@
 <script>
 export default {
+  data () {
+    return {
+      //isLogin:'',
+      activeindex: '0'
+    }
+  },
+  methods:{
+    getUser(){
+        axios.get('/user').then((response)=>{
+          console.log(response);
+        this.isLogin = response.data.name;
+      })
+    },
+    MoveHome(){
+      this.$router.push("/home");
+       //axios.get('/home');
+    },
+  },
+  mounted(){
+    //this.getUser();
+  },
   computed: {
     isLogin () {
       return this.$store.getters['auth/check']
@@ -12,24 +33,22 @@ export default {
 </script>
 <template>
   <nav class="navbar">
-    <RouterLink class="navbar__brand" to="/">
-      Vuesplash
-    </RouterLink>
-    <div class="navbar__menu">
-      <div v-if="isLogin" class="navbar__item">
-        <button class="button">
-          <i class="icon ion-md-add"></i>
-          Submit a photo
-        </button>
-      </div>
-      <span v-if="isLogin" class="navbar__item">
-        {{username}}
-      </span>
-      <div v-else class="navbar__item">
-        <RouterLink class="button button--link" to="/login">
-          Login / Register
-        </RouterLink>
-      </div>
-    </div>
+    <el-menu
+      default-active="activeIndex"
+      class="el-menu-demo"
+      mode="horizontal"
+      background-color="#545c64"
+      text-color="#fff"
+      active-text-color="#ffd04b"
+      v-if="isLogin"
+    >
+      <el-menu-item activeIndex="1" @click="MoveHome">
+      Home
+    </el-menu-item>
+    <!--<el-menu-item activeIndex="2" @click="MoveForm">-->
+    <!--      Login / Register-->
+    <!--</el-menu-item>-->
+    </el-menu>
   </nav>
 </template>
+

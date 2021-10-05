@@ -2,10 +2,12 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 // ページコンポーネントをインポートする
-import PhotoList from './pages/PhotoList.vue'
+import Form from './pages/Form.vue'
 import Login from './pages/Login.vue'
 import store from './store' 
 import SystemError from './pages/errors/System.vue'
+import TodoDetail from './pages/TodoDetail.vue'
+import Home from './pages/Home.vue'
 
 // VueRouterプラグインを使用する
 // これによって<RouterView />コンポーネントなどを使うことができる
@@ -14,15 +16,23 @@ Vue.use(VueRouter)
 // パスとコンポーネントのマッピング
 const routes = [
   {
-    path: '/',
-    component: PhotoList
+    path: '/home',
+    component: Home,
+    beforeEnter (to, from, next) {
+      if (store.getters['auth/check']) {
+        next()
+      } else {
+        next('login')
+      }
+    }
   },
   {
     path: '/login',
-    component: Login,
+    component: Form,
     beforeEnter (to, from, next) {
       if (store.getters['auth/check']) {
-        next('/')
+        next('home')
+        console.log("home")
       } else {
         next()
       }
@@ -31,11 +41,18 @@ const routes = [
   {
     path: '/500',
     component: SystemError
-  }
+  },
+  // {
+  //   path:'/home/:id',
+  //   name:"schedule-url",
+  //   component: TodoDetail,
+  //   props:true
+  // }
 ]
 
 // VueRouterインスタンスを作成する
 const router = new VueRouter({
+  mode: 'history',
   routes
 })
 
