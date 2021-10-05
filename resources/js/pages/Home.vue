@@ -96,6 +96,7 @@ export default {
       　
         this.getTodo()
         this.createDialogVisible = false
+        this.createErrors = null
     },
     showDetail(data){
       this.detailData = data;
@@ -121,7 +122,7 @@ export default {
       }
         this.getTodo();
         this.detailDialogVisible = false;
-         this.detailErrors = null
+        this.detailErrors = null
     },
     changeCreateVisibleState(data){
       this.createDialogVisible = data;

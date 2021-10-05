@@ -3892,8 +3892,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this2.getTodo();
 
                 _this2.createDialogVisible = false;
+                _this2.createErrors = null;
 
-              case 13:
+              case 14:
               case "end":
                 return _context.stop();
             }
