@@ -6,7 +6,6 @@
     <main>
       <div class="container">
        <RouterView /> 
-        <RouterView />
       </div>
     </main>
     <Footer />
@@ -43,3 +42,25 @@ export default {
   }
 }
 </script>
+<style>
+  .main{
+    /*padding-top: 60px; */
+    /*padding-bottom: 60px; */
+    /*height: auto; */
+    /*background-color: #fff000; */
+    padding-bottom: 100px;
+  }
+  .Footer{
+    position: fixed; /*ここを変更*/
+    bottom: 0;
+    width: 100%;
+    height: 100px;
+  }
+  .Navbar{
+    width: 100%;
+    position: relative;
+    height: auto !important;
+    height: 100%;
+    min-height: 100%;
+  }
+</style>
