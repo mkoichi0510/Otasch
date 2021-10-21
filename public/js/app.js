@@ -3654,6 +3654,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    },
+    logoutLine: function logoutLine() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return _this2.$store.dispatch('auth/logoutLine');
+
+              case 2:
+                if (_this2.apiStatus) {
+                  _this2.$router.push('/login');
+                }
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     }
   },
   computed: {
@@ -3662,6 +3686,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     apiStatus: function apiStatus() {
       return this.$store.state.auth.apiStatus;
+    },
+    isLineLogin: function isLineLogin() {
+      return this.$store.getters['auth/checkLineLogin'];
     }
   }
 });
@@ -3722,6 +3749,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Login_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Login.vue */ "./resources/js/pages/Login.vue");
 /* harmony import */ var _Register_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Register.vue */ "./resources/js/pages/Register.vue");
+/* harmony import */ var _Line_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Line.vue */ "./resources/js/pages/Line.vue");
 //
 //
 //
@@ -3732,12 +3760,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     login: _Login_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    register: _Register_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    register: _Register_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    lineApi: _Line_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
@@ -3763,7 +3794,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _TodoDetail_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TodoDetail.vue */ "./resources/js/pages/TodoDetail.vue");
 /* harmony import */ var _TodoList_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./TodoList.vue */ "./resources/js/pages/TodoList.vue");
 /* harmony import */ var _TodoSort__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./TodoSort */ "./resources/js/pages/TodoSort.vue");
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../util */ "./resources/js/util.js");
+/* harmony import */ var _Line_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Line.vue */ "./resources/js/pages/Line.vue");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../util */ "./resources/js/util.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -3811,12 +3843,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     createForm: _TodoCreate_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     detailForm: _TodoDetail_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     todoList: _TodoList_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-    sortForm: _TodoSort__WEBPACK_IMPORTED_MODULE_4__["default"]
+    sortForm: _TodoSort__WEBPACK_IMPORTED_MODULE_4__["default"],
+    lineApi: _Line_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   data: function data() {
     return {
@@ -3870,7 +3904,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context.sent;
                 console.log(response.status);
 
-                if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_5__["UNPROCESSABLE_ENTITY"])) {
+                if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_6__["UNPROCESSABLE_ENTITY"])) {
                   _context.next = 8;
                   break;
                 }
@@ -3879,7 +3913,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context.abrupt("return", false);
 
               case 8:
-                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_5__["CREATED"])) {
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_6__["CREATED"])) {
                   _context.next = 11;
                   break;
                 }
@@ -3932,7 +3966,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 2:
                 response = _context2.sent;
 
-                if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_5__["UNPROCESSABLE_ENTITY"])) {
+                if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_6__["UNPROCESSABLE_ENTITY"])) {
                   _context2.next = 6;
                   break;
                 }
@@ -3941,7 +3975,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context2.abrupt("return", false);
 
               case 6:
-                if (response.status !== _util__WEBPACK_IMPORTED_MODULE_5__["OK"]) {
+                if (response.status !== _util__WEBPACK_IMPORTED_MODULE_6__["OK"]) {
                   _this4.$store.commit('error/setCode', response.status);
                 }
 
@@ -4006,6 +4040,166 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   mounted: function mounted() {
     this.getTodo();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Line.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Line.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util */ "./resources/js/util.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      state: this.createState(),
+      params: {
+        channelID: '1656516916',
+        callbackURL: 'https://16e576e7e8ae4836ad78a778e6db6d16.vfs.cloud9.ap-northeast-1.amazonaws.com/login',
+        channelSecret: '174247308853df99a3a9def0e419bd8c',
+        url: null,
+        code: null,
+        state: null,
+        access_token: null
+      },
+      responseData: null
+    };
+  },
+  props: {
+    componentType: {
+      type: Boolean
+    }
+  },
+  methods: {
+    loginLine: function loginLine() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var paramaters, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                paramaters = new URLSearchParams();
+                paramaters.append('grant_type', 'authorization_code');
+                paramaters.append('code', _this.params.code);
+                paramaters.append('redirect_uri', _this.params.callbackURL);
+                paramaters.append('client_id', _this.params.channelID);
+                paramaters.append('client_secret', _this.params.channelSecret);
+                _context.next = 8;
+                return axios.post('https://api.line.me/oauth2/v2.1/token', paramaters);
+
+              case 8:
+                response = _context.sent;
+                console.log(response.status);
+                console.log(response.data);
+
+                if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                  _context.next = 15;
+                  break;
+                }
+
+                _this.params.access_token = response.data.access_token;
+
+                _this.registerLineAccount();
+
+                return _context.abrupt("return", false);
+
+              case 15:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    //ラインアカウントで登録
+    registerLineAccount: function registerLineAccount() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return _this2.$store.dispatch('auth/registerLineAccount', _this2.params);
+
+              case 2:
+                if (_this2.apiStatus) {
+                  // トップページに移動する
+                  _this2.$router.push('/home');
+                }
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    createState: function createState() {
+      // 生成する文字列の長さ
+      var createLength = 8; // 生成する文字列に含める文字セット
+
+      var characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+      var charactersLength = characters.length;
+      var state = "";
+
+      for (var i = 0; i < createLength; i++) {
+        state += characters[Math.floor(Math.random() * charactersLength)];
+      }
+
+      return state;
+    },
+    setParams: function setParams() {
+      var param = new URL(document.location).searchParams;
+      this.params.code = param.get('code');
+      this.params.state = param.get('state');
+    }
+  },
+  mounted: function mounted() {
+    if (this.componentType) {
+      this.lavel = "LINEアカウントでログイン";
+    } else {
+      this.lavel = "LINEアカウントで登録";
+    }
+
+    this.params.url = "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=".concat(this.params.channelID, "&redirect_uri=").concat(this.params.callbackURL, "&state=").concat(this.state, "&scope=profile");
+    this.setParams();
+
+    if (this.params.code != null) {
+      console.log("認証");
+      this.loginLine();
+    }
+  },
+  computed: {
+    apiStatus: function apiStatus() {
+      console.log("comp");
+      return this.$store.state.auth.apiStatus;
+    }
   }
 });
 
@@ -4190,7 +4384,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       },
       errors: {
         color: "red"
-      }
+      },
+      loginComponent: false
     };
   },
   methods: {
@@ -68691,11 +68886,15 @@ var render = function() {
       { staticClass: "button_wrapper" },
       [
         _vm.isLogin
-          ? _c(
-              "button",
-              { staticClass: "button button--link", on: { click: _vm.logout } },
-              [_vm._v("Logout")]
-            )
+          ? _c("div", { staticClass: "logined" }, [
+              _c("button", { on: { click: _vm.logout } }, [_vm._v("Logout")]),
+              _vm._v(" "),
+              _vm.isLineLogin
+                ? _c("button", { on: { click: _vm.logoutLine } }, [
+                    _vm._v("ラインアカウントの連携を解除")
+                  ])
+                : _vm._e()
+            ])
           : _c(
               "RouterLink",
               { staticClass: "button button--link", attrs: { to: "/login" } },
@@ -68813,7 +69012,9 @@ var render = function() {
           )
         ],
         1
-      )
+      ),
+      _vm._v(" "),
+      _c("lineApi")
     ],
     1
   )
@@ -68906,6 +69107,34 @@ var render = function() {
     ],
     1
   )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Line.vue?vue&type=template&id=09f140fd&":
+/*!**************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Line.vue?vue&type=template&id=09f140fd& ***!
+  \**************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("a", { attrs: { href: _vm.params.url } }, [
+      _vm._v("Lineアカウントで登録またはログイン")
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -87647,6 +87876,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/pages/Line.vue":
+/*!*************************************!*\
+  !*** ./resources/js/pages/Line.vue ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Line_vue_vue_type_template_id_09f140fd___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Line.vue?vue&type=template&id=09f140fd& */ "./resources/js/pages/Line.vue?vue&type=template&id=09f140fd&");
+/* harmony import */ var _Line_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Line.vue?vue&type=script&lang=js& */ "./resources/js/pages/Line.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Line_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Line_vue_vue_type_template_id_09f140fd___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Line_vue_vue_type_template_id_09f140fd___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/Line.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/pages/Line.vue?vue&type=script&lang=js&":
+/*!**************************************************************!*\
+  !*** ./resources/js/pages/Line.vue?vue&type=script&lang=js& ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Line_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Line.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Line.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Line_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/pages/Line.vue?vue&type=template&id=09f140fd&":
+/*!********************************************************************!*\
+  !*** ./resources/js/pages/Line.vue?vue&type=template&id=09f140fd& ***!
+  \********************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Line_vue_vue_type_template_id_09f140fd___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Line.vue?vue&type=template&id=09f140fd& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Line.vue?vue&type=template&id=09f140fd&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Line_vue_vue_type_template_id_09f140fd___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Line_vue_vue_type_template_id_09f140fd___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/pages/Login.vue":
 /*!**************************************!*\
   !*** ./resources/js/pages/Login.vue ***!
@@ -88218,6 +88516,9 @@ var getters = {
   },
   username: function username(state) {
     return state.user ? state.user.name : '';
+  },
+  checkLineLogin: function checkLineLogin(state) {
+    return !!state.user.sns_id;
   }
 };
 var mutations = {
@@ -88235,7 +88536,7 @@ var mutations = {
   }
 };
 var actions = {
-  //会員登録
+  //通常会員登録
   register: function register(context, data) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
       var response;
@@ -88278,33 +88579,95 @@ var actions = {
       }, _callee);
     }))();
   },
-  //ログイン
-  login: function login(context, data) {
+  //ラインアカウントでの会員登録
+  registerLineAccount: function registerLineAccount(context, data) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-      var response;
+      var response, response2;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
               context.commit('setApiStatus', null);
               _context2.next = 3;
+              return axios.post('/api/linelogin/register', data);
+
+            case 3:
+              response = _context2.sent;
+              _context2.next = 6;
+              return axios.post('/api/register', response.data);
+
+            case 6:
+              response2 = _context2.sent;
+              console.log(response2.status);
+
+              if (!(response2.status === _util__WEBPACK_IMPORTED_MODULE_1__["CREATED"])) {
+                _context2.next = 13;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              context.commit('setUser', response2.data);
+              console.log(response2.data);
+              return _context2.abrupt("return", false);
+
+            case 13:
+              if (!(response2.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                _context2.next = 17;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              context.commit('setUser', response2.data);
+              return _context2.abrupt("return", false);
+
+            case 17:
+              context.commit('setApiStatus', false);
+
+              if (response2.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {
+                context.commit('setRegisterErrorMessages', response2.data.errors);
+              } else {
+                context.commit('error/setCode', response2.status, {
+                  root: true
+                });
+              }
+
+            case 19:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  },
+  //通常ログイン
+  login: function login(context, data) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              context.commit('setApiStatus', null);
+              _context3.next = 3;
               return axios.post('/api/login', data)["catch"](function (err) {
                 return err.response || err;
               });
 
             case 3:
-              response = _context2.sent;
+              response = _context3.sent;
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context2.next = 8;
+                _context3.next = 9;
                 break;
               }
 
               context.commit('setApiStatus', true);
               context.commit('setUser', response.data);
-              return _context2.abrupt("return", false);
+              console.log(response.data); //ユーザーオブジェクトを渡せればOK
 
-            case 8:
+              return _context3.abrupt("return", false);
+
+            case 9:
               context.commit('setApiStatus', false);
 
               if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {
@@ -88315,37 +88678,37 @@ var actions = {
                 });
               }
 
-            case 10:
+            case 11:
             case "end":
-              return _context2.stop();
+              return _context3.stop();
           }
         }
-      }, _callee2);
+      }, _callee3);
     }))();
   },
   //ログアウト
   logout: function logout(context) {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
       var response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context4.prev = _context4.next) {
             case 0:
               context.commit('setApiStatus', null);
-              _context3.next = 3;
+              _context4.next = 3;
               return axios.post('/api/logout');
 
             case 3:
-              response = _context3.sent;
+              response = _context4.sent;
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context3.next = 8;
+                _context4.next = 8;
                 break;
               }
 
               context.commit('setApiStatus', true);
               context.commit('setUser', null);
-              return _context3.abrupt("return", false);
+              return _context4.abrupt("return", false);
 
             case 8:
               context.commit('setApiStatus', false);
@@ -88355,49 +88718,89 @@ var actions = {
 
             case 10:
             case "end":
-              return _context3.stop();
+              return _context4.stop();
           }
         }
-      }, _callee3);
+      }, _callee4);
     }))();
   },
-  //ログインユーザーチェック
-  currentUser: function currentUser(context) {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-      var response, user;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+  //ラインアカウントとの連携の解除
+  logoutLine: function logoutLine(context) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
         while (1) {
-          switch (_context4.prev = _context4.next) {
+          switch (_context5.prev = _context5.next) {
             case 0:
               context.commit('setApiStatus', null);
-              _context4.next = 3;
-              return axios.get('/api/user');
+              _context5.next = 3;
+              return axios.post('/api/linelogin/delete');
 
             case 3:
-              response = _context4.sent;
-              user = response.data || null;
+              response = _context5.sent;
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context4.next = 9;
+                _context5.next = 8;
                 break;
               }
 
               context.commit('setApiStatus', true);
-              context.commit('setUser', user);
-              return _context4.abrupt("return", false);
+              context.commit('setUser', null);
+              return _context5.abrupt("return", false);
 
-            case 9:
+            case 8:
               context.commit('setApiStatus', false);
               context.commit('error/setCode', response.status, {
                 root: true
               });
 
-            case 11:
+            case 10:
             case "end":
-              return _context4.stop();
+              return _context5.stop();
           }
         }
-      }, _callee4);
+      }, _callee5);
+    }))();
+  },
+  //ログインユーザーチェック
+  currentUser: function currentUser(context) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+      var response, user;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              console.log("ログインユーザーチェック");
+              context.commit('setApiStatus', null);
+              _context6.next = 4;
+              return axios.get('/api/user');
+
+            case 4:
+              response = _context6.sent;
+              console.log(response.data);
+              user = response.data || null;
+
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                _context6.next = 11;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              context.commit('setUser', user);
+              return _context6.abrupt("return", false);
+
+            case 11:
+              context.commit('setApiStatus', false);
+              context.commit('error/setCode', response.status, {
+                root: true
+              });
+
+            case 13:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, _callee6);
     }))();
   }
 };

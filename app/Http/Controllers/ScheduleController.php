@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSchedule;
 use App\Schedule;
+use Illuminate\Support\Facades\Log;
 
 class ScheduleController extends Controller
 {
     //件数を指定してデータを取得　デフォルトは10件
     public function index(Schedule $schedule)
     {
-        return $schedule->get();  
+        return $schedule->getData();  
     }
     
     //件数を指定して論理削除データのみを取得　デフォルトは10件
