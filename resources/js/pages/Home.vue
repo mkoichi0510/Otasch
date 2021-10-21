@@ -39,6 +39,7 @@ import createForm from './TodoCreate.vue'
 import detailForm from './TodoDetail.vue'
 import todoList from './TodoList.vue'
 import sortForm from './TodoSort'
+import lineApi from './Line.vue'
 import { OK, CREATED, UNPROCESSABLE_ENTITY } from '../util'
 
 export default {
@@ -46,7 +47,8 @@ export default {
     createForm,
     detailForm,
     todoList,
-    sortForm
+    sortForm,
+    lineApi
   },
   data () {
     return {

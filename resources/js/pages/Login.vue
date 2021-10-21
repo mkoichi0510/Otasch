@@ -31,6 +31,7 @@
 
 <script>
 export default {
+  
   data () {
     return {
       loginForm: {
@@ -39,7 +40,7 @@ export default {
       },
       errors: {
           color: "red",
-        },
+      },
     }
   },
   methods:{
@@ -56,7 +57,7 @@ export default {
       clearError(){
         this.$store.commit('auth/setLoginErrorMessages', null)
         console.log(this.$store.getters['auth/check'])
-      }
+      },
   },
   created(){
     this.clearError()
