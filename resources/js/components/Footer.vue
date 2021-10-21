@@ -16,26 +16,38 @@ export default {
   },
   methods: {
     async logout () {
-      await this.$store.dispatch('auth/logout')
+      await this.$store.dispatch('auth/logout');
       if(this.apiStatus){
-        this.$router.push('/login')
+        this.$router.push('/login');
+      }
+    },
+    async logoutLine(){
+      await this.$store.dispatch('auth/logoutLine');
+      if(this.apiStatus){
+        this.$router.push('/login');
       }
     }
   },
   computed:{
     isLogin(){
-      return this.$store.getters['auth/check']
+      return this.$store.getters['auth/check'];
     },
     apiStatus () {
-      return this.$store.state.auth.apiStatus
+      return this.$store.state.auth.apiStatus;
     },
+    isLineLogin(){
+      return this.$store.getters['auth/checkLineLogin'];
+    }
   },
 }
 </script>
 <template>
   <el-footer  class="footer">
     <div class="button_wrapper">
-      <button v-if="isLogin" class="button button--link" @click="logout">Logout</button>
+      <div class="logined"  v-if="isLogin">
+        <button  @click="logout">Logout</button>
+        <button v-if="isLineLogin" @click="logoutLine">ラインアカウントの連携を解除</button>
+      </div>
       <RouterLink v-else class="button button--link" to="/login">
         Login / Register
       </RouterLink>
