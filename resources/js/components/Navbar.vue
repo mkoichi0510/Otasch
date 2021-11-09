@@ -14,9 +14,17 @@ export default {
       })
     },
     MoveHome(){
-      this.$router.push("/home");
-       //axios.get('/home');
+      this.$router.push("/home").catch(() => {});
     },
+    MovePreview(){
+      this.$router.push("/preview").catch(() => {});
+    },
+    MoveAccount(){
+      this.$router.push("/account").catch(() => {});
+    },
+    MoveLog(){
+      this.$router.push("/log").catch(() => {});
+    }
   },
   mounted(){
     //this.getUser();
@@ -32,7 +40,7 @@ export default {
 }
 </script>
 <template>
-  <nav class="navbar">
+  <nav class="navbar" v-if="isLogin">
     <el-menu
       default-active="activeIndex"
       class="el-menu-demo"
@@ -43,11 +51,17 @@ export default {
       v-if="isLogin"
     >
       <el-menu-item activeIndex="1" @click="MoveHome">
-      Home
+      ホーム
     </el-menu-item>
-    <!--<el-menu-item activeIndex="2" @click="MoveForm">-->
-    <!--      Login / Register-->
-    <!--</el-menu-item>-->
+    <el-menu-item activeIndex="2" @click="MovePreview">
+      予定一覧
+    </el-menu-item>
+    <el-menu-item activeIndex="3" @click="MoveLog">
+      記録
+    </el-menu-item>
+    <el-menu-item activeIndex="4" @click="MoveAccount">
+      アカウント
+    </el-menu-item>
     </el-menu>
   </nav>
 </template>

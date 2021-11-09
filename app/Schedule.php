@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Log;
+use App\User;
 
 class Schedule extends Model
 {
@@ -17,12 +19,14 @@ class Schedule extends Model
         'term',
     ];
     
-    //ログインしているユーザーidに対応するデータを引数で指定した件数だけ持ってくる
-    public function getPaginateByLimit(int $limit_count = 10)
+    // public function user(){
+    //     return $this->belongsTo(User::class);
+    // }
+    public function tasks()
     {
-        // updated_atで降順に並べたあと、limitで件数制限をかける
-        return $this->where('user_id',auth()->user()->id)->orderBy('updated_at', 'DESC')->limit($limit_count)->get();
+        return $this->hasMany('App\Task');
     }
+    
     
     //ログインしているユーザーidに対応する論理削除されたデータを引数で指定した件数だけ持ってくる
     public function getPaginateByLimitSoftDelete(int $limit_count = 10)
