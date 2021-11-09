@@ -52,7 +52,8 @@ export default {
       },
       errors: {
           color: "red",
-        },
+      },
+      loginComponent:false,
     }
   },
   methods:{
