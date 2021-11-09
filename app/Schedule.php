@@ -22,16 +22,11 @@ class Schedule extends Model
     // public function user(){
     //     return $this->belongsTo(User::class);
     // }
-    
-    
-    //ログインしているユーザーidに対応するデータを持ってくる
-    public function getData()
+    public function tasks()
     {
-        Log::debug(auth()->user());
-        // updated_atで降順に並べた結果を返す
-        return $this->where('user_id',auth()->user()->id)->orderBy('updated_at', 'DESC')->get();
-        //return Schedule::find(auth()->user()->id)->schedules;
+        return $this->hasMany('App\Task');
     }
+    
     
     //ログインしているユーザーidに対応する論理削除されたデータを引数で指定した件数だけ持ってくる
     public function getPaginateByLimitSoftDelete(int $limit_count = 10)

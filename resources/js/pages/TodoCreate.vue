@@ -1,37 +1,43 @@
 <template>
   <div class="container--small">
       <el-dialog 
-        title="Tips" 
+        title="新たに追加する予定" 
         :visible.sync="createFormVisible" 
         width="70%"
         :before-close="handleClose"
         >
       <el-form ref="form" label-width="120px">
-          <el-form-item label="name">
+          <el-form-item label="予定名">
             <el-input v-model="createForm.name"></el-input>
           </el-form-item>
-          <div v-if="createErrorMessage">
-            <ul v-if="createErrorMessage.name">
-              <li :style="errors" v-for="msg in createErrorMessage.name" :key="msg" >{{ msg }}</li>
+          <div v-if="createScheduleErrors">
+            <ul v-if="createScheduleErrors.name">
+              <li :style="errors" v-for="msg in createScheduleErrors.name" :key="msg" >{{ msg }}</li>
             </ul>
           </div>
-          <el-form-item label="priority">
+          <el-form-item label="優先度">
             <el-input-number v-model="createForm.priority":min="1" :max="10"></el-input-number>
           </el-form-item>
-          <el-form-item label ="term">
-              <el-date-picker v-model="createForm.term" type="date" placeholder="Pick a day"></el-date-picker>
+          <el-form-item label ="期限">
+              <el-date-picker
+                v-model="createForm.term" 
+                type="date" 
+                placeholder="期限を選択してください" 
+                format="yyyy/MM/dd"
+                value-format="yyyy-MM-dd"
+              ></el-date-picker>
             </el-form-item>
-          <div v-if="createErrorMessage">
-            <ul v-if="createErrorMessage.term">
-              <li :style="errors" v-for="msg in createErrorMessage.term" :key="msg" >{{ msg }}</li>
+          <div v-if="createScheduleErrors">
+            <ul v-if="createScheduleErrors.term">
+              <li :style="errors" v-for="msg in createScheduleErrors.term" :key="msg" >{{ msg }}</li>
             </ul>
           </div>
-          <el-form-item label="Text">
+          <el-form-item label="予定の詳細">
             <el-input type="textarea" v-model="createForm.Text"></el-input>
           </el-form-item>
-          <div v-if="createErrorMessage">
-            <ul v-if="createErrorMessage.Text">
-              <li :style="errors" v-for="msg in createErrorMessage.Text" :key="msg" >{{ msg }}</li>
+          <div v-if="createScheduleErrors">
+            <ul v-if="createScheduleErrors.Text">
+              <li :style="errors" v-for="msg in createScheduleErrors.Text" :key="msg" >{{ msg }}</li>
             </ul>
           </div>
             <div class="form__button">
@@ -54,7 +60,7 @@ export default {
         name: '',
         Text: '',
         priority: 1,
-        term: null
+        term: null,
       },
       errors: {
           color: "red",
@@ -66,42 +72,40 @@ export default {
           type:Boolean,
           default:false,
       },
-      createErrorMessage:{
-        type:Object,
-        default:false,
-      }
   },
   methods:{
     handleClose() {
         this.$emit('create-form-close');
-        this.$emit('reset-error-message')
-        return
+        return;
     },
     registerSchedule(){
-        this.createForm.term = this.transformDate(this.createForm.term);
-        this.$emit('register-schedule',this.createForm)
-        //this.initialzleRegisterForm();
-    },
-    transformDate(date){
-        date = new Date(date);
-        var formattedDate = [date.getFullYear(),('0' + (date.getMonth() + 1)).slice(-2),('0' + date.getDate()).slice(-2)].join('/');
-        return formattedDate;
+        this.$emit('register-schedule',this.createForm);
     },
     initialzleRegisterForm(){
       this.createForm.name = '';
       this.createForm.Text = '';
       this.createForm.priority = 1;
       this.createForm.term = null;
-    }
+    },
+    clearError(){
+      this.$store.commit('data/setCreateScheduleErrorMessages', null);
+    },
   },
   computed: {
     apiStatus () {
-      return this.$store.state.auth.apiStatus
+      return this.$store.state.data.apiStatus;
+    },
+     createScheduleErrors () {
+      return this.$store.state.data.createScheduleErrorMessages;
     }
   },
   watch:{
-      createFormVisible(){
-        this.initialzleRegisterForm();
+      createFormVisible(newvalue){
+        console.log("create");
+        if(newvalue){
+          this.clearError();
+        　this.initialzleRegisterForm();
+        }
       }
   }
 }
