@@ -2,16 +2,6 @@
 export default {
   data () {
     return {
-        footerStyle: {
-          width: "100%",
-          backgroundColor: "#89c7de",
-          color: "#fff",
-          textAlign: "center",
-          padding: "30px 0",
-
-          position: "absolute",/*←絶対位置*/
-          bottom: 0, /*下に固定*/
-        },
     }
   },
   methods: {
@@ -21,12 +11,6 @@ export default {
         this.$router.push('/login');
       }
     },
-    async logoutLine(){
-      await this.$store.dispatch('auth/logoutLine');
-      if(this.apiStatus){
-        this.$router.push('/login');
-      }
-    }
   },
   computed:{
     isLogin(){
@@ -35,9 +19,6 @@ export default {
     apiStatus () {
       return this.$store.state.auth.apiStatus;
     },
-    isLineLogin(){
-      return this.$store.getters['auth/checkLineLogin'];
-    }
   },
 }
 </script>
@@ -46,7 +27,6 @@ export default {
     <div class="button_wrapper">
       <div class="logined"  v-if="isLogin">
         <button  @click="logout">Logout</button>
-        <button v-if="isLineLogin" @click="logoutLine">ラインアカウントの連携を解除</button>
       </div>
       <RouterLink v-else class="button button--link" to="/login">
         Login / Register

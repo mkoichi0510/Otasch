@@ -10,9 +10,10 @@ use App\User;
 
 class LineMessageApiController extends Controller
 {
-    public function getUserMessage(Request $request)
+    public function getUserMessage()
     {
-        Log::debug($request);
+        //Log::debug($request);
+        return response(200);
     }
     
     //新規登録処理

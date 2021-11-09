@@ -44,32 +44,29 @@ export default {
     }
   },
   methods:{
-      async login(){
-        console.log("ログイン");
-         // authストアのloginアクションを呼び出す
-        await this.$store.dispatch('auth/login', this.loginForm)
+    async login(){
+      // authストアのloginアクションを呼び出す
+      await this.$store.dispatch('auth/login', this.loginForm)
         
-        if (this.apiStatus) {
-          // トップページに移動する
-          this.$router.push('/home')
-        }
-      },
-      clearError(){
-        this.$store.commit('auth/setLoginErrorMessages', null)
-        console.log(this.$store.getters['auth/check'])
-      },
+      if (this.apiStatus) {
+        // トップページに移動する
+        this.$router.push('/home')
+      }
+    },
+    clearError(){
+      this.$store.commit('auth/setLoginErrorMessages', null)
+    },
   },
   created(){
-    this.clearError()
-    console.log(this.$store.state.auth.apiStatus)
+    this.clearError();
   },
   computed: {
     apiStatus () {
       return this.$store.state.auth.apiStatus
     },
     loginErrors () {
-      return this.$store.state.auth.loginErrorMessages
-  }
+      return this.$store.state.auth.loginErrorMessages;
+    }
   },
 }
 </script>

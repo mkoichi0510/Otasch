@@ -11,9 +11,6 @@ import { OK, CREATED, UNPROCESSABLE_ENTITY } from '../util'
       return {
         state : this.createState(),
         params : {
-          channelID : '1656516916',
-          callbackURL : 'https://16e576e7e8ae4836ad78a778e6db6d16.vfs.cloud9.ap-northeast-1.amazonaws.com/login',
-          channelSecret : '174247308853df99a3a9def0e419bd8c',
           url : null,
           code : null,
           state : null,
@@ -33,9 +30,10 @@ import { OK, CREATED, UNPROCESSABLE_ENTITY } from '../util'
         var paramaters = new URLSearchParams();
         paramaters.append('grant_type', 'authorization_code');
         paramaters.append('code', this.params.code);
-        paramaters.append('redirect_uri', this.params.callbackURL);
-        paramaters.append('client_id', this.params.channelID);
-        paramaters.append('client_secret', this.params.channelSecret);
+        paramaters.append('redirect_uri', this.$store.state.auth.line_client_callback);
+        paramaters.append('client_id', this.$store.state.auth.line_client_id);
+        paramaters.append('client_secret', this.$store.state.auth.line_client_secret);
+        console.log(this.$store.state.auth.line_client_callback);
         const response = await axios.post('https://api.line.me/oauth2/v2.1/token', paramaters);
         console.log(response.status);
         console.log(response.data);
@@ -53,6 +51,15 @@ import { OK, CREATED, UNPROCESSABLE_ENTITY } from '../util'
         if(this.apiStatus){
           // トップページに移動する
           this.$router.push('/home');
+        }
+       },
+       //Lineクライアントデータの取得
+       async setURL(){
+        await this.$store.dispatch('auth/getLineClientData');
+        console.log("get");
+        if(this.apiStatus){
+          //URLの設定
+          this.params.url = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${this.$store.state.auth.line_client_id}&redirect_uri=${this.$store.state.auth.line_client_callback}&state=${this.state}&scope=profile`;
         }
        },
        createState(){
@@ -74,6 +81,15 @@ import { OK, CREATED, UNPROCESSABLE_ENTITY } from '../util'
         this.params.code = param.get('code');
         this.params.state = param.get('state');
       },
+      
+      async initilizeData(){
+        await this.setURL();
+        this.setParams();
+        if(this.params.code != null){
+          console.log("認証");
+          this.loginLine();
+        }
+      }
     },
     mounted : function(){
       if(this.componentType){
@@ -82,12 +98,8 @@ import { OK, CREATED, UNPROCESSABLE_ENTITY } from '../util'
       else{
         this.lavel = "LINEアカウントで登録"
       }
-      this.params.url = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${this.params.channelID}&redirect_uri=${this.params.callbackURL}&state=${this.state}&scope=profile`;
-      this.setParams();
-      if(this.params.code != null){
-        console.log("認証");
-        this.loginLine();
-      }
+      this.initilizeData();
+      
     },
     computed: {
       apiStatus () {

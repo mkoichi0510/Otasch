@@ -16,7 +16,7 @@ Vue.use(VuePaginate);
 //Vue.use(axios,VueAxios);
 
 const createApp = async () => {
-  await store.dispatch('auth/currentUser')
+  await store.dispatch('auth/currentUser');
   
   new Vue({
     el: '#app',
@@ -27,4 +27,4 @@ const createApp = async () => {
   })
 }
 
-createApp()
+createApp();

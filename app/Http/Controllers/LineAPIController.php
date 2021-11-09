@@ -10,19 +10,32 @@ use App\User;
 
 class LineAPIController extends Controller
 {
+    public function getLineClientData(){
+        $postData = array(
+            'callback'  => config('app.line_client_callback'),
+            // 'client_id'     => $request->input('channelID'),
+            'client_id'     => config('app.line_client_id'),
+            // 'client_secret' => $request->input('channelSecret'),
+            'client_secret' => config('app.line_client_secret'),
+        );
+        return $postData;
+    }
+    
     public function getAccessToken(Request $request)
     {
+        Log::debug("データ代入");
         $postData = array(
             'grant_type'    => 'authorization_code',
             'code'          => $request->input('code'),
-            'redirect_uri'  => $request->input('callbackURL'),
-            //'redirect_uri'  => 'https://16e576e7e8ae4836ad78a778e6db6d16.vfs.cloud9.ap-northeast-1.amazonaws.com/home',
-            'client_id'     => $request->input('channelID'),
-            //'client_id'     => '1656516916',
-            'client_secret' => $request->input('channelSecret'),
-            //'client_secret' => '174247308853df99a3a9def0e419bd8c',
+            // 'redirect_uri'  => $request->input('callbackURL'),
+            'redirect_uri'  => config('app.line_client_callback'),
+            // 'client_id'     => $request->input('channelID'),
+            'client_id'     => config('app.line_client_id'),
+            // 'client_secret' => $request->input('channelSecret'),
+            'client_secret' => config('app.line_client_secret'),
         );
         
+        Log::debug(config('app.line_client_callback'));
 
         $ch = curl_init();
 
@@ -83,12 +96,13 @@ class LineAPIController extends Controller
         Log::debug($json);
         
         //accessTokenが有効な場合
-        if($request->input('channelID') == $json["client_id"] && $json["expires_in"] > 0){
+        if(config('app.line_client_id') == $json["client_id"] && $json["expires_in"] > 0){
             Log::debug("プロフィール情報取得");
             $user = $this->getProfile($postData);
+            return response($user, 200);
         }
         // Log::debug($user);
-        return response($user, 200);
+        return;
     }
     
     public function forceDelete(User $user)

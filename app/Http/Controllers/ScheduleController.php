@@ -8,10 +8,22 @@ use Illuminate\Support\Facades\Log;
 
 class ScheduleController extends Controller
 {
-    //件数を指定してデータを取得　デフォルトは10件
-    public function index(Schedule $schedule)
+    //ログイン済みユーザーの未達成予定一覧を取得
+    public function index()
     {
-        return $schedule->getData();  
+        return auth()->user()->schedules()->orderBy('updated_at', 'DESC')->get();
+    }
+    
+    //ログイン済みユーザーの全予定一覧を取得
+    public function indexAll()
+    {
+        return auth()->user()->schedules()->orderBy('updated_at', 'DESC')->withTrashed()->whereNotNull('id')->get();
+    }
+    
+    //ログイン済みユーザーの達成済み予定一覧を取得
+    public function indexSoftDeleteSchedule()
+    {
+        return auth()->user()->schedules()->orderBy('updated_at', 'DESC')->onlyTrashed()->whereNotNull('id')->get();
     }
     
     //件数を指定して論理削除データのみを取得　デフォルトは10件
@@ -21,11 +33,12 @@ class ScheduleController extends Controller
     }
     
     //予定の新規登録
-    public function store(StoreSchedule $request, Schedule $schedule)
+    public function store(StoreSchedule $request)
     {
-        $input = $request->all();
-        $input["user_id"] = auth()->user()->id;
-        $schedule->fill($input)->save();
+        $schedule = new Schedule();
+        $schedule = $request->all();
+        $schedule["user_id"] = auth()->user()->id;
+        Schedule::create($schedule);
         
         return response($schedule, 201);
     }
