@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Tokyo',
 
     /*
     |--------------------------------------------------------------------------
@@ -227,5 +227,17 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
-
+    
+    /*
+    |--------------------------------------------------------------------------
+    | 非デフォルトenv定義箇所
+    |--------------------------------------------------------------------------
+    |
+    | Laravelのデフォルト定義ではないenvの設定は以下に記載すること。
+    |
+    */
+	  
+    'line_client_id' => env('LINE_CLIENT_ID','error'),
+    'line_client_secret' => env('LINE_CLIENT_SECRET','error'),
+    'line_client_callback' => env('LINE_CLIENT_CALLBACK','error'),
 ];

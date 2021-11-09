@@ -54,7 +54,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email:strict,dns', 'max:255', 'unique:users'], //不正なメールアドレスをはじくように変更
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -66,6 +66,15 @@ class RegisterController extends Controller
      * @return \App\User
      */
     protected function create(array $data)
+    {
+        return User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
+    }
+    
+    protected function snsAccountCreate(array $data)
     {
         return User::create([
             'name' => $data['name'],
