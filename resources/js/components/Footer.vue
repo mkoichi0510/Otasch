@@ -2,32 +2,22 @@
 export default {
   data () {
     return {
-        footerStyle: {
-          width: "100%",
-          backgroundColor: "#89c7de",
-          color: "#fff",
-          textAlign: "center",
-          padding: "30px 0",
-
-          position: "absolute",/*←絶対位置*/
-          bottom: 0, /*下に固定*/
-        },
     }
   },
   methods: {
     async logout () {
-      await this.$store.dispatch('auth/logout')
+      await this.$store.dispatch('auth/logout');
       if(this.apiStatus){
-        this.$router.push('/login')
+        this.$router.push('/login');
       }
-    }
+    },
   },
   computed:{
     isLogin(){
-      return this.$store.getters['auth/check']
+      return this.$store.getters['auth/check'];
     },
     apiStatus () {
-      return this.$store.state.auth.apiStatus
+      return this.$store.state.auth.apiStatus;
     },
   },
 }
@@ -35,7 +25,9 @@ export default {
 <template>
   <el-footer  class="footer">
     <div class="button_wrapper">
-      <button v-if="isLogin" class="button button--link" @click="logout">Logout</button>
+      <div class="logined"  v-if="isLogin">
+        <button  @click="logout">Logout</button>
+      </div>
       <RouterLink v-else class="button button--link" to="/login">
         Login / Register
       </RouterLink>

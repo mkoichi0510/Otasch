@@ -5,16 +5,19 @@
         <el-tab-pane label="Login" name="first"><login></login></el-tab-pane>
         <el-tab-pane label="Register" name="second"><register></register></el-tab-pane>
       </el-tabs>
+      <lineApi></lineApi>
  </div>
 </template>
 
 <script>
-import login from './Login.vue'
-import register from './Register.vue'
+import login from './Login.vue';
+import register from './Register.vue';
+import lineApi from './Line.vue';
   export default {
     components: {
       login,
-      register
+      register,
+      lineApi,
     },
     data() {
       return {
