@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Auth\Events\Registered;
@@ -77,6 +76,7 @@ class LineAPIController extends Controller
             'sns_id'        => $json['userId'],
         );
        
+        
         return $user;
         
     }

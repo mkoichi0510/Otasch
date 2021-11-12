@@ -52,6 +52,9 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        if($data['sns_id'] != null ){
+            return;
+        }
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email:strict,dns', 'max:255', 'unique:users'], //不正なメールアドレスをはじくように変更
