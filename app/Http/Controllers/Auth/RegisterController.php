@@ -52,9 +52,15 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        if($data['sns_id'] != null ){
-            return;
+        
+        //Line登録処理時のバリデート
+        if(array_key_exists('sns_id', $data)){
+            return Validator::make($data, [
+            'name' => ['required', 'string', 'max:255'],
+            'sns_id' => ['required', 'string', 'max:255'],
+        ]);;
         }
+        //通常登録処理時のバリデート
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email:strict,dns', 'max:255', 'unique:users'], //不正なメールアドレスをはじくように変更
