@@ -52,7 +52,7 @@ class LineAPIController extends Controller
         
         //$accessToken = $json;
         //Log::debug($json['access_token']);
-        $this->getUserInfo($json['access_token']);
+        $this->getProfile($json['access_token']);
     }
     
     //新規登録処理
