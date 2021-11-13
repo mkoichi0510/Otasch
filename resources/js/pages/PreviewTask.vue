@@ -65,6 +65,9 @@
                   <el-link type="primary"@click="showDetail(task)"><h2 class='title'>{{ task.name }}</h2></el-link>
                 </li>
               </ul>
+              <div v-if="tasks.length < 1">
+                <el-empty　description="NoData"></el-empty>
+              </div>
               <el-pagination
                 background
                 layout="prev, pager, next"
