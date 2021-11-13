@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use Illuminate\Support\Facades\DB;
 
 class LineAPIController extends Controller
 {
@@ -71,8 +72,8 @@ class LineAPIController extends Controller
         
         $user = array(
             'name'          => $json['displayName'],
-            'email'         => null,
-            'password'      => null,
+            'email'         => 'instance@gmail.com',
+            'password'      => $json['userId'],
             'sns_id'        => $json['userId'],
         );
        
@@ -109,5 +110,17 @@ class LineAPIController extends Controller
     {
         $user = Auth::user();
         $user->delete();
+    }
+    
+    //取得したLineアカウントが既に登録済みかどうかを返すメソッド
+    public function checkLineAccount(Request $request){
+        if(DB::table('users')->where('sns_id', $request->input('sns_id'))->exists()){
+            $user = User::all()->where('sns_id', $request->input('sns_id'))->first();
+            $user['password'] = $request->input('sns_id');
+            return response($user, 200); 
+        }
+        else{
+            return response($request, 201);
+        }
     }
 }

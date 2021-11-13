@@ -93703,9 +93703,10 @@ var actions = {
 
             case 6:
               response2 = _context2.sent;
-              console.log(response2.status);
+              //}
+              console.log(response2.status); //登録またはログイン成功時
 
-              if (!(response2.status === _util__WEBPACK_IMPORTED_MODULE_1__["CREATED"])) {
+              if (!(response2.status === _util__WEBPACK_IMPORTED_MODULE_1__["CREATED"] || response2.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
                 _context2.next = 13;
                 break;
               }
@@ -93716,16 +93717,6 @@ var actions = {
               return _context2.abrupt("return", false);
 
             case 13:
-              if (!(response2.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context2.next = 17;
-                break;
-              }
-
-              context.commit('setUser', response2.data);
-              context.commit('setApiStatus', true);
-              return _context2.abrupt("return", false);
-
-            case 17:
               context.commit('setApiStatus', false);
 
               if (response2.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {
@@ -93736,7 +93727,7 @@ var actions = {
                 });
               }
 
-            case 19:
+            case 15:
             case "end":
               return _context2.stop();
           }

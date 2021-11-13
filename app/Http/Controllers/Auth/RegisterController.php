@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
@@ -76,21 +77,29 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
-    }
-    
-    protected function snsAccountCreate(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'sns_id' => $data['sns_id'],
-        ]);
+        //Line連携アカウントを登録する場合
+        if(array_key_exists('sns_id', $data)){
+            //Lineアカウントが既に登録済みの場合
+            if(DB::table('users')->where('sns_id', $data['sns_id'])->exists()){
+                return User::all()->where('sns_id', $data['sns_id'])->first();
+            }
+            else{
+                return User::create([
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'password' => Hash::make($data['password']),
+                    'sns_id' => $data['sns_id'],
+                ]);
+            }    
+        }
+        //通常アカウントを登録する場合
+        else{
+            return User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+            ]);
+        }
     }
     
     protected function restoreLineAccount(Request $request){
