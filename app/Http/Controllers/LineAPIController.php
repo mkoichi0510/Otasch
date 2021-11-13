@@ -106,10 +106,11 @@ class LineAPIController extends Controller
         return;
     }
     
-    public function forceDelete(User $user)
+    public function forceDelete()
     {
-        $user = Auth::user();
-        $user->delete();
+        $user = auth()->user();
+        $user->forceDelete();
+        return;
     }
     
     //取得したLineアカウントが既に登録済みかどうかを返すメソッド

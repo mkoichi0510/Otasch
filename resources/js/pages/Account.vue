@@ -1,6 +1,12 @@
 <template>
   <div>
     <br>
+    <check 
+      :checkFormVisible='checkFormVisible'
+      :message='checkMessage'
+      @confirm="forceDelete" 
+      @check-form-close="checkFormVisible=false"
+    ></check>
     <accountForm
     :accountFormVisible='accountFormVisible'
     :updateUser='updateUser'
@@ -19,7 +25,7 @@
           <div>
             <h2>
               <span>LINEアカウントの連携状態：{{checkLineLogin}}</span>
-              <el-button type="danger" v-if="isLineLogin" @click="logoutLine" style="float: right">LINEアカウントの連携解除</el-button>
+              <el-button type="danger" v-if="isLineLogin" @click="openCheckForm" style="float: right">LINEアカウントの連携解除</el-button>
             </h2>
           </div>
           <br>
@@ -31,13 +37,17 @@
 
 <script>
 import accountForm from './AccountForm.vue'
+import check from './Check.vue'
 export default {
   components:{
     accountForm,
+    check,
   },
   data () {
     return {
       accountFormVisible:false,
+      checkFormVisible:false,
+      checkMessage:"",
     }
   },
   methods:{
@@ -59,11 +69,16 @@ export default {
                 // handle error
             })
     },
-    async logoutLine(){
-      await this.$store.dispatch('auth/logoutLine');
+    async forceDelete(){
+      await this.$store.dispatch('auth/deleteLineAccount');
       if(this.apiStatus){
         this.$router.push('/login');
       }
+    },
+    openCheckForm(){
+      console.log("check");
+      this.checkMessage = "すべてのデータが削除されますが本当にLineアカウントの連携を削除してもよろしいですか。"
+      this.checkFormVisible = true;
     },
   },
   
@@ -92,7 +107,8 @@ export default {
     },
     isLineLogin(){
       return this.$store.getters['auth/checkLineLogin'];
-    }
+    },
+    
   }
   
 }

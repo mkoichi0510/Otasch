@@ -3718,6 +3718,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _AccountForm_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AccountForm.vue */ "./resources/js/pages/AccountForm.vue");
+/* harmony import */ var _Check_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Check.vue */ "./resources/js/pages/Check.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -3755,14 +3756,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    accountForm: _AccountForm_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    accountForm: _AccountForm_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    check: _Check_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
-      accountFormVisible: false
+      accountFormVisible: false,
+      checkFormVisible: false,
+      checkMessage: ""
     };
   },
   methods: {
@@ -3801,7 +3812,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.$http.get('/password/reset').error(function (data, status, request) {// handle error
       });
     },
-    logoutLine: function logoutLine() {
+    forceDelete: function forceDelete() {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
@@ -3810,7 +3821,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return _this2.$store.dispatch('auth/logoutLine');
+                return _this2.$store.dispatch('auth/deleteLineAccount');
 
               case 2:
                 if (_this2.apiStatus) {
@@ -3824,6 +3835,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee2);
       }))();
+    },
+    openCheckForm: function openCheckForm() {
+      console.log("check");
+      this.checkMessage = "すべてのデータが削除されますが本当にLineアカウントの連携を削除してもよろしいですか。";
+      this.checkFormVisible = true;
     }
   },
   computed: {
@@ -71333,6 +71349,19 @@ var render = function() {
     [
       _c("br"),
       _vm._v(" "),
+      _c("check", {
+        attrs: {
+          checkFormVisible: _vm.checkFormVisible,
+          message: _vm.checkMessage
+        },
+        on: {
+          confirm: _vm.forceDelete,
+          "check-form-close": function($event) {
+            _vm.checkFormVisible = false
+          }
+        }
+      }),
+      _vm._v(" "),
       _c("accountForm", {
         attrs: {
           accountFormVisible: _vm.accountFormVisible,
@@ -71398,7 +71427,7 @@ var render = function() {
                         {
                           staticStyle: { float: "right" },
                           attrs: { type: "danger" },
-                          on: { click: _vm.logoutLine }
+                          on: { click: _vm.openCheckForm }
                         },
                         [_vm._v("LINEアカウントの連携解除")]
                       )
@@ -93820,8 +93849,8 @@ var actions = {
       }, _callee4);
     }))();
   },
-  //ラインアカウントとの連携の解除
-  logoutLine: function logoutLine(context) {
+  //ラインアカウントの物理削除
+  deleteLineAccount: function deleteLineAccount(context) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
       var response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {

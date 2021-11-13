@@ -134,8 +134,8 @@ const actions = {
     context.commit('error/setCode', response.status, {root: true })
   },
   
-  //ラインアカウントとの連携の解除
-  async logoutLine (context) {
+  //ラインアカウントの物理削除
+  async deleteLineAccount (context) {
     context.commit('setApiStatus', null);
     const response = await axios.post('/api/linelogin/delete');
     
