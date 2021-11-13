@@ -70,17 +70,7 @@ const actions = {
   async registerLineAccount (context, data) {
     context.commit('setApiStatus', null);
     const response = await axios.post('/api/linelogin/register', data);
-    // const check = await axios.post('/api/linelogin/check', response.data);
-    // let response2;
-    // console.log(check.data);
-    // if(check.status === OK){
-    //   console.log("login");
-    //   console.log(check.data);
-    //   response2 = await axios.post('/api/login', check.data);
-    // }
-    // else if(check.status === CREATED){
     const response2 = await axios.post('/api/register', response.data);
-    //}
     console.log(response2.status);
     
     //登録またはログイン成功時

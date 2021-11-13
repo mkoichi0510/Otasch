@@ -6,44 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
     use AuthenticatesUsers;
-    //AuthenticateUsersのバリデーションをLineログインの時にも利用できるよう上書きする
-    protected function validateLogin(Request $request)
-    {
-        Log::debug($request);
-        //Lineログイン処理時のバリデート
-        if(isset($request["sns_id"])){
-            Log::debug('LoginController');
-            $request->validate([
-                'email' => 'required|string',
-                'sns_id' => 'required|string',
-            ]);
-        
-        }
-        //通常ログイン処理時のバリデート
-        else{
-            $request->validate([
-                $this->username() => 'required|string',
-                'password' => 'required|string',
-            ]);
-        }
-    }
-
+    
     /**
      * Where to redirect users after login.
      *
