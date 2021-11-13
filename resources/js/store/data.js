@@ -145,7 +145,7 @@ const actions = {
   async forceDeleteTask(context, data){
     context.commit('setApiStatus', null);
     console.log(data.id);
-    const response = await axios.post('/api/tasks/forcedelete/', data);
+    const response = await axios.post('/api/tasks/forcedelete', data);
     if(response.status === OK){
       context.commit('setApiStatus', true);
       return false;

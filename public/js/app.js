@@ -94355,7 +94355,7 @@ var actions = {
               context.commit('setApiStatus', null);
               console.log(data.id);
               _context7.next = 4;
-              return axios.post('/api/tasks/forcedelete/', data);
+              return axios.post('/api/tasks/forcedelete', data);
 
             case 4:
               response = _context7.sent;
