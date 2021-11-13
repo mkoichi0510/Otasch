@@ -196,8 +196,8 @@ export default {
     lemainDay(schedule){
       //期限と現在時刻をgetTime()でエポックミリ秒を取得して差分を出す
       let term = new Date(schedule.term);
-      //期限の時刻を0時0分0秒に設定する。
-      term.setHours(0,0,0);
+      //期限の時刻を23時59分59秒に設定する。
+      term.setHours(23,59,59);
       let diff = term.getTime() - Date.now();
       //日付けになるように、diffを割って変換。
       var day = diff/(1000*60*60*24);

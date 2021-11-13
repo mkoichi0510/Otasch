@@ -4379,9 +4379,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     //引数で与えられた予定の残り日数を算出するメソッド
     lemainDay: function lemainDay(schedule) {
       //期限と現在時刻をgetTime()でエポックミリ秒を取得して差分を出す
-      var term = new Date(schedule.term); //期限の時刻を0時0分0秒に設定する。
+      var term = new Date(schedule.term); //期限の時刻を23時59分59秒に設定する。
 
-      term.setHours(0, 0, 0);
+      term.setHours(23, 59, 59);
       var diff = term.getTime() - Date.now(); //日付けになるように、diffを割って変換。
 
       var day = diff / (1000 * 60 * 60 * 24); //残り日数が1日以上の場合は残り日数を返す
@@ -5775,9 +5775,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     //予定の残り日数を算出するメソッド
     lemainDay: function lemainDay() {
       //期限と現在時刻をgetTime()でエポックミリ秒を取得して差分を出す
-      var term = new Date(this.schedule.term); //期限時刻を0時0分0秒に設定する
+      var term = new Date(this.schedule.term); //期限時刻を23時59分59秒に設定する
 
-      term.setHours(0, 0, 0);
+      term.setHours(23, 59, 59);
       var diff = term.getTime() - Date.now(); //日付けになるように、diffを割って変換。
 
       var day = diff / (1000 * 60 * 60 * 24); //残り日数が1日以上の場合は残り日数を返す
