@@ -72,8 +72,8 @@ class LineAPIController extends Controller
         
         $user = array(
             'name'          => $json['displayName'],
-            'email'         => 'instance@gmail.com',
-            'password'      => $json['userId'],
+            'email'         => null,
+            'password'      => null,
             'sns_id'        => $json['userId'],
         );
        
@@ -113,15 +113,4 @@ class LineAPIController extends Controller
         return;
     }
     
-    //取得したLineアカウントが既に登録済みかどうかを返すメソッド
-    public function checkLineAccount(Request $request){
-        if(DB::table('users')->where('sns_id', $request->input('sns_id'))->exists()){
-            $user = User::all()->where('sns_id', $request->input('sns_id'))->first();
-            $user['password'] = $request->input('sns_id');
-            return response($user, 200); 
-        }
-        else{
-            return response($request, 201);
-        }
-    }
 }

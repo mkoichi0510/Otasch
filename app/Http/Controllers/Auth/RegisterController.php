@@ -102,20 +102,6 @@ class RegisterController extends Controller
         }
     }
     
-    protected function restoreLineAccount(Request $request){
-        $user = User::onlyTrashed()->where('sns_id',$request->input('sns_id'))->first();
-        if($user != null){
-            $user->restore();
-            Log::debug("復元");
-            Log::debug($user);
-        }
-        return $user;
-    }
-    
-    protected function checkLineAccount(Request $request){
-        return User::all()->where('sns_id',$request->input('sns_id'))->first();
-    }
-    
     protected function registered(Request $request, $user)
     {
         return $user;
