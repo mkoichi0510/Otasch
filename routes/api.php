@@ -31,6 +31,9 @@ Route::put('/update','UserUpdateController@update')->name('update');
 //Lineクライアントのデータの取得
 Route::get('/linelogin/data', 'LineAPIController@getLineClientData');
 
+//Lineアカウントが登録済みかどうかをチェック
+Route::post('/linelogin/check', 'LineAPIController@checkLineAccount');
+
 // Lineアカウントで会員登録
 Route::post('/linelogin/register', 'LineAPIController@getLineUserAccount');
 

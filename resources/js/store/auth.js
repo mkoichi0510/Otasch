@@ -70,20 +70,25 @@ const actions = {
   async registerLineAccount (context, data) {
     context.commit('setApiStatus', null);
     const response = await axios.post('/api/linelogin/register', data);
+    // const check = await axios.post('/api/linelogin/check', response.data);
+    // let response2;
+    // console.log(check.data);
+    // if(check.status === OK){
+    //   console.log("login");
+    //   console.log(check.data);
+    //   response2 = await axios.post('/api/login', check.data);
+    // }
+    // else if(check.status === CREATED){
     const response2 = await axios.post('/api/register', response.data);
+    //}
     console.log(response2.status);
-    if(response2.status === CREATED){
+    
+    //登録またはログイン成功時
+    if(response2.status === CREATED || response2.status === OK){
       context.commit('setUser', response2.data);
       context.commit('setApiStatus', true);
       console.log(response2.data);
       return false;
-    }
-    
-    //既に登録済みの場合
-    if (response2.status === OK) {
-      context.commit('setUser', response2.data)
-      context.commit('setApiStatus', true)
-      return false
     }
     
     context.commit('setApiStatus', false)
@@ -129,8 +134,8 @@ const actions = {
     context.commit('error/setCode', response.status, {root: true })
   },
   
-  //ラインアカウントとの連携の解除
-  async logoutLine (context) {
+  //ラインアカウントの物理削除
+  async deleteLineAccount (context) {
     context.commit('setApiStatus', null);
     const response = await axios.post('/api/linelogin/delete');
     
