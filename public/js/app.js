@@ -94354,7 +94354,7 @@ var actions = {
             case 0:
               context.commit('setApiStatus', null);
               _context7.next = 3;
-              return axios["delete"]("/api/tasks/forcedelete/".concat(data.id), data);
+              return axios["delete"]('/api/tasks/forcedelete/', data.id);
 
             case 3:
               response = _context7.sent;
@@ -94654,7 +94654,7 @@ var actions = {
             case 0:
               context.commit('setApiStatus', null);
               _context14.next = 3;
-              return axios["delete"]("/api/schedules/forcedelete/".concat(data.id), data);
+              return axios["delete"]('/api/schedules/forcedelete', data.id);
 
             case 3:
               response = _context14.sent;

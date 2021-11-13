@@ -48,7 +48,7 @@ Route::prefix('schedules')->group(function(){
     Route::post('register', 'ScheduleController@store');
     Route::put('/update/{schedule}','ScheduleController@update');
     Route::delete('/delete/{schedule}', 'ScheduleController@delete');
-    Route::delete('/forcedelete/{schedule}', 'ScheduleController@forceDelete');
+    Route::delete('/forcedelete', 'ScheduleController@forceDelete');
 });
 
 //タスクのルーティング
@@ -58,7 +58,7 @@ Route::prefix('tasks')->group(function(){
     Route::get('/getcleardata/{scheduleid}', 'TaskController@indexSoftDelete');
     Route::put('/update/{task}', 'TaskController@update');
     Route::delete('/delete/{task}', 'TaskController@delete');
-    Route::delete('/forcedelete/{task}', 'TaskController@forceDelete');
+    Route::delete('/forcedelete', 'TaskController@forceDelete');
     Route::post('/register', 'TaskController@store');
 });
 

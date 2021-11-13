@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSchedule;
+use Illuminate\Http\Request;
 use App\Schedule;
 use Illuminate\Support\Facades\Log;
 
@@ -51,8 +52,10 @@ class ScheduleController extends Controller
     }
     
     //物理削除
-    public function forceDelete(Schedule $schedule)
+    public function forceDelete(Request $scheduleid)
     {
+        $schedule = new Schedule();
+        $schedule["id"] = $scheduleid;
         $schedule->forceDelete();
     }
     

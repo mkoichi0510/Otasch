@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTask;
 use App\Schedule;
+use Illuminate\Http\Request;
 use App\Task;
 use Illuminate\Support\Facades\Log;
 
@@ -54,8 +55,10 @@ class TaskController extends Controller
     }
     
     //物理削除
-    public function forceDelete(Task $task)
+    public function forceDelete(Request $taskid)
     {
+        $task = new Task();
+        $task["id"] = $taskid;
         $task->forceDelete();
         return;
     }

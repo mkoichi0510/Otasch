@@ -144,7 +144,7 @@ const actions = {
   //タスクの物理削除
   async forceDeleteTask(context, data){
     context.commit('setApiStatus', null);
-    const response = await axios.delete(`/api/tasks/forcedelete/${data.id}`, data);
+    const response = await axios.delete('/api/tasks/forcedelete/', data.id);
     if(response.status === OK){
       context.commit('setApiStatus', true);
       return false;
@@ -272,7 +272,7 @@ const actions = {
   //予定の物理削除
   async forceDeleteSchedule(context, data){
     context.commit('setApiStatus', null);
-    const response = await axios.delete(`/api/schedules/forcedelete/${data.id}`, data);
+    const response = await axios.delete('/api/schedules/forcedelete', data.id);
     if(response.status === OK){
       context.commit('setApiStatus', true);
       return false;
