@@ -111,8 +111,8 @@ export default {
       
       if(this.apiStatus){
         this.schedules = this.$store.state.data.schedules;
-        this.taskLabel = "未達成";
-        console.log(this.schedules);
+        this.scheduleLabel = "未達成";
+        console.log("getTodo");
       }
     },
     //達成済みを含めたすべてのスケジュールの取得

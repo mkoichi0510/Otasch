@@ -7,6 +7,7 @@ use App\Schedule;
 use Illuminate\Http\Request;
 use App\Task;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
@@ -55,10 +56,9 @@ class TaskController extends Controller
     }
     
     //物理削除
-    public function forceDelete(Request $taskid)
+    public function forceDelete(Request $task)
     {
-        $task = new Task();
-        $task["id"] = $taskid;
+        $task = Task::withTrashed()->where('id', $task->input('id'))->get()->first();
         $task->forceDelete();
         return;
     }

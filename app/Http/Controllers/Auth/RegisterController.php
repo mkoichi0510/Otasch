@@ -81,6 +81,7 @@ class RegisterController extends Controller
         if(array_key_exists('sns_id', $data)){
             //Lineアカウントが既に登録済みの場合
             if(DB::table('users')->where('sns_id', $data['sns_id'])->exists()){
+                Log::debug(User::all()->where('sns_id', $data['sns_id'])->first());
                 return User::all()->where('sns_id', $data['sns_id'])->first();
             }
             else{

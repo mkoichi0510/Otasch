@@ -5312,8 +5312,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 2:
                 if (_this.apiStatus) {
                   _this.schedules = _this.$store.state.data.schedules;
-                  _this.taskLabel = "未達成";
-                  console.log(_this.schedules);
+                  _this.scheduleLabel = "未達成";
+                  console.log("getTodo");
                 }
 
               case 3:
@@ -94353,21 +94353,22 @@ var actions = {
           switch (_context7.prev = _context7.next) {
             case 0:
               context.commit('setApiStatus', null);
-              _context7.next = 3;
-              return axios["delete"]('/api/tasks/forcedelete/', data.id);
+              console.log(data.id);
+              _context7.next = 4;
+              return axios.post('/api/tasks/forcedelete/', data);
 
-            case 3:
+            case 4:
               response = _context7.sent;
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context7.next = 7;
+                _context7.next = 8;
                 break;
               }
 
               context.commit('setApiStatus', true);
               return _context7.abrupt("return", false);
 
-            case 7:
+            case 8:
               context.commit('setApiStatus', false);
 
               if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {
@@ -94378,7 +94379,7 @@ var actions = {
                 });
               }
 
-            case 9:
+            case 10:
             case "end":
               return _context7.stop();
           }
@@ -94654,20 +94655,21 @@ var actions = {
             case 0:
               context.commit('setApiStatus', null);
               _context14.next = 3;
-              return axios["delete"]('/api/schedules/forcedelete', data.id);
+              return axios.post('/api/schedules/forcedelete', data);
 
             case 3:
               response = _context14.sent;
+              console.log(response.status);
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context14.next = 7;
+                _context14.next = 8;
                 break;
               }
 
               context.commit('setApiStatus', true);
               return _context14.abrupt("return", false);
 
-            case 7:
+            case 8:
               context.commit('setApiStatus', false);
 
               if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {
@@ -94678,7 +94680,7 @@ var actions = {
                 });
               }
 
-            case 9:
+            case 10:
             case "end":
               return _context14.stop();
           }

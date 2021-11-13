@@ -52,11 +52,11 @@ class ScheduleController extends Controller
     }
     
     //物理削除
-    public function forceDelete(Request $scheduleid)
+    public function forceDelete(Request $schedule)
     {
-        $schedule = new Schedule();
-        $schedule["id"] = $scheduleid;
+        $schedule = Schedule::withTrashed()->where('id', $schedule->input('id'))->get()->first();
         $schedule->forceDelete();
+        return;
     }
     
     //更新処理
