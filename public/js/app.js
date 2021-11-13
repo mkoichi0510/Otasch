@@ -4558,22 +4558,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       state: this.createState(),
+      //
       params: {
         url: null,
+        //ユーザーがLineにログインする画面に遷移するためのURLを格納
         code: null,
+        //ユーザーがLineにログインした際に返されるcodeの値を格納
         state: null,
-        access_token: null
+        //ユーザーがLineにログインした際に返されるstateの値を格納
+        access_token: null //取得したアクセストークンを格納
+
       },
       responseData: null
     };
   },
   props: {
+    //ログイン画面で用いられているか、新規登録画面で用いられているかを判定するためのpropsデータ
     componentType: {
-      type: Boolean
+      type: Boolean //true:ログイン画面、false:新規登録画面
+
     }
   },
   methods: {
-    loginLine: function loginLine() {
+    //Lineアカウントを連携するためのacceseTokenをフロント側で取得
+    getAccessToken: function getAccessToken() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -4582,33 +4590,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                paramaters = new URLSearchParams();
+                paramaters = new URLSearchParams(); //パラメータの設定
+
                 paramaters.append('grant_type', 'authorization_code');
                 paramaters.append('code', _this.params.code);
                 paramaters.append('redirect_uri', _this.$store.state.auth.line_client_callback);
                 paramaters.append('client_id', _this.$store.state.auth.line_client_id);
-                paramaters.append('client_secret', _this.$store.state.auth.line_client_secret);
-                console.log(_this.$store.state.auth.line_client_callback);
-                _context.next = 9;
+                paramaters.append('client_secret', _this.$store.state.auth.line_client_secret); //送信
+
+                _context.next = 8;
                 return axios.post('https://api.line.me/oauth2/v2.1/token', paramaters);
 
-              case 9:
+              case 8:
                 response = _context.sent;
-                console.log(response.status);
-                console.log(response.data);
 
                 if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                  _context.next = 16;
+                  _context.next = 13;
                   break;
                 }
 
-                _this.params.access_token = response.data.access_token;
+                _this.params.access_token = response.data.access_token; //取得したアクセストークンを用いてサーバー側でユーザープロフィールをLineプラットフォームから取得し、新規登録またはログイン処理を行う
 
                 _this.registerLineAccount();
 
                 return _context.abrupt("return", false);
 
-              case 16:
+              case 13:
               case "end":
                 return _context.stop();
             }
@@ -4616,7 +4623,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    //ラインアカウントで登録
+    //ラインアカウントで登録またはログイン処理をする命令をサーバー側に投げるメソッド
     registerLineAccount: function registerLineAccount() {
       var _this2 = this;
 
@@ -4629,8 +4636,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this2.$store.dispatch('auth/registerLineAccount', _this2.params);
 
               case 2:
+                //成功時
                 if (_this2.apiStatus) {
-                  // トップページに移動する
+                  // ホーム画面に移動する
                   _this2.$router.push('/home');
                 }
 
@@ -4642,7 +4650,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
-    //Lineクライアントデータの取得
+    //Lineクライアントデータをサーバー側で取得し、Lineのログイン画面に遷移するためのURLを設定するメソッド
     setURL: function setURL() {
       var _this3 = this;
 
@@ -4655,14 +4663,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this3.$store.dispatch('auth/getLineClientData');
 
               case 2:
-                console.log("get");
-
+                //Lineクライアントデータ取得成功時
                 if (_this3.apiStatus) {
                   //URLの設定
                   _this3.params.url = "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=".concat(_this3.$store.state.auth.line_client_id, "&redirect_uri=").concat(_this3.$store.state.auth.line_client_callback, "&state=").concat(_this3.state, "&scope=profile");
                 }
 
-              case 4:
+              case 3:
               case "end":
                 return _context3.stop();
             }
@@ -4670,13 +4677,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee3);
       }))();
     },
+    //Lineのログイン画面に遷移するURLに必要になるランダムの文字列を生成し、生成した値を返すメソッド
     createState: function createState() {
       // 生成する文字列の長さ
       var createLength = 8; // 生成する文字列に含める文字セット
 
-      var characters = "abcdefghijklmnopqrstuvwxyz0123456789";
-      var charactersLength = characters.length;
-      var state = "";
+      var characters = "abcdefghijklmnopqrstuvwxyz0123456789"; //文字セットの文字数を格納
+
+      var charactersLength = characters.length; //生成した文字列を格納するための変数
+
+      var state = ""; //ランダム文字列の生成
 
       for (var i = 0; i < createLength; i++) {
         state += characters[Math.floor(Math.random() * charactersLength)];
@@ -4684,11 +4694,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return state;
     },
+    //ユーザーがLineにログインし、ログイン画面にリダイレクトした際にURLに含まれるcodeとstateのパラメータを変数に格納するメソッド
     setParams: function setParams() {
-      var param = new URL(document.location).searchParams;
+      //URLに含まれるパラメータを取得
+      var param = new URL(document.location).searchParams; //取得したパラメータを格納
+
       this.params.code = param.get('code');
       this.params.state = param.get('state');
     },
+    //このvueファイルが読み込まれた際に実行するメソッド
     initilizeData: function initilizeData() {
       var _this4 = this;
 
@@ -4701,12 +4715,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this4.setURL();
 
               case 2:
-                _this4.setParams();
+                //URLに含まれるパラメータを変数に格納
+                _this4.setParams(); //Lineのログインに成功し、リダイレクトした時
+
 
                 if (_this4.params.code != null) {
-                  console.log("認証");
-
-                  _this4.loginLine();
+                  //アクセストークンを取得するメソッドを実行
+                  _this4.getAccessToken();
                 }
 
               case 4:
@@ -4719,17 +4734,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   mounted: function mounted() {
+    //ログイン画面でこのvueファイルが読み込まれた場合
     if (this.componentType) {
       this.lavel = "LINEアカウントでログイン";
-    } else {
+    } //新規登録画面でこのvueファイルが読み込まれた場合
+    else {
       this.lavel = "LINEアカウントで登録";
-    }
+    } //このvueファイルを表示するのに必要なデータの取得
+
 
     this.initilizeData();
   },
   computed: {
+    //vuexを用いてサーバーに投げた処理が正常に行われたかの結果を取得
     apiStatus: function apiStatus() {
-      console.log("comp");
       return this.$store.state.auth.apiStatus;
     }
   }
@@ -93747,7 +93765,6 @@ var actions = {
 
             case 6:
               response2 = _context2.sent;
-              //}
               console.log(response2.status); //登録またはログイン成功時
 
               if (!(response2.status === _util__WEBPACK_IMPORTED_MODULE_1__["CREATED"] || response2.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {

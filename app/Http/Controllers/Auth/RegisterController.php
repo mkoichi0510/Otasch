@@ -5,27 +5,14 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
-use App\Schedule;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
     use RegistersUsers;
 
     /**
@@ -53,7 +40,6 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        
         //Line登録処理時のバリデート
         if(array_key_exists('sns_id', $data)){
             return Validator::make($data, [
@@ -79,11 +65,11 @@ class RegisterController extends Controller
     {
         //Line連携アカウントを登録する場合
         if(array_key_exists('sns_id', $data)){
-            //Lineアカウントが既に登録済みの場合
+            //Lineアカウントが既に登録済みの場合Userデータを返す
             if(DB::table('users')->where('sns_id', $data['sns_id'])->exists()){
-                Log::debug(User::all()->where('sns_id', $data['sns_id'])->first());
                 return User::all()->where('sns_id', $data['sns_id'])->first();
             }
+            //Lineアカウントが未登録の場合新規登録
             else{
                 return User::create([
                     'name' => $data['name'],

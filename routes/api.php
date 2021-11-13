@@ -26,13 +26,10 @@ Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('/user', fn() => Auth::user())->name('user');
 
 //ユーザー情報変更
-Route::put('/update','UserUpdateController@update')->name('update');
+Route::put('/update','UserUpdateController@updateUser')->name('update');
 
 //Lineクライアントのデータの取得
 Route::get('/linelogin/data', 'LineAPIController@getLineClientData');
-
-//Lineアカウントが登録済みかどうかをチェック
-Route::post('/linelogin/check', 'LineAPIController@checkLineAccount');
 
 // Lineアカウントで会員登録
 Route::post('/linelogin/register', 'LineAPIController@getLineUserAccount');
@@ -42,24 +39,24 @@ Route::post('/linelogin/delete', 'LineAPIController@forceDelete');
 
 //スケジュールのルーティング
 Route::prefix('schedules')->group(function(){
-    Route::get('/getdata', 'ScheduleController@index');
-    Route::get('/getallschedule', 'ScheduleController@indexAll');
-    Route::get('/getsoftdelete', 'ScheduleController@indexSoftDeleteSchedule');
-    Route::post('register', 'ScheduleController@store');
-    Route::put('/update/{schedule}','ScheduleController@update');
-    Route::delete('/delete/{schedule}', 'ScheduleController@delete');
-    Route::post('/forcedelete', 'ScheduleController@forceDelete');
+    Route::get('/getdata', 'ScheduleController@indexUnCompleteSchedule');
+    Route::get('/getallschedule', 'ScheduleController@indexAllSchedule');
+    Route::get('/getsoftdelete', 'ScheduleController@indexCompleteSchedule');
+    Route::post('register', 'ScheduleController@storeSchedule');
+    Route::put('/update/{schedule}','ScheduleController@updateSchedule');
+    Route::delete('/delete/{schedule}', 'ScheduleController@softDeleteSchedule');
+    Route::post('/forcedelete', 'ScheduleController@forceDeleteSchedule');
 });
 
 //タスクのルーティング
 Route::prefix('tasks')->group(function(){
-    Route::get('/getdata/{scheduleid}', 'TaskController@index');
-    Route::get('/getalldata/{scheduleid}', 'TaskController@indexIncludeSoftDelete');
-    Route::get('/getcleardata/{scheduleid}', 'TaskController@indexSoftDelete');
-    Route::put('/update/{task}', 'TaskController@update');
-    Route::delete('/delete/{task}', 'TaskController@delete');
-    Route::post('/forcedelete', 'TaskController@forceDelete');
-    Route::post('/register', 'TaskController@store');
+    Route::get('/getdata/{scheduleid}', 'TaskController@indexUnCompleteTask');
+    Route::get('/getcleardata/{scheduleid}', 'TaskController@indexSoftDeleteTask');
+    Route::get('/getalldata/{scheduleid}', 'TaskController@indexAllTask');
+    Route::post('/register', 'TaskController@storeTask');
+    Route::delete('/delete/{task}', 'TaskController@softDeleteTask');
+    Route::post('/forcedelete', 'TaskController@forceDeleteTask');
+    Route::put('/update/{task}', 'TaskController@updateTask');
 });
 
 // //lineuserからのメッセージの受信

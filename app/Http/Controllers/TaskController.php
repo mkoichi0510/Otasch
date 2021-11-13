@@ -3,16 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTask;
-use App\Schedule;
 use Illuminate\Http\Request;
 use App\Task;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\DB;
+use App\Schedule;
 
 class TaskController extends Controller
 {
     //選択したスケジュールの未達成タスク一覧を全取得
-    public function index($scheduleid)
+    public function indexUnCompleteTask($scheduleid)
     {
         //Scheduleが論理削除されているときでもデータを取得できるように、バインディングを用いない手法で行う
         $schedule = new Schedule();
@@ -20,8 +18,8 @@ class TaskController extends Controller
         return $schedule->tasks()->orderBy('updated_at', 'DESC')->get();
     }
     
-    //論理削除データのみを取得
-    public function indexSoftDelete($scheduleid)
+    //論理削除済みタスクのみを取得
+    public function indexSoftDeleteTask($scheduleid)
     {
         //Scheduleが論理削除されているときでもデータを取得できるように、バインディングを用いない手法で行う
         $schedule = new Schedule();
@@ -30,7 +28,7 @@ class TaskController extends Controller
     }
     
     //論理削除データを含めすべてのデータを取得
-    public function indexIncludeSoftDelete($scheduleid)
+    public function indexAllTask($scheduleid)
     {
         //Scheduleが論理削除されているときでもデータを取得できるように、バインディングを用いない手法で行う
         $schedule = new Schedule();
@@ -39,7 +37,7 @@ class TaskController extends Controller
     }
     
     //タスクの新規登録
-    public function store(StoreTask $request)
+    public function storeTask(StoreTask $request)
     {
         $task = new Task();
         $task = $request->all();
@@ -48,25 +46,25 @@ class TaskController extends Controller
         return response($task,201);
     }
     
-    //論理削除
-    public function delete(Task $task)
+    //タスクの論理削除
+    public function softDeleteTask(Task $task)
     {
         $task->delete();
         return;
     }
     
-    //物理削除
-    public function forceDelete(Request $task)
+    //タスクの物理削除(論理削除済みデータはバインディングできないため、postリクエストで削除したい予定データを送ってサーバー側でTaskモデルから探索を行う)
+    public function forceDeleteTask(Request $task)
     {
+        //引数で受け取ったタスクデータのidを用いて論理削除済みタスクを含めて検索
         $task = Task::withTrashed()->where('id', $task->input('id'))->get()->first();
         $task->forceDelete();
         return;
     }
     
     //更新処理
-    public function update(StoreTask $request, Task $task)
+    public function updateTask(StoreTask $request, Task $task)
     {
-        
         $input = $request->all();
         $input["user_id"] = auth()->user()->id;
         $task->fill($input)->save();

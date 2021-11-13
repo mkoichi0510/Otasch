@@ -5,36 +5,29 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreSchedule;
 use Illuminate\Http\Request;
 use App\Schedule;
-use Illuminate\Support\Facades\Log;
 
 class ScheduleController extends Controller
 {
     //ログイン済みユーザーの未達成予定一覧を取得
-    public function index()
+    public function indexUnCompleteSchedule()
     {
         return auth()->user()->schedules()->orderBy('updated_at', 'DESC')->get();
     }
     
     //ログイン済みユーザーの全予定一覧を取得
-    public function indexAll()
+    public function indexAllSchedule()
     {
         return auth()->user()->schedules()->orderBy('updated_at', 'DESC')->withTrashed()->whereNotNull('id')->get();
     }
     
     //ログイン済みユーザーの達成済み予定一覧を取得
-    public function indexSoftDeleteSchedule()
+    public function indexCompleteSchedule()
     {
         return auth()->user()->schedules()->orderBy('updated_at', 'DESC')->onlyTrashed()->whereNotNull('id')->get();
     }
-    
-    //件数を指定して論理削除データのみを取得　デフォルトは10件
-    public function indexSoftDelete(Schedule $schedule)
-    {
-        return $schedule->getPaginateByLimitSoftDelete();
-    }
-    
+
     //予定の新規登録
-    public function store(StoreSchedule $request)
+    public function storeSchedule(StoreSchedule $request)
     {
         $schedule = new Schedule();
         $schedule = $request->all();
@@ -44,26 +37,26 @@ class ScheduleController extends Controller
         return response($schedule, 201);
     }
     
-    //論理削除
-    public function delete(Schedule $schedule)
+    //予定の論理削除
+    public function softDeleteSchedule(Schedule $schedule)
     {
         $schedule->delete();
-        
     }
     
-    //物理削除
-    public function forceDelete(Request $schedule)
+    //予定の物理削除(論理削除済みデータはバインディングできないため、postリクエストで削除したい予定データを送ってサーバー側でScheduleモデルから探索を行う)
+    public function forceDeleteSchedule(Request $schedule)
     {
+        //引数で受け取った予定データのidを用いて論理削除済み予定を含めて検索
         $schedule = Schedule::withTrashed()->where('id', $schedule->input('id'))->get()->first();
+        //物理削除
         $schedule->forceDelete();
         return;
     }
     
     //更新処理
-    public function update(StoreSchedule $request, Schedule $schedule)
+    public function updateSchedule(StoreSchedule $request, Schedule $schedule)
     {
         $input = $request->all();
-        //dd($input);
         $schedule->fill($input)->save();
     }
 }
