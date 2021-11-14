@@ -10,6 +10,5 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 
 Route::get('/{any?}', fn() => view('index'))->where('any', '.+');
