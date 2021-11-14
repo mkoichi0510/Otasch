@@ -26,7 +26,7 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name' => 'required|max:20',
-            'email' => 'required|email:strict,dns|max:100|unique:users,email,'.Auth::user()->id.'id',
+            'email' => 'required|email:strict,dns|max:100|unique:users,email,'.Auth::user()->id.'id',//ログインユーザー以外のユーザーの登録メールアドレスとかぶっていないかをチェック
         ];
     }
 }
