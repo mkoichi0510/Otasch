@@ -54,59 +54,63 @@
 export default {
   name:'createForm',
   data () {
-      
     return {
+      //予定の新規作成時にユーザーからの入力値を格納する変数
       createForm: {
-        name: '',
-        Text: '',
-        priority: 1,
-        term: null,
+        name: '',//予定名
+        Text: '',//予定の詳細
+        priority: 1,//予定の優先度
+        term: null,//予定の期限
       },
+      //エラーメッセージの色
       errors: {
           color: "red",
         },
     }
   },
   props:{
-      createFormVisible:{
-          type:Boolean,
-          default:false,
-      },
+    //予定新規作成ダイアログの表示非表示を管理する変数
+    createFormVisible:{
+        type:Boolean,
+        default:false,
+    },
   },
   methods:{
+    //ダイアログを閉じる処理を親コンポーネントに投げる
     handleClose() {
         this.$emit('create-form-close');
         return;
     },
+    //ダイアログに入力した値で予定の新規作成処理を行う命令を親コンポーネントに投げる
     registerSchedule(){
         this.$emit('register-schedule',this.createForm);
     },
+    //ダイアログのフォームを初期化するメソッド
     initialzleRegisterForm(){
       this.createForm.name = '';
       this.createForm.Text = '';
       this.createForm.priority = 1;
       this.createForm.term = null;
     },
+    //エラーメッセージをリセット
     clearError(){
       this.$store.commit('data/setCreateScheduleErrorMessages', null);
     },
   },
   computed: {
-    apiStatus () {
-      return this.$store.state.data.apiStatus;
-    },
-     createScheduleErrors () {
+    //エラーメッセージをdataストアから取得するメソッド
+    createScheduleErrors () {
       return this.$store.state.data.createScheduleErrorMessages;
     }
   },
   watch:{
-      createFormVisible(newvalue){
-        console.log("create");
-        if(newvalue){
-          this.clearError();
-        　this.initialzleRegisterForm();
-        }
+    //タスク新規作成ダイアログが非表示から表示に切り替わった際に実行
+    createFormVisible(newvalue){
+      if(newvalue){
+        this.clearError();
+      　this.initialzleRegisterForm();
       }
+    }
   }
 }
 </script>

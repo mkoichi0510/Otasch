@@ -17,8 +17,6 @@
 
 <script>
 export default {
-  name:'detailForm',
-
   props:{
       checkFormVisible:{
           type:Boolean,

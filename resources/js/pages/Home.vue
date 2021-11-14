@@ -7,7 +7,6 @@
           <h1>推奨予定：{{schedule.name}}</h1>
         </div>
         <div class="progress">
-          
           <h2>
             <span>進捗率</span>
             <span　style="float: right" v-if="checkTerm(schedule) && checkDay">残り{{lemainDay(schedule)}}日</span>
@@ -16,7 +15,7 @@
           </h2>
           <el-progress :percentage="progress"></el-progress>
         </div>
-       <h2 type="text">次にする推奨タスク:{{nextTaskName}}</h2>
+        <h2 type="text">次にする推奨タスク:{{nextTaskName}}</h2>
         <el-button style="float: right; padding: 10px"type="primary" @click="MoveTask(schedule)">予定の調整</el-button>
         <br>
       </el-card>
@@ -42,11 +41,8 @@
           <div class="limitSchedules" v-if="limitSchedules">
             <ul>
               <li v-for="(schedule, i) in paginateSchedulesLimit" :key="i">
-              <!--<h2>達成日：{{getClearDate(schedule.deleted_at)}}</h2>-->
                 <el-link type="primary"@click="MoveTask(schedule);">
                   <h2>{{ schedule.name }}</h2>
-                <!--<h2>残り{{lemainDay(schedule)}}日</h2>-->
-                <!--<h2 v-else>残り{{lemainDay(schedule)}}時間</h2>-->
                 </el-link>
               </li>
             </ul>
@@ -91,51 +87,25 @@
 </template>
 
 <script>
-import { OK, CREATED, UNPROCESSABLE_ENTITY } from '../util'
-
 export default {
   data () {
     return {
-      schedule:null,
-      schedules:null,
-      limitSchedules:null,
-      tasks: null,
-      allTasks: null,
-      clearTasks: null,
-      day : 5,
-      nextTaskName: "",
-      nextScheduleName:"",
-      checkDay:null,
-      limitDay:10,
+      schedule:null,　//推奨予定を格納
+      schedules:null, //ユーザーの予定を複数を格納する
+      limitSchedules:null, //期限が迫っている予定を複数格納する
+      tasks: null,　//scheduel変数に格納されている予定に結び付いたタスクを格納する
+      allTasks: null,　//全タスクを格納する
+      clearTasks: null,//達成済みタスクを格納する
+      nextTaskName: "",//推奨タスクの名前を格納する
+      checkDay:null, //残り日数が1日以上か1日未満かを判定する　true:1日以上　false:1日未満
+      limitDay:10,　//期限が迫っている予定一覧で用いる
+      
       //ぺジネーション用
       currentPageScheduleLimit : 1,//現在のページ 
       perPageScheduleLimit: 5, //1ページ毎の表示件数
     }
   },
-  computed: {
-    apiStatus () {
-      return this.$store.state.data.apiStatus;
-    },
-    //予定の進捗率を算出するメソッド
-    progress(){
-      //達成済みタスク一覧とすべてのタスク一覧のデータがないときは処理を行わない
-      if(!this.clearTasks || !this.allTasks){
-        return;
-      }
-      //クリア済みタスクが1つ以上あるときのみ進捗率の計算を行う
-      if(this.clearTasks.length > 0){
-        return parseInt(this.clearTasks.length / this.allTasks.length * 100);
-      }
-      else{
-        return 0;
-      }
-    },
-    paginateSchedulesLimit() {
-      //第1引数には取り出しの開始位置、第2引数には取り出しを終える直前の位置を渡す
-      return this.limitSchedules.slice((this.currentPageScheduleLimit - 1) * this.perPageScheduleLimit, this.currentPageScheduleLimit * this.perPageScheduleLimit);
-    },
-    
-  },
+  
   methods:{
     //未完了予定の取得
     async getTodo(){
@@ -143,21 +113,20 @@ export default {
       
       if(this.apiStatus){
         this.schedules = this.$store.state.data.schedules;
-        this.taskLabel = "未達成";
       }
     },
     //未完了のタスクの取得
     async getData(){
-      // console.log(this.schedule.id);
       await this.$store.dispatch('data/getTask', this.schedule.id);
+      
       if(this.apiStatus){
         this.tasks = this.$store.state.data.tasks;
-        this.taskLabel = "未達成";
       }
     },
     //達成済みを含めたすべてのタスクの取得
     async getAllData(){
       await this.$store.dispatch('data/getAllTask', this.schedule.id);
+      
       if(this.apiStatus){
         this.allTasks = this.$store.state.data.tasks;
       }
@@ -165,6 +134,7 @@ export default {
     //達成済みタスクのみ取得
     async getClearData(){
       await this.$store.dispatch('data/getClearTask', this.schedule.id);
+      
       if(this.apiStatus){
         this.clearTasks = this.$store.state.data.tasks;
       }
@@ -177,13 +147,16 @@ export default {
       if(this.schedules.length > 0){
         //推奨予定の設定
         this.nextSchedule();
+        //期限が迫っている予定の設定
         this.getLimitScheduel();
+        //推奨予定がある場合
         if(this.schedule){
           //推奨予定のタスクの更新
           this.updateTaskData();
         }
       }
     },
+    
     //全タスク情報の更新
     async updateTaskData(){
       await this.getData();
@@ -212,6 +185,7 @@ export default {
         return parseInt(day*24);
       }
     },
+    //引数で渡された予定が期限切れまたは達成済みかどうかを判定しその結果を返すメソッド　true:期限内かつ未達成　false:期限切れまたは達成済み
     checkTerm(schedule){
       if(this.lemainDay(schedule) >= 0 && !schedule.deleted_at){
         return true;
@@ -227,22 +201,24 @@ export default {
         this.nextTaskName = "";
         return;
       }
+      //タスクが1つもない場合
+      if(this.tasks.length == 0){
+        this.nextTaskName = "";
+        return;
+      }
       
       //優先度の最大値を初期値として設定
       let pri = 10;
       //優先度が一番高いタスクの格納用変数
       let taskDatas = null;
       //優先度が一番高いタスクを格納
-      while((!taskDatas || taskDatas.length == 0) && pri > 0){
+      while(!taskDatas && pri > 0){
         taskDatas = this.tasks.filter(task => {
           return task.priority == pri;
         });
         pri--;
       }
-      if(taskDatas.length == 0){
-        this.nextTaskName = "";
-        return;
-      }
+      
       //優先度が一番高いタスクが重複したときはタスクの作成時間が一番若いものを選ぶ
       if(taskDatas.length > 1){
         let defaultTime = Date.now();
@@ -254,11 +230,14 @@ export default {
           }
         });
       }
+      //優先度が最大のタスクが1つの場合
       else if(taskDatas.length == 1){
         this.nextTaskName = taskDatas[0].name;
       }
     },
+    //limitDayの値以下の残り日数の予定をlimitScehdulesに格納するメソッド
     getLimitScheduel(){
+      //予定がない場合は何もせずに終わる
       if(!this.schedules){
         return;
       }
@@ -266,35 +245,33 @@ export default {
     },
     //次に取り組むべき予定を算出するメソッド
     nextSchedule(){
-      //未達成予定がない場合
+      //予定がない場合
       if(!this.schedules){
         this.schedule = null;
         return;
-      }else if(this.schedules.length == 1 && this.checkTerm(this.schedules[0]) && this.lemainDay(this.schedules[0])){
-        this.schedule = this.schedules[0];
-        return;
       }
       
-      //残り日数÷優先度が一番低い予定を格納
+      //残り日数÷優先度の値が一番低い予定を格納
       this.schedules.forEach(schedule => {
-        //取り組むべき予定がある場合
-        if(this.schedule && this.checkTerm(schedule) && this.checkDay){
+        //推奨予定に既に値が入っている場合で新たに比較する予定が期限内かつ未達成の場合
+        if(this.schedule && this.checkTerm(schedule)){
           //新たに検討する予定の残り日数÷優先度の値
           let priValNew = this.lemainDay(schedule) / schedule.priority;
+          //lemainDayメソッドの返り値が時間単位だった場合残り日数÷優先度の値を0に設定
           if(!this.checkDay){
             priValNew = 0;
-            console.log(schedule);
           }
-          //現在最も低い残り日数÷優先度の値
+          //現在設定されている推奨予定の残り日数÷優先度の値
           let priValNow = this.lemainDay(this.schedule) / this.schedule.priority;
+          //lemainDayメソッドの返り値が時間単位だった場合残り日数÷優先度の値を0に設定
           if(!this.checkDay){
             priValNow = 0;
           }
-          //現在の残り日数÷優先度の値よりも低いときに更新
+          //現在設定されている推奨予定の残り日数÷優先度の値よりも低いときに更新
           if(priValNow > priValNew){
             this.schedule = schedule;
           }
-          //現在の残り日数÷優先度の値が等しい場合は作成日が早い時に更新
+          //現在の残り日数÷優先度の値が等しい場合は推奨予定の作成日より早い場合に更新
           else if(priValNow == priValNew){
             let createTimeNow = new Date(this.schedule.created_at);
             let createTimeNew = new Date(schedule.created_at);
@@ -304,9 +281,8 @@ export default {
             }
           }
         }
-        //予定がnullの時かつ未達成かつ期限内の場合に設定
-        else if(this.checkTerm(schedule) && this.lemainDay(schedule)){
-        　console.log(schedule);
+        //推奨予定がnullの時かつ期限内かつ未達成の場合に推奨予定に設定
+        else if(this.checkTerm(schedule)){
           this.schedule = schedule;
         }
       });
@@ -315,6 +291,7 @@ export default {
     
     //タスク一覧へ移動
     MoveTask(schedule){
+      //タスク一覧画面に渡す予定の設定
       this.$store.commit('data/setSchedule', schedule);
       this.$router.push("/task");
     },
@@ -323,6 +300,30 @@ export default {
     MoveSchedule(schedule){
       this.$router.push("/preview");
     },
+  },
+  
+  computed: {
+    //サーバーに投げた処理が完了したかどうかを返す
+    apiStatus () {
+      return this.$store.state.data.apiStatus;
+    },
+    //予定の進捗率を算出するメソッド
+    progress(){
+      //達成済みタスクない場合は0%とする
+      if(!this.clearTasks){
+        return　0;
+      }
+      //クリア済みタスクが1つ以上あるときのみ進捗率の計算を行う
+      if(this.clearTasks.length > 0){
+        return parseInt(this.clearTasks.length / this.allTasks.length * 100);
+      }
+    },
+    //期限が迫っている予定一覧のペジネート用メソッド
+    paginateSchedulesLimit() {
+      //第1引数には取り出しの開始位置、第2引数には取り出しを終える直前の位置を渡す
+      return this.limitSchedules.slice((this.currentPageScheduleLimit - 1) * this.perPageScheduleLimit, this.currentPageScheduleLimit * this.perPageScheduleLimit);
+    },
+    
   },
   created(){
     //予定およびタスクの初期設定
@@ -337,14 +338,6 @@ export default {
 }
 </script>
 <style>
-  .body{
-    padding:0; 
-    margin:0;
-    height: 100%;
-  }
-  .text {
-    font-size: 14px;
-  }
   .clearfix:before,
   .clearfix:after {
     display: table;
@@ -353,8 +346,4 @@ export default {
   .clearfix:after {
     clear: both
   }
-
-  /*.box-card {*/
-  /*  width: 600px;*/
-  /*}*/
 </style>

@@ -33,7 +33,6 @@
               <el-row>
                 <el-button type="primary"@click="register">Register</el-button>
               </el-row>
-              <!--<button type="submit" class="button button--inverse">register</button>-->
             </div>
         </el-form>
     </div>
@@ -44,38 +43,43 @@
 export default {
   data () {
     return {
+      //ユーザーがForm画面で入力するデータを格納する変数
       registerForm: {
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: ''
+        name: '',//ユーザー名
+        email: '',//ユーザーメールアドレス
+        password: '',//ユーザーパスワード
+        password_confirmation: '' //パスワードの確認用
       },
+      //エラーメッセージの色
       errors: {
           color: "red",
       },
-      loginComponent:false,
     }
   },
   methods:{
-      async register () {
-        // authストアのresigterアクションを呼び出す
-        console.log("登録");
-        await this.$store.dispatch('auth/register', this.registerForm)
-        if(this.apiStatus){
-          // トップページに移動する
-          this.$router.push('/home')
-        }
+    //ユーザー登録を行う処理をサーバー側に投げるメソッド
+    async register () {
+      // authストアのresigterアクションを呼び出す
+      await this.$store.dispatch('auth/register', this.registerForm);
+      
+      if(this.apiStatus){
+        // トップページに移動する
+        this.$router.push('/home');
+      }
     },
+    //エラーメッセージのリセット
     clearError(){
-      this.$store.commit('auth/setRegisterErrorMessages', null)
+      this.$store.commit('auth/setRegisterErrorMessages', null);
     }
   },
   computed: {
+    //サーバー側に投げた処理が成功したかどうかを返す
     apiStatus () {
-      return this.$store.state.auth.apiStatus
+      return this.$store.state.auth.apiStatus;
     },
+    //入力データに不備があったときにエラーメッセージをauthストアから取得するメソッド
     registerErrors(){
-      return this.$store.state.auth.registerErrorMessages
+      return this.$store.state.auth.registerErrorMessages;
     }
   },
 }

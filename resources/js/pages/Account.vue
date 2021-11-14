@@ -4,12 +4,12 @@
     <check 
       :checkFormVisible='checkFormVisible'
       :message='checkMessage'
-      @confirm="forceDelete" 
+      @confirm="forceDeleteLineAccount" 
       @check-form-close="checkFormVisible=false"
     ></check>
     <accountForm
     :accountFormVisible='accountFormVisible'
-    :updateUser='updateUser'
+    :updateUser='updateUserData'
     @account-form-close="accountFormVisible=false"
     ></accountForm>
     <el-card class="box-card">
@@ -39,10 +39,6 @@
 import accountForm from './AccountForm.vue'
 import check from './Check.vue'
 export default {
-  components:{
-    accountForm,
-    check,
-  },
   data () {
     return {
       accountFormVisible:false,
@@ -50,42 +46,46 @@ export default {
       checkMessage:"",
     }
   },
+  components:{
+    accountForm,
+    check,
+  },
   methods:{
-    //ユーザー情報の変更
-    async updateUser(data){
+    //ユーザー情報の更新
+    async updateUserData(data){
+      //サーバー側に更新処理を投げる
       await this.$store.dispatch('auth/changeUserName', data);
         
-        if (this.apiStatus) {
-          // エラーメッセージを消してポップアップを閉じる
-          this.accountFormVisible=false;
-          this.clearError();
-        }
-      },
-      clearError(){
-        this.$store.commit('auth/setUpdateErrorMessages', null);
+      if (this.apiStatus) {
+        // エラーメッセージを消してポップアップを閉じる
+        this.accountFormVisible=false;
+        this.clearErrorMessage();
+      }
     },
-    resetPassword(){
-      this.$http.get('/password/reset').error(function (data, status, request) {
-                // handle error
-            })
+    //エラーメッセージをリセットする
+    clearErrorMessage(){
+      this.$store.commit('auth/setUpdateErrorMessages', null);
     },
-    async forceDelete(){
+    //LINEアカウントのデータを物理削除する命令をサーバー側に投げる
+    async forceDeleteLineAccount(){
       await this.$store.dispatch('auth/deleteLineAccount');
       if(this.apiStatus){
         this.$router.push('/login');
       }
     },
+    //Lineアカウントの連携解除ボタンを押した際に表示するメッセージを設定し、確認画面ダイアログを開くメソッド
     openCheckForm(){
-      console.log("check");
-      this.checkMessage = "すべてのデータが削除されますが本当にLineアカウントの連携を削除してもよろしいですか。"
+      this.checkMessage = "すべてのデータが削除されますが本当にLineアカウントの連携を削除してもよろしいですか。";
       this.checkFormVisible = true;
     },
   },
   
   computed: {
+    //ログインユーザーのユーザー名を返す
     username () {
       return this.$store.getters['auth/username'];
     },
+    //ログインユーザーの登録メールアドレスを返す
     mail () {
       if(this.$store.getters['auth/mail']){
         return this.$store.getters['auth/mail'];
@@ -94,6 +94,7 @@ export default {
         return "未設定";
       }
     },
+    //LINEアカウントでログイン（連携）の状態を表す文字列を返す
     checkLineLogin() {
       if(this.$store.getters['auth/checkLineLogin'] == null){
         return "未連携";
@@ -102,9 +103,11 @@ export default {
         return "連携済み";
       }
     },
+    //サーバー側に投げた処理が成功したかどうかを返す
     apiStatus () {
-      return this.$store.state.auth.apiStatus
+      return this.$store.state.auth.apiStatus;
     },
+    //LINEアカウントでログイン（連携）しているかを返す
     isLineLogin(){
       return this.$store.getters['auth/checkLineLogin'];
     },
@@ -113,10 +116,3 @@ export default {
   
 }
 </script>
-<style>
-  .body{
-    padding:0; 
-    margin:0;
-    height: 100%;
-  }
-</style>

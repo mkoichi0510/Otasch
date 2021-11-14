@@ -1,27 +1,3 @@
-<script>
-export default {
-  data () {
-    return {
-    }
-  },
-  methods: {
-    async logout () {
-      await this.$store.dispatch('auth/logout');
-      if(this.apiStatus){
-        this.$router.push('/login');
-      }
-    },
-  },
-  computed:{
-    isLogin(){
-      return this.$store.getters['auth/check'];
-    },
-    apiStatus () {
-      return this.$store.state.auth.apiStatus;
-    },
-  },
-}
-</script>
 <template>
   <el-footer  class="footer">
     <div class="button_wrapper">
@@ -34,6 +10,30 @@ export default {
     </div>
   </el-footer>
 </template>
+
+<script>
+export default {
+  methods: {
+    //ログアウトする処理をサーバー側に投げる
+    async logout () {
+      await this.$store.dispatch('auth/logout');
+      if(this.apiStatus){
+        this.$router.push('/login');
+      }
+    },
+  },
+  computed:{
+    //ログインしているかのチェック
+    isLogin(){
+      return this.$store.getters['auth/check'];
+    },
+    //サーバー側に投げた処理が完了したかの判定を返す
+    apiStatus () {
+      return this.$store.state.auth.apiStatus;
+    },
+  },
+}
+</script>
 
 <style>
   .el-footer{

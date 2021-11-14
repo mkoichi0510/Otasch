@@ -3612,11 +3612,22 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {};
-  },
   methods: {
+    //ログアウトする処理をサーバー側に投げる
     logout: function logout() {
       var _this = this;
 
@@ -3643,9 +3654,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   computed: {
+    //ログインしているかのチェック
     isLogin: function isLogin() {
       return this.$store.getters['auth/check'];
     },
+    //サーバー側に投げた処理が完了したかの判定を返す
     apiStatus: function apiStatus() {
       return this.$store.state.auth.apiStatus;
     }
@@ -3663,43 +3676,54 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      //isLogin:'',
-      activeindex: '0'
-    };
-  },
   methods: {
-    getUser: function getUser() {
-      var _this = this;
-
-      axios.get('/user').then(function (response) {
-        console.log(response);
-        _this.isLogin = response.data.name;
-      });
-    },
+    //ホーム画面に移動
     MoveHome: function MoveHome() {
       this.$router.push("/home")["catch"](function () {});
     },
+    //予定一覧画面に移動
     MovePreview: function MovePreview() {
       this.$router.push("/preview")["catch"](function () {});
     },
-    MoveAccount: function MoveAccount() {
-      this.$router.push("/account")["catch"](function () {});
-    },
+    //記録画面に移動
     MoveLog: function MoveLog() {
       this.$router.push("/log")["catch"](function () {});
+    },
+    //アカウント画面に移動
+    MoveAccount: function MoveAccount() {
+      this.$router.push("/account")["catch"](function () {});
     }
   },
-  mounted: function mounted() {//this.getUser();
-  },
   computed: {
+    //ユーザーがログインしているかの判定
     isLogin: function isLogin() {
       return this.$store.getters['auth/check'];
-    },
-    username: function username() {
-      return this.$store.getters['auth/username'];
     }
   }
 });
@@ -3765,10 +3789,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    accountForm: _AccountForm_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    check: _Check_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
-  },
   data: function data() {
     return {
       accountFormVisible: false,
@@ -3776,9 +3796,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       checkMessage: ""
     };
   },
+  components: {
+    accountForm: _AccountForm_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    check: _Check_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
   methods: {
-    //ユーザー情報の変更
-    updateUser: function updateUser(data) {
+    //ユーザー情報の更新
+    updateUserData: function updateUserData(data) {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -3794,7 +3818,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   // エラーメッセージを消してポップアップを閉じる
                   _this.accountFormVisible = false;
 
-                  _this.clearError();
+                  _this.clearErrorMessage();
                 }
 
               case 3:
@@ -3805,14 +3829,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    clearError: function clearError() {
+    //エラーメッセージをリセットする
+    clearErrorMessage: function clearErrorMessage() {
       this.$store.commit('auth/setUpdateErrorMessages', null);
     },
-    resetPassword: function resetPassword() {
-      this.$http.get('/password/reset').error(function (data, status, request) {// handle error
-      });
-    },
-    forceDelete: function forceDelete() {
+    //LINEアカウントのデータを物理削除する命令をサーバー側に投げる
+    forceDeleteLineAccount: function forceDeleteLineAccount() {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
@@ -3836,16 +3858,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
+    //Lineアカウントの連携解除ボタンを押した際に表示するメッセージを設定し、確認画面ダイアログを開くメソッド
     openCheckForm: function openCheckForm() {
-      console.log("check");
       this.checkMessage = "すべてのデータが削除されますが本当にLineアカウントの連携を削除してもよろしいですか。";
       this.checkFormVisible = true;
     }
   },
   computed: {
+    //ログインユーザーのユーザー名を返す
     username: function username() {
       return this.$store.getters['auth/username'];
     },
+    //ログインユーザーの登録メールアドレスを返す
     mail: function mail() {
       if (this.$store.getters['auth/mail']) {
         return this.$store.getters['auth/mail'];
@@ -3853,6 +3877,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return "未設定";
       }
     },
+    //LINEアカウントでログイン（連携）の状態を表す文字列を返す
     checkLineLogin: function checkLineLogin() {
       if (this.$store.getters['auth/checkLineLogin'] == null) {
         return "未連携";
@@ -3860,9 +3885,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return "連携済み";
       }
     },
+    //サーバー側に投げた処理が成功したかどうかを返す
     apiStatus: function apiStatus() {
       return this.$store.state.auth.apiStatus;
     },
+    //LINEアカウントでログイン（連携）しているかを返す
     isLineLogin: function isLineLogin() {
       return this.$store.getters['auth/checkLineLogin'];
     }
@@ -3923,9 +3950,6 @@ __webpack_require__.r(__webpack_exports__);
       updateForm: {
         name: this.$store.getters['auth/username'],
         email: this.$store.getters['auth/mail']
-      },
-      errors: {
-        color: "red"
       }
     };
   },
@@ -3951,6 +3975,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
+    //エラーメッセージの取得
     updateErrors: function updateErrors() {
       return this.$store.state.auth.updateErrorMessages;
     }
@@ -3986,7 +4011,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'detailForm',
   props: {
     checkFormVisible: {
       type: Boolean,
@@ -4063,7 +4087,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util */ "./resources/js/util.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -4158,54 +4181,33 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       schedule: null,
+      //推奨予定を格納
       schedules: null,
+      //ユーザーの予定を複数を格納する
       limitSchedules: null,
+      //期限が迫っている予定を複数格納する
       tasks: null,
+      //scheduel変数に格納されている予定に結び付いたタスクを格納する
       allTasks: null,
+      //全タスクを格納する
       clearTasks: null,
-      day: 5,
+      //達成済みタスクを格納する
       nextTaskName: "",
-      nextScheduleName: "",
+      //推奨タスクの名前を格納する
       checkDay: null,
+      //残り日数が1日以上か1日未満かを判定する　true:1日以上　false:1日未満
       limitDay: 10,
+      //期限が迫っている予定一覧で用いる
       //ぺジネーション用
       currentPageScheduleLimit: 1,
       //現在のページ 
       perPageScheduleLimit: 5 //1ページ毎の表示件数
 
     };
-  },
-  computed: {
-    apiStatus: function apiStatus() {
-      return this.$store.state.data.apiStatus;
-    },
-    //予定の進捗率を算出するメソッド
-    progress: function progress() {
-      //達成済みタスク一覧とすべてのタスク一覧のデータがないときは処理を行わない
-      if (!this.clearTasks || !this.allTasks) {
-        return;
-      } //クリア済みタスクが1つ以上あるときのみ進捗率の計算を行う
-
-
-      if (this.clearTasks.length > 0) {
-        return parseInt(this.clearTasks.length / this.allTasks.length * 100);
-      } else {
-        return 0;
-      }
-    },
-    paginateSchedulesLimit: function paginateSchedulesLimit() {
-      //第1引数には取り出しの開始位置、第2引数には取り出しを終える直前の位置を渡す
-      return this.limitSchedules.slice((this.currentPageScheduleLimit - 1) * this.perPageScheduleLimit, this.currentPageScheduleLimit * this.perPageScheduleLimit);
-    }
   },
   methods: {
     //未完了予定の取得
@@ -4223,7 +4225,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 2:
                 if (_this.apiStatus) {
                   _this.schedules = _this.$store.state.data.schedules;
-                  _this.taskLabel = "未達成";
                 }
 
               case 3:
@@ -4249,7 +4250,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 2:
                 if (_this2.apiStatus) {
                   _this2.tasks = _this2.$store.state.data.tasks;
-                  _this2.taskLabel = "未達成";
                 }
 
               case 3:
@@ -4326,9 +4326,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 //予定データがあるときのみ実行
                 if (_this5.schedules.length > 0) {
                   //推奨予定の設定
-                  _this5.nextSchedule();
+                  _this5.nextSchedule(); //期限が迫っている予定の設定
 
-                  _this5.getLimitScheduel();
+
+                  _this5.getLimitScheduel(); //推奨予定がある場合
+
 
                   if (_this5.schedule) {
                     //推奨予定のタスクの更新
@@ -4395,6 +4397,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return parseInt(day * 24);
       }
     },
+    //引数で渡された予定が期限切れまたは達成済みかどうかを判定しその結果を返すメソッド　true:期限内かつ未達成　false:期限切れまたは達成済み
     checkTerm: function checkTerm(schedule) {
       if (this.lemainDay(schedule) >= 0 && !schedule.deleted_at) {
         return true;
@@ -4410,6 +4413,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (this.schedule.deleted_at) {
         this.nextTaskName = "";
         return;
+      } //タスクが1つもない場合
+
+
+      if (this.tasks.length == 0) {
+        this.nextTaskName = "";
+        return;
       } //優先度の最大値を初期値として設定
 
 
@@ -4417,16 +4426,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       var taskDatas = null; //優先度が一番高いタスクを格納
 
-      while ((!taskDatas || taskDatas.length == 0) && pri > 0) {
+      while (!taskDatas && pri > 0) {
         taskDatas = this.tasks.filter(function (task) {
           return task.priority == pri;
         });
         pri--;
-      }
-
-      if (taskDatas.length == 0) {
-        this.nextTaskName = "";
-        return;
       } //優先度が一番高いタスクが重複したときはタスクの作成時間が一番若いものを選ぶ
 
 
@@ -4440,13 +4444,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             _this7.nextTaskName = task.name;
           }
         });
-      } else if (taskDatas.length == 1) {
+      } //優先度が最大のタスクが1つの場合
+      else if (taskDatas.length == 1) {
         this.nextTaskName = taskDatas[0].name;
       }
     },
+    //limitDayの値以下の残り日数の予定をlimitScehdulesに格納するメソッド
     getLimitScheduel: function getLimitScheduel() {
       var _this8 = this;
 
+      //予定がない場合は何もせずに終わる
       if (!this.schedules) {
         return;
       }
@@ -4459,38 +4466,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     nextSchedule: function nextSchedule() {
       var _this9 = this;
 
-      //未達成予定がない場合
+      //予定がない場合
       if (!this.schedules) {
         this.schedule = null;
         return;
-      } else if (this.schedules.length == 1 && this.checkTerm(this.schedules[0]) && this.lemainDay(this.schedules[0])) {
-        this.schedule = this.schedules[0];
-        return;
-      } //残り日数÷優先度が一番低い予定を格納
+      } //残り日数÷優先度の値が一番低い予定を格納
 
 
       this.schedules.forEach(function (schedule) {
-        //取り組むべき予定がある場合
-        if (_this9.schedule && _this9.checkTerm(schedule) && _this9.checkDay) {
+        //推奨予定に既に値が入っている場合で新たに比較する予定が期限内かつ未達成の場合
+        if (_this9.schedule && _this9.checkTerm(schedule)) {
           //新たに検討する予定の残り日数÷優先度の値
-          var priValNew = _this9.lemainDay(schedule) / schedule.priority;
+          var priValNew = _this9.lemainDay(schedule) / schedule.priority; //lemainDayメソッドの返り値が時間単位だった場合残り日数÷優先度の値を0に設定
 
           if (!_this9.checkDay) {
             priValNew = 0;
-            console.log(schedule);
-          } //現在最も低い残り日数÷優先度の値
+          } //現在設定されている推奨予定の残り日数÷優先度の値
 
 
-          var priValNow = _this9.lemainDay(_this9.schedule) / _this9.schedule.priority;
+          var priValNow = _this9.lemainDay(_this9.schedule) / _this9.schedule.priority; //lemainDayメソッドの返り値が時間単位だった場合残り日数÷優先度の値を0に設定
+
 
           if (!_this9.checkDay) {
             priValNow = 0;
-          } //現在の残り日数÷優先度の値よりも低いときに更新
+          } //現在設定されている推奨予定の残り日数÷優先度の値よりも低いときに更新
 
 
           if (priValNow > priValNew) {
             _this9.schedule = schedule;
-          } //現在の残り日数÷優先度の値が等しい場合は作成日が早い時に更新
+          } //現在の残り日数÷優先度の値が等しい場合は推奨予定の作成日より早い場合に更新
           else if (priValNow == priValNew) {
             var createTimeNow = new Date(_this9.schedule.created_at);
             var createTimeNew = new Date(schedule.created_at); //作成日が早いときに更新
@@ -4499,21 +4503,44 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               _this9.schedule = schedule;
             }
           }
-        } //予定がnullの時かつ未達成かつ期限内の場合に設定
-        else if (_this9.checkTerm(schedule) && _this9.lemainDay(schedule)) {
-          console.log(schedule);
+        } //推奨予定がnullの時かつ期限内かつ未達成の場合に推奨予定に設定
+        else if (_this9.checkTerm(schedule)) {
           _this9.schedule = schedule;
         }
       });
     },
     //タスク一覧へ移動
     MoveTask: function MoveTask(schedule) {
+      //タスク一覧画面に渡す予定の設定
       this.$store.commit('data/setSchedule', schedule);
       this.$router.push("/task");
     },
     //予定一覧へ移動
     MoveSchedule: function MoveSchedule(schedule) {
       this.$router.push("/preview");
+    }
+  },
+  computed: {
+    //サーバーに投げた処理が完了したかどうかを返す
+    apiStatus: function apiStatus() {
+      return this.$store.state.data.apiStatus;
+    },
+    //予定の進捗率を算出するメソッド
+    progress: function progress() {
+      //達成済みタスクない場合は0%とする
+      if (!this.clearTasks) {
+        return 0;
+      } //クリア済みタスクが1つ以上あるときのみ進捗率の計算を行う
+
+
+      if (this.clearTasks.length > 0) {
+        return parseInt(this.clearTasks.length / this.allTasks.length * 100);
+      }
+    },
+    //期限が迫っている予定一覧のペジネート用メソッド
+    paginateSchedulesLimit: function paginateSchedulesLimit() {
+      //第1引数には取り出しの開始位置、第2引数には取り出しを終える直前の位置を渡す
+      return this.limitSchedules.slice((this.currentPageScheduleLimit - 1) * this.perPageScheduleLimit, this.currentPageScheduleLimit * this.perPageScheduleLimit);
     }
   },
   created: function created() {
@@ -4558,7 +4585,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       state: this.createState(),
-      //
+      //Lineログインで使うランダム文字列格納用
+      //Lineログインで用いるデータ群
       params: {
         url: null,
         //ユーザーがLineにログインする画面に遷移するためのURLを格納
@@ -4568,8 +4596,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         //ユーザーがLineにログインした際に返されるstateの値を格納
         access_token: null //取得したアクセストークンを格納
 
-      },
-      responseData: null
+      }
     };
   },
   props: {
@@ -4766,11 +4793,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _TodoCreate_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TodoCreate.vue */ "./resources/js/pages/TodoCreate.vue");
-/* harmony import */ var _TodoDetail_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TodoDetail.vue */ "./resources/js/pages/TodoDetail.vue");
-/* harmony import */ var _TodoSort__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./TodoSort */ "./resources/js/pages/TodoSort.vue");
-/* harmony import */ var _Line_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Line.vue */ "./resources/js/pages/Line.vue");
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../util */ "./resources/js/util.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -4851,95 +4873,42 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    createForm: _TodoCreate_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    detailForm: _TodoDetail_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    sortForm: _TodoSort__WEBPACK_IMPORTED_MODULE_3__["default"],
-    lineApi: _Line_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
-  },
   data: function data() {
     return {
       schedules: null,
+      //達成済み予定一覧格納用
       clearScheduleToday: null,
+      //当日の達成予定一覧格納用
       clearScheduleBefore: null,
-      tasks: null,
-      detailDialogVisibleTask: false,
-      detailDialogVisibleSchedule: false,
-      detailDataSchedule: {
-        name: '',
-        detail: '',
-        priority: '',
-        term: null,
-        id: null,
-        deleted_at: null
-      },
-      detailDataTask: {
-        name: '',
-        detail: '',
-        priority: '',
-        id: null,
-        deleted_at: null
-      },
+      //特定月の達成予定一覧格納用
+      selectDate: new Date(),
+      //過去の完了済み予定でいつの完了済み予定を表示するのか指定するときに用いる
       //ぺジネーション用
       currentPageSchedule: 1,
-      //現在のページ 
+      //当日の達成済み予定の現在のページ 
       perPageSchedule: 5,
-      //1ページ毎の表示件数
+      //当日の達成済み予定の1ページ毎の表示件数
       currentPageScheduleBefore: 1,
-      //現在のページ 
-      perPageScheduleBefore: 5,
-      //1ページ毎の表示件数
-      currentPageTask: 1,
-      //現在のページ 
-      perPageTask: 5,
-      //1ページ毎の表示件数
-      selectDate: new Date()
+      //すべての達成済み予定の現在のページ 
+      perPageScheduleBefore: 5 //すべての達成済み予定の1ページ毎の表示件数
+
     };
   },
   computed: {
+    //サーバー側に投げた処理が完了したかどうかを返す
     apiStatus: function apiStatus() {
       return this.$store.state.data.apiStatus;
     },
-    paginateSchedules: function paginateSchedules() {
-      //第1引数には取り出しの開始位置、第2引数には取り出しを終える直前の位置を渡す
-      return this.schedules.slice((this.currentPageSchedule - 1) * this.perPageSchedule, this.currentPageSchedule * this.perPageSchedule);
-    },
+    //当日の完了済み予定のペジネート用
     paginateSchedulesToday: function paginateSchedulesToday() {
       //第1引数には取り出しの開始位置、第2引数には取り出しを終える直前の位置を渡す
       return this.clearScheduleToday.slice((this.currentPageSchedule - 1) * this.perPageSchedule, this.currentPageSchedule * this.perPageSchedule);
     },
+    //過去の完了済み予定のペジネート用
     paginateSchedulesBefore: function paginateSchedulesBefore() {
       //第1引数には取り出しの開始位置、第2引数には取り出しを終える直前の位置を渡す
       return this.clearScheduleBefore.slice((this.currentPageScheduleBefore - 1) * this.perPageScheduleBefore, this.currentPageScheduleBefore * this.perPageScheduleBefore);
-    },
-    paginateTasks: function paginateTasks() {
-      return this.tasks.slice((this.currentPageTask - 1) * this.perPageTask, this.currentPageTask * this.perPageTask);
     }
   },
   methods: {
@@ -4968,8 +4937,52 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    //達成済みタスクのみ取得
-    getClearData: function getClearData() {
+    //タスク一覧へ移動
+    MoveTask: function MoveTask(data) {
+      this.$store.commit('data/setSchedule', data);
+      this.$router.push("/task");
+    },
+    //当日に達成した予定を格納するメソッド
+    setTodayClearSchedule: function setTodayClearSchedule() {
+      //達成済みタスクがない場合は処理を行わすに終了
+      if (!this.schedules) {
+        return;
+      } //当日の年月日と等しい予定を格納
+
+
+      var today = new Date();
+      this.clearScheduleToday = this.schedules.filter(function (schedule) {
+        var scheduleDay = new Date(schedule.deleted_at);
+        return scheduleDay.getFullYear() == today.getFullYear() && scheduleDay.getMonth() == today.getMonth() && scheduleDay.getDate() == today.getDate();
+      });
+    },
+    //selectDateで指定した年月に達成した予定を格納するメソッド
+    setBeforeClearSchedule: function setBeforeClearSchedule() {
+      //達成済みタスクがない場合は処理を行わすに終了
+      if (!this.schedules) {
+        return;
+      } //selectDateで指定した年月と等しい予定を格納
+
+
+      var selectDay = new Date(this.selectDate);
+      this.clearScheduleBefore = this.schedules.filter(function (schedule) {
+        var scheduleDay = new Date(schedule.deleted_at);
+        return scheduleDay.getFullYear() == selectDay.getFullYear() && scheduleDay.getMonth() == selectDay.getMonth();
+      }); //格納後に達成済み順で昇順にソート
+
+      this.clearScheduleBefore.sort(this.compareDeletedAtUp);
+    },
+    //達成済み日でタスクを昇順にソート
+    compareDeletedAtUp: function compareDeletedAtUp(a, b) {
+      return new Date(a.deleted_at).getTime() - new Date(b.deleted_at).getTime();
+    },
+    //引数で渡された日付の年月を返すメソッド
+    getMonth: function getMonth(data) {
+      var clear = new Date(data);
+      return "".concat(clear.getFullYear(), "\u5E74").concat(clear.getMonth() + 1, "\u6708");
+    },
+    //このvueファイルが読み込まれたときに実行するメソッド
+    initializeData: function initializeData() {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
@@ -4978,102 +4991,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return _this2.$store.dispatch('data/getClearTask', _this2.schedule.id);
+                return _this2.getClearSchedule();
 
               case 2:
-                if (_this2.apiStatus) {
-                  _this2.tasks = _this2.$store.state.data.tasks;
-                }
+                //達成済み予定の格納
+                _this2.setTodayClearSchedule(); //当日達成済み予定の格納
 
-              case 3:
+
+                _this2.setBeforeClearSchedule(); //selectDateで指定した年月と等しい予定を格納
+
+
+              case 4:
               case "end":
                 return _context2.stop();
             }
           }
         }, _callee2);
       }))();
-    },
-    //タスク一覧へ移動
-    MoveTask: function MoveTask(data) {
-      this.$store.commit('data/setSchedule', data);
-      this.$router.push("/task");
-    },
-    //propsで受け渡すデータの設定とダイアログの表示
-    showDetailSchedule: function showDetailSchedule(data) {
-      this.detailDataSchedule = data;
-      this.detailDialogVisibleSchedule = true;
-    },
-    //propsで受け渡すデータの設定とダイアログの表示
-    showDetailTask: function showDetailTask(data) {
-      this.detailDataTask = data;
-      this.detailDialogVisibleTask = true;
-    },
-    //当日に達成した予定を格納するメソッド
-    setTodayClearSchedule: function setTodayClearSchedule() {
-      if (!this.schedules) {
-        return;
-      }
-
-      var today = new Date();
-      this.clearScheduleToday = this.schedules.filter(function (schedule) {
-        var scheduleDay = new Date(schedule.deleted_at);
-        return scheduleDay.getFullYear() == today.getFullYear() && scheduleDay.getMonth() == today.getMonth() && scheduleDay.getDate() == today.getDate();
-      });
-    },
-    //昨日以前に達成した予定を格納するメソッド
-    setBeforeClearSchedule: function setBeforeClearSchedule() {
-      if (!this.schedules) {
-        return;
-      }
-
-      var selectDay = new Date(this.selectDate);
-      this.clearScheduleBefore = this.schedules.filter(function (schedule) {
-        var scheduleDay = new Date(schedule.deleted_at);
-        return scheduleDay.getFullYear() == selectDay.getFullYear() && scheduleDay.getMonth() == selectDay.getMonth();
-      });
-      this.clearScheduleBefore.sort(this.compareNumbers);
-    },
-    //昇順で達成済みタスクをソート
-    compareDeletedAtUp: function compareDeletedAtUp(a, b) {
-      return new Date(a.deleted_at).getTime() - new Date(b.deleted_at).getTime();
-    },
-    getClearMonth: function getClearMonth(data) {
-      var clear = new Date(data);
-      return "".concat(clear.getFullYear(), "\u5E74").concat(clear.getMonth() + 1, "\u6708");
-    },
-    initializeData: function initializeData() {
-      var _this3 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _context3.next = 2;
-                return _this3.getClearSchedule();
-
-              case 2:
-                _this3.setTodayClearSchedule();
-
-                _this3.setBeforeClearSchedule();
-
-                console.log(_this3.clearScheduleBefore);
-
-              case 5:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
-      }))();
     }
   },
   created: function created() {
     //達成済み予定の取得
-    this.initializeData(); //達成済みタスクの取得
-    //this.getClearData();
+    this.initializeData();
   },
   watch: {
+    //selectDateの値が変わるたびに予定の格納を行う
     selectDate: function selectDate() {
       this.setBeforeClearSchedule();
     }
@@ -5099,7 +5041,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//
 //
 //
 //
@@ -5168,17 +5109,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    clearError: function clearError() {
+    //エラーメッセージのリセット
+    clearErrorMessage: function clearErrorMessage() {
       this.$store.commit('auth/setLoginErrorMessages', null);
     }
   },
   created: function created() {
-    this.clearError();
+    this.clearErrorMessage();
   },
   computed: {
+    //サーバー側に投げた処理が成功したかどうかを返す
     apiStatus: function apiStatus() {
       return this.$store.state.auth.apiStatus;
     },
+    //エラーメッセージの取得
     loginErrors: function loginErrors() {
       return this.$store.state.auth.loginErrorMessages;
     }
@@ -5201,8 +5145,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _TodoCreate_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TodoCreate.vue */ "./resources/js/pages/TodoCreate.vue");
 /* harmony import */ var _TodoDetail_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TodoDetail.vue */ "./resources/js/pages/TodoDetail.vue");
 /* harmony import */ var _TodoSort__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./TodoSort */ "./resources/js/pages/TodoSort.vue");
-/* harmony import */ var _Line_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Line.vue */ "./resources/js/pages/Line.vue");
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../util */ "./resources/js/util.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -5275,43 +5217,46 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     createForm: _TodoCreate_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     detailForm: _TodoDetail_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    sortForm: _TodoSort__WEBPACK_IMPORTED_MODULE_3__["default"],
-    lineApi: _Line_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+    sortForm: _TodoSort__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {
       schedules: null,
+      //画面に表示する予定一覧のデータを格納する変数
       createDialogVisible: false,
+      //新規予定作成ダイアログの表示非表示を管理する変数
       detailDialogVisible: false,
-      todoListsVisible: false,
+      //予定の詳細画面の表示非常時を管理する変数
       sortDialogVisible: false,
+      //予定のソートを行うダイアログの表示非表示を管理する変数
       scheduleLabel: "未達成",
+      //画面に表示する予定の種類を表す文字列を格納する変数
       allSchedules: null,
+      //全予定を格納する変数
       clearSchedules: null,
+      //達成済み予定を格納する変数
       //ぺジネーション用
       currentPage: 1,
       //現在のページ 
       perPage: 10,
       //1ページ毎の表示件数
+      //詳細画面にpropsで渡すデータ
       detailData: {
         name: '',
+        //予定名
         detail: '',
+        //詳細
         priority: '',
+        //優先度
         term: null,
-        id: null
-      } // body:{
-      //   position: "relative",
-      //   paddingBottom: "60px",
-      //   boxSizing: "border-box",
-      //   minHeight: "100vh"
-      // },
+        //期限
+        id: null //予定id
 
+      }
     };
   },
   methods: {
@@ -5331,7 +5276,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 if (_this.apiStatus) {
                   _this.schedules = _this.$store.state.data.schedules;
                   _this.scheduleLabel = "未達成";
-                  console.log("getTodo");
                 }
 
               case 3:
@@ -5553,7 +5497,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }
       }
 
-      console.log(this.schedules);
       this.sortDialogVisible = false;
     },
     //昇順でタスクを優先度順にソート
@@ -5582,40 +5525,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       //第1引数には取り出しの開始位置、第2引数には取り出しを終える直前の位置を渡す
       return this.schedules.slice((this.currentPage - 1) * this.perPage, this.currentPage * this.perPage);
     },
+    //サーバー側に投げた処理が成功したかどうかを返す
     apiStatus: function apiStatus() {
       return this.$store.state.data.apiStatus;
-    } // checkTerm(){
-    //   if(this.lemainDay >= 0){
-    //     return true;
-    //   }
-    //   else{
-    //     return false;
-    //   }
-    // },
-    // //予定の残り日数を算出するメソッド
-    // lemainDay(){
-    //   //期限と現在時刻をgetTime()でエポックミリ秒を取得して差分を出す
-    //   let term = new Date(this.schedule.term); 
-    //   let diff = term.getTime() - Date.now();
-    //   //日付けになるように、diffを割って変換。
-    //   var day = diff/(1000*60*60*24);
-    //   return parseInt(day);
-    // },
-    // //予定の進捗率を算出するメソッド
-    // progress(){
-    //   //達成済みタスク一覧とすべてのタスク一覧のデータがないときは処理を行わない
-    //   if(!this.clearTasks || !this.allTasks){
-    //     return;
-    //   }
-    //   //クリア済みタスクが1つ以上あるときのみ進捗率の計算を行う
-    //   if(this.clearTasks.length > 0){
-    //     return parseInt(this.clearTasks.length / this.allTasks.length * 100);
-    //   }
-    //   else{
-    //     return 0;
-    //   }
-    // },
-
+    }
   }
 });
 
@@ -5632,10 +5545,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue_paginate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-paginate */ "./node_modules/vue-paginate/dist/vue-paginate.js");
-/* harmony import */ var vue_paginate__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_paginate__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _TaskCreate_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TaskCreate.vue */ "./resources/js/pages/TaskCreate.vue");
-/* harmony import */ var _TaskDetail_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./TaskDetail.vue */ "./resources/js/pages/TaskDetail.vue");
+/* harmony import */ var _TaskCreate_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TaskCreate.vue */ "./resources/js/pages/TaskCreate.vue");
+/* harmony import */ var _TaskDetail_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TaskDetail.vue */ "./resources/js/pages/TaskDetail.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -5728,31 +5639,45 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 
 
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'todoTask',
   components: {
-    createForm: _TaskCreate_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    detailForm: _TaskDetail_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    createForm: _TaskCreate_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    detailForm: _TaskDetail_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
       schedule: null,
+      //画面に表示する予定を格納する変数
       tasks: null,
+      //scheduleに結び付いているタスク一覧を格納する変数
       allTasks: null,
+      //scheduleに結び付いている全タスク一覧を格納する変数
       clearTasks: null,
+      //scheduleに結び付いている達成済みタスクを格納する変数
       createDialogVisible: false,
+      //新規タスク生成ダイアログの表示非表示を管理する変数
       detailDialogVisible: false,
+      //選択したタスクの詳細ダイアログの表示非表示を管理する変数
+      taskLabel: "未達成",
+      //画面に表示するタスクの種類を表す文字列を格納する変数
+      nextTaskName: "",
+      //推奨タスク名を格納する変数
+      checkDay: null,
+      //残り日数が1日以上か1日未満かを判定する　true:1日以上　false:1日未満
+      //タスク詳細ダイアログにpropsで渡すタスクデータ
       detailData: {
         name: '',
+        //タスク名
         detail: '',
+        //タスクの詳細
         priority: '',
+        //タスクの優先度
         id: null,
-        deleted_at: null
+        //タスクのid
+        deleted_at: null //タスクの達成日
+
       },
-      taskLabel: "未達成",
-      nextTaskName: "",
-      checkDay: null,
       //ペジネート用
       currentPage: 1,
       //現在のページ 
@@ -5762,69 +5687,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     };
   },
-  // props:{
-  //   //予定一覧で選択したスケジュールのデータ
-  //   data:{
-  //         type:Object,
-  //         default:false,
-  //     },
-  // },
-  computed: {
-    paginateTasks: function paginateTasks() {
-      return this.tasks.slice((this.currentPage - 1) * this.perPage, this.currentPage * this.perPage);
-    },
-    apiStatus: function apiStatus() {
-      return this.$store.state.data.apiStatus;
-    },
-    checkTerm: function checkTerm() {
-      if (this.lemainDay >= 0 && !this.schedule.deleted_at) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-    checkScheduleState: function checkScheduleState() {
-      if (!this.schedule.deleted_at) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-    //予定の残り日数を算出するメソッド
-    lemainDay: function lemainDay() {
-      //期限と現在時刻をgetTime()でエポックミリ秒を取得して差分を出す
-      var term = new Date(this.schedule.term); //期限時刻を23時59分59秒に設定する
-
-      term.setHours(23, 59, 59);
-      var diff = term.getTime() - Date.now(); //日付けになるように、diffを割って変換。
-
-      var day = diff / (1000 * 60 * 60 * 24); //残り日数が1日以上の場合は残り日数を返す
-
-      if (parseInt(day) > 0) {
-        this.checkDay = true;
-        return parseInt(day);
-      } //残り日数が1日未満の場合は残り時間を返す
-      else {
-        this.checkDay = false;
-        return parseInt(day * 24);
-      }
-    },
-    //予定の進捗率を算出するメソッド
-    progress: function progress() {
-      //達成済みタスク一覧とすべてのタスク一覧のデータがないときは処理を行わない
-      if (!this.clearTasks || !this.allTasks) {
-        return;
-      } //クリア済みタスクが1つ以上あるときのみ進捗率の計算を行う
-
-
-      if (this.clearTasks.length > 0) {
-        return parseInt(this.clearTasks.length / this.allTasks.length * 100);
-      } else {
-        return 0;
-      }
-    }
-  },
   methods: {
+    //予定一覧画面へ遷移
     MovePreview: function MovePreview() {
       this.$router.push("/preview");
     },
@@ -5837,17 +5701,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                console.log(_this.schedule.id);
-                _context.next = 3;
+                _context.next = 2;
                 return _this.$store.dispatch('data/getTask', _this.schedule.id);
 
-              case 3:
+              case 2:
                 if (_this.apiStatus) {
                   _this.tasks = _this.$store.state.data.tasks;
                   _this.taskLabel = "未達成";
                 }
 
-              case 4:
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -5905,9 +5768,52 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee3);
       }))();
     },
+    //次に取り組むべき予定を算出するメソッド
+    nextTask: function nextTask() {
+      var _this4 = this;
+
+      //予定が達成済みの場合推奨タスクを表示せずに処理を終える
+      if (this.schedule.deleted_at) {
+        this.nextTaskName = "";
+        return;
+      } //タスクがない場合推奨タスクを表示せずに処理を終える
+
+
+      if (this.tasks.length == 0) {
+        this.nextTaskName = "";
+        return;
+      } //優先度の最大値を初期値として設定
+
+
+      var pri = 10; //優先度が一番高いタスクの格納用変数
+
+      var taskDatas = null; //優先度が一番高いタスクを格納
+
+      while ((!taskDatas || taskDatas.length == 0) && pri > 0) {
+        taskDatas = this.tasks.filter(function (task) {
+          return task.priority == pri;
+        });
+        pri--;
+      } //優先度が一番高いタスクが重複したときはタスクの作成時間が一番若いものを選ぶ
+
+
+      if (taskDatas.length > 1) {
+        var defaultTime = Date.now();
+        taskDatas.forEach(function (task) {
+          var createTime = new Date(task.created_at);
+
+          if (createTime.getTime() < defaultTime) {
+            defaultTime = createTime.getTime();
+            _this4.nextTaskName = task.name;
+          }
+        });
+      } else if (taskDatas.length == 1) {
+        this.nextTaskName = taskDatas[0].name;
+      }
+    },
     //全タスク情報の更新
     updateTaskData: function updateTaskData() {
-      var _this4 = this;
+      var _this5 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
@@ -5915,19 +5821,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context4.prev = _context4.next) {
               case 0:
                 _context4.next = 2;
-                return _this4.getData();
+                return _this5.getData();
 
               case 2:
                 _context4.next = 4;
-                return _this4.nextTask();
+                return _this5.getAllData();
 
               case 4:
                 _context4.next = 6;
-                return _this4.getAllData();
+                return _this5.getClearData();
 
               case 6:
                 _context4.next = 8;
-                return _this4.getClearData();
+                return _this5.nextTask();
 
               case 8:
               case "end":
@@ -5939,27 +5845,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     //新規タスクの取得
     register: function register(data) {
-      var _this5 = this;
+      var _this6 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                console.log(data);
-                data.schedule_id = _this5.schedule.id;
-                _context5.next = 4;
-                return _this5.$store.dispatch('data/registerTask', data);
+                data.schedule_id = _this6.schedule.id;
+                _context5.next = 3;
+                return _this6.$store.dispatch('data/registerTask', data);
 
-              case 4:
-                if (_this5.apiStatus) {
+              case 3:
+                if (_this6.apiStatus) {
                   //タスク作成後にタスク一覧を更新
-                  _this5.updateTaskData();
+                  _this6.updateTaskData();
 
-                  _this5.createDialogVisible = false;
+                  _this6.createDialogVisible = false;
                 }
 
-              case 5:
+              case 4:
               case "end":
                 return _context5.stop();
             }
@@ -5969,24 +5874,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     //タスクの更新
     updateTask: function updateTask(data) {
-      var _this6 = this;
+      var _this7 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
-                data.schedule_id = _this6.schedule.id;
+                data.schedule_id = _this7.schedule.id;
                 _context6.next = 3;
-                return _this6.$store.dispatch('data/updateTask', data);
+                return _this7.$store.dispatch('data/updateTask', data);
 
               case 3:
-                if (_this6.apiStatus) {
-                  _this6.detailDialogVisible = false;
+                if (_this7.apiStatus) {
+                  _this7.detailDialogVisible = false;
                 } //タスク更新後にタスク一覧を更新
 
 
-                _this6.updateTaskData();
+                _this7.updateTaskData();
 
               case 5:
               case "end":
@@ -5998,23 +5903,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     //登録タスクの達成処理
     softDelete: function softDelete(data) {
-      var _this7 = this;
+      var _this8 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
             switch (_context7.prev = _context7.next) {
               case 0:
-                data.schedule_id = _this7.schedule.id;
+                data.schedule_id = _this8.schedule.id;
                 _context7.next = 3;
-                return _this7.$store.dispatch('data/deleteTask', data);
+                return _this8.$store.dispatch('data/deleteTask', data);
 
               case 3:
-                if (_this7.apiStatus) {
+                if (_this8.apiStatus) {
                   //タスク完了処理後にタスク一覧を更新
-                  _this7.updateTaskData();
+                  _this8.updateTaskData();
 
-                  _this7.detailDialogVisible = false;
+                  _this8.detailDialogVisible = false;
                 }
 
               case 4:
@@ -6027,23 +5932,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     //タスクの取り消し
     forceDelete: function forceDelete(data) {
-      var _this8 = this;
+      var _this9 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
           while (1) {
             switch (_context8.prev = _context8.next) {
               case 0:
-                data.schedule_id = _this8.schedule.id;
+                data.schedule_id = _this9.schedule.id;
                 _context8.next = 3;
-                return _this8.$store.dispatch('data/forceDeleteTask', data);
+                return _this9.$store.dispatch('data/forceDeleteTask', data);
 
               case 3:
-                if (_this8.apiStatus) {
+                if (_this9.apiStatus) {
                   //タスク削除後にタスク一覧を更新
-                  _this8.updateTaskData();
+                  _this9.updateTaskData();
 
-                  _this8.detailDialogVisible = false;
+                  _this9.detailDialogVisible = false;
                 }
 
               case 4:
@@ -6059,70 +5964,81 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.detailData = data;
       this.detailDialogVisible = true;
     },
+    //scheduleに格納されている予定の達成日を年月日で返すメソッド
     getClearDate: function getClearDate() {
       var clear = new Date(this.schedule.deleted_at);
       return "".concat(clear.getFullYear(), "\u5E74").concat(clear.getMonth() + 1, "\u6708").concat(clear.getDate(), "\u65E5");
+    }
+  },
+  computed: {
+    //ペジネート用
+    paginateTasks: function paginateTasks() {
+      return this.tasks.slice((this.currentPage - 1) * this.perPage, this.currentPage * this.perPage);
     },
-    //次に取り組むべき予定を算出するメソッド
-    nextTask: function nextTask() {
-      var _this9 = this;
-
-      //予定が達成済みの場合
-      if (this.schedule.deleted_at) {
-        this.nextTaskName = "";
-        return;
-      } //優先度の最大値を初期値として設定
-
-
-      var pri = 10; //優先度が一番高いタスクの格納用変数
-
-      var taskDatas = null; //優先度が一番高いタスクを格納
-
-      while ((!taskDatas || taskDatas.length == 0) && pri > 0) {
-        taskDatas = this.tasks.filter(function (task) {
-          return task.priority == pri;
-        });
-        console.log(taskDatas);
-        pri--;
+    //サーバー側に投げた処理が成功したかどうかを返す
+    apiStatus: function apiStatus() {
+      return this.$store.state.data.apiStatus;
+    },
+    //scheduleに格納されている予定が期限切れまたは達成済みかどうかを判定しその結果を返すメソッド　true:期限内かつ未達成　false:期限切れまたは達成済み
+    checkTerm: function checkTerm() {
+      if (this.lemainDay >= 0 && !this.schedule.deleted_at) {
+        return true;
+      } else {
+        return false;
       }
+    },
+    //scheduleに格納されている予定が達成済みかどうかを判定しその結果を返すメソッド　true:未達成　false:達成済み
+    checkScheduleState: function checkScheduleState() {
+      if (!this.schedule.deleted_at) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    //予定の残り日数を算出するメソッド
+    lemainDay: function lemainDay() {
+      //期限と現在時刻をgetTime()でエポックミリ秒を取得して差分を出す
+      var term = new Date(this.schedule.term); //期限時刻を23時59分59秒に設定する
 
-      if (taskDatas.length == 0) {
-        this.nextTaskName = "";
+      term.setHours(23, 59, 59);
+      var diff = term.getTime() - Date.now(); //日付けになるように、diffを割って変換。
+
+      var day = diff / (1000 * 60 * 60 * 24); //残り日数が1日以上の場合は残り日数を返す
+
+      if (parseInt(day) > 0) {
+        this.checkDay = true;
+        return parseInt(day);
+      } //残り日数が1日未満の場合は残り時間を返す
+      else {
+        this.checkDay = false;
+        return parseInt(day * 24);
+      }
+    },
+    //予定の進捗率を算出するメソッド
+    progress: function progress() {
+      //達成済みタスク一覧とすべてのタスク一覧のデータがないときは処理を行わない
+      if (!this.clearTasks || !this.allTasks) {
         return;
-      } //優先度が一番高いタスクが重複したときはタスクの作成時間が一番若いものを選ぶ
+      } //クリア済みタスクが1つ以上あるときのみ進捗率の計算を行う
 
 
-      if (taskDatas.length > 1) {
-        var defaultTime = Date.now();
-        taskDatas.forEach(function (task) {
-          var createTime = new Date(task.created_at);
-
-          if (createTime.getTime() < defaultTime) {
-            defaultTime = createTime.getTime();
-            _this9.nextTaskName = task.name;
-          }
-        });
-      } else if (taskDatas.length == 1) {
-        this.nextTaskName = taskDatas[0].name;
+      if (this.clearTasks.length > 0) {
+        return parseInt(this.clearTasks.length / this.allTasks.length * 100);
+      } else {
+        return 0;
       }
     }
   },
   created: function created() {
-    this.schedule = this.$store.state.data.schedule; //storeのstateにscheduleのデータが入っていない場合には/previewに遷移させる
-
-    console.log(this.schedule);
-    console.log("Preview");
+    //dataストアにstateに設定されているscheduleをこのvueファイル内のschedule変数に格納
+    this.schedule = this.$store.state.data.schedule; //dataストアのstateにscheduleのデータが入っていない場合には/previewに遷移させる
 
     if (!this.schedule) {
       this.MovePreview();
     } else {
+      //タスクデータの更新を行う
       this.updateTaskData();
     }
-  },
-  watch: {// tasks(newValue){
-    //     this.tasks = newValue;
-    //     this.totalPage = Math.ceil(this.tasks.length / this.perPage);
-    //   },
   }
 });
 
@@ -6186,23 +6102,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      //ユーザーがForm画面で入力するデータを格納する変数
       registerForm: {
         name: '',
+        //ユーザー名
         email: '',
+        //ユーザーメールアドレス
         password: '',
-        password_confirmation: ''
+        //ユーザーパスワード
+        password_confirmation: '' //パスワードの確認用
+
       },
+      //エラーメッセージの色
       errors: {
         color: "red"
-      },
-      loginComponent: false
+      }
     };
   },
   methods: {
+    //ユーザー登録を行う処理をサーバー側に投げるメソッド
     register: function register() {
       var _this = this;
 
@@ -6211,18 +6132,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                // authストアのresigterアクションを呼び出す
-                console.log("登録");
-                _context.next = 3;
+                _context.next = 2;
                 return _this.$store.dispatch('auth/register', _this.registerForm);
 
-              case 3:
+              case 2:
                 if (_this.apiStatus) {
                   // トップページに移動する
                   _this.$router.push('/home');
                 }
 
-              case 4:
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -6230,14 +6149,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
+    //エラーメッセージのリセット
     clearError: function clearError() {
       this.$store.commit('auth/setRegisterErrorMessages', null);
     }
   },
   computed: {
+    //サーバー側に投げた処理が成功したかどうかを返す
     apiStatus: function apiStatus() {
       return this.$store.state.auth.apiStatus;
     },
+    //入力データに不備があったときにエラーメッセージをauthストアから取得するメソッド
     registerErrors: function registerErrors() {
       return this.$store.state.auth.registerErrorMessages;
     }
@@ -6294,55 +6216,61 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'createForm',
   data: function data() {
     return {
+      //タスクの新規作成時にユーザーからの入力値を格納する変数
       createForm: {
         name: '',
+        //タスク名
         Text: '',
+        //タスクの詳細
         priority: 1,
-        schedule_id: null
+        //タスクの優先度
+        schedule_id: null //タスクの結び付いているスケジュールのid
+
       },
+      //エラーメッセージの色
       errors: {
         color: "red"
       }
     };
   },
   props: {
+    //タスク新規作成ダイアログの表示非表示を管理する変数
     createFormVisible: {
       type: Boolean,
       "default": false
     }
   },
   methods: {
+    //ダイアログを閉じる処理を親コンポーネントに投げる
     handleClose: function handleClose() {
       this.$emit('create-form-close');
       return;
     },
+    //ダイアログに入力した値でタスクの新規作成処理を行う命令を親コンポーネントに投げる
     registerTask: function registerTask() {
-      console.log(this.createForm);
       this.$emit('register-task', this.createForm);
     },
+    //ダイアログのフォームを初期化するメソッド
     initialzleCreateForm: function initialzleCreateForm() {
       this.createForm.name = '';
       this.createForm.Text = '';
       this.createForm.priority = 1;
     },
+    //エラーメッセージをリセット
     clearError: function clearError() {
       this.$store.commit('data/setCreateTaskErrorMessages', null);
     }
   },
-  created: function created() {// this.clearError();
-  },
   computed: {
-    apiStatus: function apiStatus() {
-      return this.$store.state.data.apiStatus;
-    },
+    //エラーメッセージをdataストアから取得するメソッド
     createTaskErrors: function createTaskErrors() {
       return this.$store.state.data.createTaskErrorMessages;
     }
   },
   watch: {
+    //タスク新規作成ダイアログが非表示から表示に切り替わった際に実行
     createFormVisible: function createFormVisible(newValue) {
       if (newValue) {
         this.clearError();
@@ -6428,58 +6356,65 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       editForm: this.detailData,
+      //タスクの詳細画面で表示する予定データを格納する変数
       detailMode: true,
+      //タスクの詳細ダイアログの表示非表示を管理する変数
       checkFormVisible: false,
+      //確認画面ダイアログの表示非表示を管理する変数
       checkMessage: "",
+      //確認画面ダイアログで表示するメッセージを格納する変数
+      //エラーメッセージの色
       errors: {
         color: "red"
       }
     };
   },
   props: {
+    //タスク詳細ダイアログの表示非表示を管理する変数
     detailFormVisible: {
       type: Boolean,
       "default": false
     },
+    //選択した予定データ
     detailData: {
-      type: Object,
-      "default": null
-    },
-    schedule: {
       type: Object,
       "default": null
     }
   },
   methods: {
+    //タスク詳細ダイアログを閉じる処理をする命令を親コンポーネントに投げるメソッド
     handleClose: function handleClose() {
       this.$emit('detail-form-close');
       return;
     },
+    //タスクの達成処理をする命令を親コンポーネントに投げるメソッド
     deleteTask: function deleteTask() {
-      console.log(this.editForm);
       this.$emit('delete-task', this.editForm);
     },
+    //タスクの更新処理をする命令を親コンポーネントに投げるメソッド
     updateTask: function updateTask() {
       this.$emit('update-task', this.editForm);
     },
+    //タスクの物理削除をする命令を親コンポーネントに投げるメソッド
     forceDelete: function forceDelete() {
       this.$emit('force-delete', this.editForm);
     },
+    //確認ダイアログに表示するメッセージを設定し、確認ダイアログを表示するメソッド
     openCheckForm: function openCheckForm() {
       this.checkMessage = "本当にこのタスクを削除してもよろしいですか。";
       this.checkFormVisible = true;
     },
+    //エラーメッセージのリセット
     clearError: function clearError() {
       this.$store.commit('data/setCreateTaskErrorMessages', null);
     }
   },
   computed: {
-    apiStatus: function apiStatus() {
-      return this.$store.state.data.apiStatus;
-    },
+    //更新処理のエラーメッセージを取得するメソッド
     updateTaskErrors: function updateTaskErrors() {
       return this.$store.state.data.createTaskErrorMessages;
     },
+    //propsで受け取ったタスクが達成済みかどうかを判定しその結果を返すメソッド　true:未達成　false:達成済み
     checkTaskState: function checkTaskState() {
       if (!this.editForm.deleted_at) {
         return true;
@@ -6487,8 +6422,9 @@ __webpack_require__.r(__webpack_exports__);
         return false;
       }
     },
+    //scheduleに格納されている予定が達成済みかどうかを判定しその結果を返すメソッド　true:未達成　false:達成済み
     checkScheduleState: function checkScheduleState() {
-      if (!this.schedule.deleted_at) {
+      if (!this.$store.state.data.schedule.deleted_at) {
         return true;
       } else {
         return false;
@@ -6496,6 +6432,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   watch: {
+    //タスク詳細ダイアログが非表示から表示に切り替わった際に実行
     detailFormVisible: function detailFormVisible(newValue) {
       if (newValue) {
         this.detailMode = true;
@@ -6573,53 +6510,61 @@ __webpack_require__.r(__webpack_exports__);
   name: 'createForm',
   data: function data() {
     return {
+      //予定の新規作成時にユーザーからの入力値を格納する変数
       createForm: {
         name: '',
+        //予定名
         Text: '',
+        //予定の詳細
         priority: 1,
-        term: null
+        //予定の優先度
+        term: null //予定の期限
+
       },
+      //エラーメッセージの色
       errors: {
         color: "red"
       }
     };
   },
   props: {
+    //予定新規作成ダイアログの表示非表示を管理する変数
     createFormVisible: {
       type: Boolean,
       "default": false
     }
   },
   methods: {
+    //ダイアログを閉じる処理を親コンポーネントに投げる
     handleClose: function handleClose() {
       this.$emit('create-form-close');
       return;
     },
+    //ダイアログに入力した値で予定の新規作成処理を行う命令を親コンポーネントに投げる
     registerSchedule: function registerSchedule() {
       this.$emit('register-schedule', this.createForm);
     },
+    //ダイアログのフォームを初期化するメソッド
     initialzleRegisterForm: function initialzleRegisterForm() {
       this.createForm.name = '';
       this.createForm.Text = '';
       this.createForm.priority = 1;
       this.createForm.term = null;
     },
+    //エラーメッセージをリセット
     clearError: function clearError() {
       this.$store.commit('data/setCreateScheduleErrorMessages', null);
     }
   },
   computed: {
-    apiStatus: function apiStatus() {
-      return this.$store.state.data.apiStatus;
-    },
+    //エラーメッセージをdataストアから取得するメソッド
     createScheduleErrors: function createScheduleErrors() {
       return this.$store.state.data.createScheduleErrorMessages;
     }
   },
   watch: {
+    //タスク新規作成ダイアログが非表示から表示に切り替わった際に実行
     createFormVisible: function createFormVisible(newvalue) {
-      console.log("create");
-
       if (newvalue) {
         this.clearError();
         this.initialzleRegisterForm();
@@ -6841,31 +6786,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'sortForm',
   data: function data() {
     return {
       type: '1',
-      order: '1'
+      //ソートの種類を示す変数　1:優先度 2:期限
+      order: '1' //ソートの順序を示す変数 1:昇順 2:降順
+
     };
   },
   props: {
+    //ソートダイアログの表示非表示を管理する変数
     sortFormVisible: {
       type: Boolean,
       "default": false
     },
+    //ソート処理を行うメソッド
     sortSchedules: {
       type: Function
     }
   },
   methods: {
+    //ダイアログを閉じる処理を親コンポーネントに投げる
     handleClose: function handleClose() {
       this.$emit('sort-form-close');
       return;
-    }
-  },
-  computed: {
-    apiStatus: function apiStatus() {
-      return this.$store.state.auth.apiStatus;
     }
   }
 });
@@ -6968,7 +6912,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      limitDay: 10
+      limitDay: 10 //期限が迫っている予定一覧で用いる
+
     };
   },
   methods: {
@@ -8861,25 +8806,6 @@ exports.push([module.i, "\n.el-footer{\n  background-color: #31a9ee; /* フッ�
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Account.vue?vue&type=style&index=0&lang=css&":
-/*!********************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Account.vue?vue&type=style&index=0&lang=css& ***!
-  \********************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.body{\n  padding:0; \n  margin:0;\n  height: 100%;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/AccountForm.vue?vue&type=style&index=0&lang=css&":
 /*!************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/AccountForm.vue?vue&type=style&index=0&lang=css& ***!
@@ -8892,7 +8818,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.body{\n  padding:0; \n  margin:0;\n  height: 100%;\n}\n", ""]);
+exports.push([module.i, "\n.errors{\n color: red;\n}\n", ""]);
 
 // exports
 
@@ -8911,7 +8837,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.body{\n  padding:0; \n  margin:0;\n  height: 100%;\n}\n.text {\n  font-size: 14px;\n}\n.clearfix:before,\n.clearfix:after {\n  display: table;\n  content: \"\";\n}\n.clearfix:after {\n  clear: both\n}\n\n/*.box-card {*/\n/*  width: 600px;*/\n/*}*/\n", ""]);
+exports.push([module.i, "\n.clearfix:before,\n.clearfix:after {\n  display: table;\n  content: \"\";\n}\n.clearfix:after {\n  clear: both\n}\n", ""]);
 
 // exports
 
@@ -8930,7 +8856,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.body{\n  padding:0; \n  margin:0;\n  height: 100%;\n}\n.text {\n  font-size: 14px;\n}\n.clearfix:before,\n.clearfix:after {\n  display: table;\n  content: \"\";\n}\n.clearfix:after {\n  clear: both\n}\n\n/*.box-card {*/\n/*  width: 600px;*/\n/*}*/\n", ""]);
+exports.push([module.i, "\n.clearfix:before,\n.clearfix:after {\n  display: table;\n  content: \"\";\n}\n.clearfix:after {\n  clear: both\n}\n", ""]);
 
 // exports
 
@@ -70262,36 +70188,6 @@ if(false) {}
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Account.vue?vue&type=style&index=0&lang=css&":
-/*!************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Account.vue?vue&type=style&index=0&lang=css& ***!
-  \************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./Account.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Account.vue?vue&type=style&index=0&lang=css&");
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/AccountForm.vue?vue&type=style&index=0&lang=css&":
 /*!****************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/AccountForm.vue?vue&type=style&index=0&lang=css& ***!
@@ -71288,56 +71184,36 @@ var render = function() {
         "nav",
         { staticClass: "navbar" },
         [
-          _vm.isLogin
-            ? _c(
-                "el-menu",
-                {
-                  staticClass: "el-menu-demo",
-                  attrs: {
-                    "default-active": "activeIndex",
-                    mode: "horizontal",
-                    "background-color": "#545c64",
-                    "text-color": "#fff",
-                    "active-text-color": "#ffd04b"
-                  }
-                },
-                [
-                  _c(
-                    "el-menu-item",
-                    {
-                      attrs: { activeIndex: "1" },
-                      on: { click: _vm.MoveHome }
-                    },
-                    [_vm._v("\n    ホーム\n  ")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-menu-item",
-                    {
-                      attrs: { activeIndex: "2" },
-                      on: { click: _vm.MovePreview }
-                    },
-                    [_vm._v("\n    予定一覧\n  ")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-menu-item",
-                    { attrs: { activeIndex: "3" }, on: { click: _vm.MoveLog } },
-                    [_vm._v("\n    記録\n  ")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-menu-item",
-                    {
-                      attrs: { activeIndex: "4" },
-                      on: { click: _vm.MoveAccount }
-                    },
-                    [_vm._v("\n    アカウント\n  ")]
-                  )
-                ],
-                1
-              )
-            : _vm._e()
+          _c(
+            "el-menu",
+            {
+              staticClass: "el-menu-demo",
+              attrs: {
+                mode: "horizontal",
+                "background-color": "#545c64",
+                "text-color": "#fff",
+                "active-text-color": "#ffd04b"
+              }
+            },
+            [
+              _c("el-menu-item", { on: { click: _vm.MoveHome } }, [
+                _vm._v("\n    ホーム\n  ")
+              ]),
+              _vm._v(" "),
+              _c("el-menu-item", { on: { click: _vm.MovePreview } }, [
+                _vm._v("\n    予定一覧\n  ")
+              ]),
+              _vm._v(" "),
+              _c("el-menu-item", { on: { click: _vm.MoveLog } }, [
+                _vm._v("\n    記録\n  ")
+              ]),
+              _vm._v(" "),
+              _c("el-menu-item", { on: { click: _vm.MoveAccount } }, [
+                _vm._v("\n    アカウント\n  ")
+              ])
+            ],
+            1
+          )
         ],
         1
       )
@@ -71376,7 +71252,7 @@ var render = function() {
           message: _vm.checkMessage
         },
         on: {
-          confirm: _vm.forceDelete,
+          confirm: _vm.forceDeleteLineAccount,
           "check-form-close": function($event) {
             _vm.checkFormVisible = false
           }
@@ -71386,7 +71262,7 @@ var render = function() {
       _c("accountForm", {
         attrs: {
           accountFormVisible: _vm.accountFormVisible,
-          updateUser: _vm.updateUser
+          updateUser: _vm.updateUserData
         },
         on: {
           "account-form-close": function($event) {
@@ -71534,14 +71410,12 @@ var render = function() {
               ),
               _vm._v(" "),
               _vm.updateErrors
-                ? _c("div", [
+                ? _c("div", { staticClass: "errors" }, [
                     _vm.updateErrors.name
                       ? _c(
                           "ul",
                           _vm._l(_vm.updateErrors.name, function(msg) {
-                            return _c("li", { key: msg, style: _vm.errors }, [
-                              _vm._v(_vm._s(msg))
-                            ])
+                            return _c("li", { key: msg }, [_vm._v(_vm._s(msg))])
                           }),
                           0
                         )
@@ -71567,14 +71441,12 @@ var render = function() {
               ),
               _vm._v(" "),
               _vm.updateErrors
-                ? _c("div", [
+                ? _c("div", { staticClass: "errors" }, [
                     _vm.updateErrors.email
                       ? _c(
                           "ul",
                           _vm._l(_vm.updateErrors.email, function(msg) {
-                            return _c("li", { key: msg, style: _vm.errors }, [
-                              _vm._v(_vm._s(msg))
-                            ])
+                            return _c("li", { key: msg }, [_vm._v(_vm._s(msg))])
                           }),
                           0
                         )
@@ -72254,8 +72126,7 @@ var render = function() {
                       _c("h2", [
                         _c("span", [
                           _vm._v(
-                            _vm._s(_vm.getClearMonth(_vm.selectDate)) +
-                              "達成予定"
+                            _vm._s(_vm.getMonth(_vm.selectDate)) + "達成予定"
                           )
                         ]),
                         _vm._v(" "),
@@ -72344,70 +72215,6 @@ var render = function() {
                     1
                   )
                 : _vm._e()
-            ]),
-            _vm._v(" "),
-            _c("p")
-          ],
-          1
-        )
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.tasks
-      ? _c(
-          "div",
-          { staticClass: "taskList" },
-          [
-            _c("el-card", { staticClass: "box-card" }, [
-              _c(
-                "div",
-                { staticClass: "result" },
-                [
-                  _c(
-                    "ul",
-                    _vm._l(_vm.paginateTasks, function(task, i) {
-                      return _c(
-                        "li",
-                        { key: i },
-                        [
-                          _c(
-                            "el-link",
-                            {
-                              attrs: { type: "primary" },
-                              on: { click: function($event) {} }
-                            },
-                            [
-                              _c("h2", { staticClass: "title" }, [
-                                _vm._v(_vm._s(task.name))
-                              ])
-                            ]
-                          )
-                        ],
-                        1
-                      )
-                    }),
-                    0
-                  ),
-                  _vm._v(" "),
-                  _c("el-pagination", {
-                    attrs: {
-                      background: "",
-                      layout: "prev, pager, next",
-                      "current-page": _vm.currentPageTask,
-                      "page-size": _vm.perPageTask,
-                      total: _vm.tasks.length
-                    },
-                    on: {
-                      "update:currentPage": function($event) {
-                        _vm.currentPageTask = $event
-                      },
-                      "update:current-page": function($event) {
-                        _vm.currentPageTask = $event
-                      }
-                    }
-                  })
-                ],
-                1
-              )
             ]),
             _vm._v(" "),
             _c("p")
@@ -92172,9 +91979,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Account_vue_vue_type_template_id_3056c434___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Account.vue?vue&type=template&id=3056c434& */ "./resources/js/pages/Account.vue?vue&type=template&id=3056c434&");
 /* harmony import */ var _Account_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Account.vue?vue&type=script&lang=js& */ "./resources/js/pages/Account.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _Account_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Account.vue?vue&type=style&index=0&lang=css& */ "./resources/js/pages/Account.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -92182,7 +91987,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _Account_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _Account_vue_vue_type_template_id_3056c434___WEBPACK_IMPORTED_MODULE_0__["render"],
   _Account_vue_vue_type_template_id_3056c434___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -92211,22 +92016,6 @@ component.options.__file = "resources/js/pages/Account.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Account_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Account.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Account.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Account_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/pages/Account.vue?vue&type=style&index=0&lang=css&":
-/*!*************************************************************************!*\
-  !*** ./resources/js/pages/Account.vue?vue&type=style&index=0&lang=css& ***!
-  \*************************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Account_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./Account.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Account.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Account_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Account_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Account_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Account_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
 
 /***/ }),
 
@@ -94149,7 +93938,7 @@ var actions = {
       }, _callee);
     }))();
   },
-  //タスクの取得
+  //未達成タスクの取得
   getTask: function getTask(context, id) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
       var response;
@@ -94157,17 +93946,15 @@ var actions = {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              context.commit('setApiStatus', null); //未達成予定のタスクを取得する場合
-
+              context.commit('setApiStatus', null);
               _context2.next = 3;
               return axios.get("/api/tasks/getdata/".concat(id));
 
             case 3:
               response = _context2.sent;
-              console.log(response.data);
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context2.next = 9;
+                _context2.next = 8;
                 break;
               }
 
@@ -94175,7 +93962,7 @@ var actions = {
               context.commit('setApiStatus', true);
               return _context2.abrupt("return", false);
 
-            case 9:
+            case 8:
               context.commit('setApiStatus', false);
 
               if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {//context.commit('setUpdateErrorMessages', response.data.errors)
@@ -94185,7 +93972,7 @@ var actions = {
                 });
               }
 
-            case 11:
+            case 10:
             case "end":
               return _context2.stop();
           }

@@ -83,7 +83,6 @@
 </template>
 
 <script>
-import VuePaginate from 'vue-paginate';
 import createForm from './TaskCreate.vue';
 import detailForm from './TaskDetail.vue';
 export default {
@@ -94,22 +93,25 @@ export default {
   },
   data(){
     return{
-      schedule:null,
-      tasks: null,
-      allTasks: null,
-      clearTasks: null,
-      createDialogVisible: false,
-      detailDialogVisible: false,
+      schedule:null,　//画面に表示する予定を格納する変数
+      tasks: null, //scheduleに結び付いているタスク一覧を格納する変数
+      allTasks: null,　//scheduleに結び付いている全タスク一覧を格納する変数
+      clearTasks: null, //scheduleに結び付いている達成済みタスクを格納する変数
+      createDialogVisible: false, //新規タスク生成ダイアログの表示非表示を管理する変数
+      detailDialogVisible: false, //選択したタスクの詳細ダイアログの表示非表示を管理する変数
+      taskLabel:"未達成", //画面に表示するタスクの種類を表す文字列を格納する変数
+      nextTaskName: "", //推奨タスク名を格納する変数
+      checkDay:null, //残り日数が1日以上か1日未満かを判定する　true:1日以上　false:1日未満
+      
+      //タスク詳細ダイアログにpropsで渡すタスクデータ
       detailData: {
-          name: '',
-          detail: '',
-          priority: '',
-          id:null,
-          deleted_at: null,
+          name: '',//タスク名
+          detail: '',//タスクの詳細
+          priority: '',//タスクの優先度
+          id:null, //タスクのid
+          deleted_at: null, //タスクの達成日
       },
-      taskLabel:"未達成",
-      nextTaskName: "",
-      checkDay:null,
+      
       //ペジネート用
       currentPage : 1,//現在のページ 
       perPage: 5, //1ページ毎の表示件数
@@ -117,20 +119,148 @@ export default {
     }
   },
 
-  // props:{
-  //   //予定一覧で選択したスケジュールのデータ
-  //   data:{
-  //         type:Object,
-  //         default:false,
-  //     },
-  // },
+  methods:{
+    //予定一覧画面へ遷移
+    MovePreview(){
+      this.$router.push("/preview");
+    },
+    //未完了のタスクの取得
+    async getData(){
+      await this.$store.dispatch('data/getTask', this.schedule.id);
+      
+      if(this.apiStatus){
+        this.tasks = this.$store.state.data.tasks;
+        this.taskLabel = "未達成";
+      }
+    },
+    //達成済みを含めたすべてのタスクの取得
+    async getAllData(){
+      await this.$store.dispatch('data/getAllTask', this.schedule.id);
+      
+      if(this.apiStatus){
+        this.allTasks = this.$store.state.data.tasks;
+      }
+    },
+    //達成済みタスクのみ取得
+    async getClearData(){
+      await this.$store.dispatch('data/getClearTask', this.schedule.id);
+      
+      if(this.apiStatus){
+        this.clearTasks = this.$store.state.data.tasks;
+      }
+    },
+    //次に取り組むべき予定を算出するメソッド
+    nextTask(){
+      //予定が達成済みの場合推奨タスクを表示せずに処理を終える
+      if(this.schedule.deleted_at){
+        this.nextTaskName = "";
+        return;
+      }
+      //タスクがない場合推奨タスクを表示せずに処理を終える
+      if(this.tasks.length == 0){
+        this.nextTaskName = "";
+        return;
+      }
+      
+      //優先度の最大値を初期値として設定
+      let pri = 10;
+      //優先度が一番高いタスクの格納用変数
+      let taskDatas = null;
+      //優先度が一番高いタスクを格納
+      while((!taskDatas || taskDatas.length == 0) && pri > 0){
+        taskDatas = this.tasks.filter(task => {
+          return task.priority == pri;
+        });
+        pri--;
+      }
+      //優先度が一番高いタスクが重複したときはタスクの作成時間が一番若いものを選ぶ
+      if(taskDatas.length > 1){
+        let defaultTime = Date.now();
+        taskDatas.forEach(task => {
+          let createTime = new Date(task.created_at); 
+          if(createTime.getTime() < defaultTime){
+            defaultTime = createTime.getTime();
+            this.nextTaskName = task.name;
+          }
+        });
+      }
+      else if(taskDatas.length == 1){
+        this.nextTaskName = taskDatas[0].name;
+      }
+    },
+    //全タスク情報の更新
+    async updateTaskData(){
+      await this.getData();
+      await this.getAllData();
+      await this.getClearData();
+      await this.nextTask();
+    },
+    //新規タスクの取得
+    async register(data){
+      data.schedule_id = this.schedule.id;
+      await this.$store.dispatch('data/registerTask', data);
+      
+      if (this.apiStatus) {
+          //タスク作成後にタスク一覧を更新
+          this.updateTaskData();
+          this.createDialogVisible = false;
+      }
+    },
+    //タスクの更新
+    async updateTask(data){
+      data.schedule_id = this.schedule.id;
+      await this.$store.dispatch('data/updateTask', data);
+      
+      if (this.apiStatus) {
+        this.detailDialogVisible = false;
+      }
+      //タスク更新後にタスク一覧を更新
+      this.updateTaskData();
+    },
+    //登録タスクの達成処理
+    async softDelete(data){
+      data.schedule_id = this.schedule.id;
+      await this.$store.dispatch('data/deleteTask', data);
+      
+      if (this.apiStatus) {
+        //タスク完了処理後にタスク一覧を更新
+        this.updateTaskData();
+        this.detailDialogVisible = false;
+      }
+    },
+    //タスクの取り消し
+    async forceDelete(data){
+      data.schedule_id = this.schedule.id;
+      await this.$store.dispatch('data/forceDeleteTask', data);
+      
+      if (this.apiStatus) {
+        //タスク削除後にタスク一覧を更新
+        this.updateTaskData();
+        this.detailDialogVisible = false;
+      }
+    },
+    
+    //propsで受け渡すデータの設定とダイアログの表示
+    showDetail(data){
+      this.detailData = data;
+      this.detailDialogVisible = true;
+    },
+    //scheduleに格納されている予定の達成日を年月日で返すメソッド
+    getClearDate(){
+      let clear = new Date(this.schedule.deleted_at);
+      return `${clear.getFullYear()}年${clear.getMonth()+1}月${clear.getDate()}日`;
+    },
+  },
   computed: {
+    //ペジネート用
     paginateTasks() {
         return this.tasks.slice((this.currentPage - 1) * this.perPage, this.currentPage * this.perPage);
     },
+    //サーバー側に投げた処理が成功したかどうかを返す
     apiStatus () {
       return this.$store.state.data.apiStatus;
     },
+    //scheduleに格納されている予定が期限切れまたは達成済みかどうかを判定しその結果を返すメソッド　true:期限内かつ未達成　false:期限切れまたは達成済み
     checkTerm(){
       if(this.lemainDay >= 0 && !this.schedule.deleted_at){
         return true;
@@ -139,6 +269,7 @@ export default {
         return false;
       }
     },
+    //scheduleに格納されている予定が達成済みかどうかを判定しその結果を返すメソッド　true:未達成　false:達成済み
     checkScheduleState(){
       if(!this.schedule.deleted_at){
         return true;
@@ -182,150 +313,19 @@ export default {
     },
     
   },
-  methods:{
-    MovePreview(){
-      this.$router.push("/preview");
-    },
-    //未完了のタスクの取得
-    async getData(){
-      console.log(this.schedule.id);
-      await this.$store.dispatch('data/getTask', this.schedule.id);
-      if(this.apiStatus){
-        this.tasks = this.$store.state.data.tasks;
-        this.taskLabel = "未達成";
-      }
-    },
-    //達成済みを含めたすべてのタスクの取得
-    async getAllData(){
-      await this.$store.dispatch('data/getAllTask', this.schedule.id);
-      if(this.apiStatus){
-        this.allTasks = this.$store.state.data.tasks;
-      }
-    },
-    //達成済みタスクのみ取得
-    async getClearData(){
-      await this.$store.dispatch('data/getClearTask', this.schedule.id);
-      if(this.apiStatus){
-        this.clearTasks = this.$store.state.data.tasks;
-      }
-    },
-    //全タスク情報の更新
-    async updateTaskData(){
-      await this.getData();
-      await this.nextTask();
-      await this.getAllData();
-      await this.getClearData();
-    },
-    //新規タスクの取得
-    async register(data){
-      console.log(data);
-      data.schedule_id = this.schedule.id;
-      await this.$store.dispatch('data/registerTask', data);
-      if (this.apiStatus) {
-          //タスク作成後にタスク一覧を更新
-          this.updateTaskData();
-          this.createDialogVisible = false;
-      }
-    },
-    //タスクの更新
-    async updateTask(data){
-      data.schedule_id = this.schedule.id;
-      await this.$store.dispatch('data/updateTask', data);
-      if (this.apiStatus) {
-        this.detailDialogVisible = false;
-      }
-      //タスク更新後にタスク一覧を更新
-      this.updateTaskData();
-    },
-    //登録タスクの達成処理
-    async softDelete(data){
-      data.schedule_id = this.schedule.id;
-      await this.$store.dispatch('data/deleteTask', data);
-      if (this.apiStatus) {
-        //タスク完了処理後にタスク一覧を更新
-        this.updateTaskData();
-        this.detailDialogVisible = false;
-      }
-    },
-    //タスクの取り消し
-    async forceDelete(data){
-      data.schedule_id = this.schedule.id;
-      await this.$store.dispatch('data/forceDeleteTask', data);
-      if (this.apiStatus) {
-        //タスク削除後にタスク一覧を更新
-        this.updateTaskData();
-        this.detailDialogVisible = false;
-      }
-    },
-    //propsで受け渡すデータの設定とダイアログの表示
-    showDetail(data){
-      this.detailData = data;
-      this.detailDialogVisible = true;
-    },
-    getClearDate(){
-      let clear = new Date(this.schedule.deleted_at);
-      return `${clear.getFullYear()}年${clear.getMonth()+1}月${clear.getDate()}日`;
-    },
-    //次に取り組むべき予定を算出するメソッド
-    nextTask(){
-      //予定が達成済みの場合
-      if(this.schedule.deleted_at){
-        this.nextTaskName = "";
-        return;
-      }
-      
-      //優先度の最大値を初期値として設定
-      let pri = 10;
-      //優先度が一番高いタスクの格納用変数
-      let taskDatas = null;
-      //優先度が一番高いタスクを格納
-      while((!taskDatas || taskDatas.length == 0) && pri > 0){
-        taskDatas = this.tasks.filter(task => {
-          return task.priority == pri;
-        });
-        console.log(taskDatas);
-        pri--;
-      }
-      if(taskDatas.length == 0){
-        this.nextTaskName = "";
-        return;
-      }
-      //優先度が一番高いタスクが重複したときはタスクの作成時間が一番若いものを選ぶ
-      if(taskDatas.length > 1){
-        let defaultTime = Date.now();
-        taskDatas.forEach(task => {
-          let createTime = new Date(task.created_at); 
-          if(createTime.getTime() < defaultTime){
-            defaultTime = createTime.getTime();
-            this.nextTaskName = task.name;
-          }
-        });
-      }
-      else if(taskDatas.length == 1){
-        this.nextTaskName = taskDatas[0].name;
-      }
-    }
-  },
   created(){
-    
+    //dataストアにstateに設定されているscheduleをこのvueファイル内のschedule変数に格納
     this.schedule = this.$store.state.data.schedule;
-    //storeのstateにscheduleのデータが入っていない場合には/previewに遷移させる
-    console.log(this.schedule);
-    console.log("Preview");
+    //dataストアのstateにscheduleのデータが入っていない場合には/previewに遷移させる
     if(!this.schedule){
       this.MovePreview();
     }
     else{
+      //タスクデータの更新を行う
       this.updateTaskData();
     }
   },
   
-   watch:{
-    // tasks(newValue){
-    //     this.tasks = newValue;
-    //     this.totalPage = Math.ceil(this.tasks.length / this.perPage);
-    //   },
-  }
 }
 </script>
 

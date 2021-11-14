@@ -41,7 +41,7 @@
       </h1>
         <ul v-if=schedules>
           <li v-for="(schedule, i) in paginateSchedules" :key="i">
-            <el-link type="primary"@click="showDetail(schedule);">
+            <el-link type="primary"@click="showDetail(schedule)">
               <h2 class='title'>{{ schedule.name }}</h2>
             </el-link>
           </li>
@@ -65,43 +65,33 @@
 import createForm from './TodoCreate.vue'
 import detailForm from './TodoDetail.vue'
 import sortForm from './TodoSort'
-import lineApi from './Line.vue'
-import { OK, CREATED, UNPROCESSABLE_ENTITY } from '../util'
 
 export default {
   components:{
     createForm,
     detailForm,
     sortForm,
-    lineApi
   },
   data () {
     return {
-        schedules:null,
-        createDialogVisible: false,
-        detailDialogVisible: false,
-        todoListsVisible: false,
-        sortDialogVisible: false,
-        scheduleLabel:"未達成",
-        allSchedules: null,
-        clearSchedules: null,
+        schedules:null, //画面に表示する予定一覧のデータを格納する変数
+        createDialogVisible: false, //新規予定作成ダイアログの表示非表示を管理する変数
+        detailDialogVisible: false, //予定の詳細画面の表示非常時を管理する変数
+        sortDialogVisible: false, //予定のソートを行うダイアログの表示非表示を管理する変数
+        scheduleLabel:"未達成", //画面に表示する予定の種類を表す文字列を格納する変数
+        allSchedules: null, //全予定を格納する変数
+        clearSchedules: null, //達成済み予定を格納する変数
         //ぺジネーション用
         currentPage : 1,//現在のページ 
         perPage: 10, //1ページ毎の表示件数
-        
+        //詳細画面にpropsで渡すデータ
         detailData: {
-          name: '',
-          detail: '',
-          priority: '',
-          term: null,
-          id:null,
+          name: '', //予定名
+          detail: '', //詳細
+          priority: '', //優先度
+          term: null, //期限
+          id:null, //予定id
         },
-        // body:{
-        //   position: "relative",
-        //   paddingBottom: "60px",
-        //   boxSizing: "border-box",
-        //   minHeight: "100vh"
-        // },
     }
   },
   methods:{
@@ -112,12 +102,12 @@ export default {
       if(this.apiStatus){
         this.schedules = this.$store.state.data.schedules;
         this.scheduleLabel = "未達成";
-        console.log("getTodo");
       }
     },
     //達成済みを含めたすべてのスケジュールの取得
     async getAllSchedule(){
       await this.$store.dispatch('data/getAllSchedule');
+      
       if(this.apiStatus){
         this.allSchedules = this.$store.state.data.schedules;
       }
@@ -125,6 +115,7 @@ export default {
      //達成済み予定のみ取得
     async getClearSchedule(){
       await this.$store.dispatch('data/getClearSchedule');
+      
       if(this.apiStatus){
         this.clearSchedules = this.$store.state.data.schedules;
       }
@@ -134,11 +125,11 @@ export default {
       await this.getTodo();
       await this.getAllSchedule();
       await this.getClearSchedule();
-      //await this.nextTask();
     },
     //予定の新規登録
     async register(data){
       await this.$store.dispatch('data/registerSchedule', data);
+      
       if(this.apiStatus) {
         //予定の作成後に予定一覧を更新
         this.updateScheduleData();
@@ -153,6 +144,7 @@ export default {
     //予定の達成処理
     async softDelete(data){
       await this.$store.dispatch('data/deleteSchedule', data);
+      
       if (this.apiStatus) {
         //予定の達成処理後に予定一覧を再取得
         this.updateScheduleData();
@@ -162,6 +154,7 @@ export default {
     //予定の取り消し
     async forceDelete(data){
       await this.$store.dispatch('data/forceDeleteSchedule', data);
+      
       if (this.apiStatus) {
         //予定削除後にタスク一覧を更新
         this.updateScheduleData();
@@ -171,6 +164,7 @@ export default {
     //データの更新
     async updateSchedule(data){
       await this.$store.dispatch('data/updateSchedule', data);
+      
       if (this.apiStatus) {
         this.detailDialogVisible = false;
       }
@@ -192,8 +186,7 @@ export default {
           this.schedules.sort(this.compareTermDown);
         } 
       }
-      
-      console.log(this.schedules);
+    
       this.sortDialogVisible = false;
     },
     //昇順でタスクを優先度順にソート
@@ -213,53 +206,25 @@ export default {
       return new Date(b.term).getTime() - new Date(a.term).getTime();
     },
   },
+  
   created(){
     this.updateScheduleData();
   },
+  
   computed: {
      //1ページあたりのschedulesデータを返す
     paginateSchedules() {
       //第1引数には取り出しの開始位置、第2引数には取り出しを終える直前の位置を渡す
       return this.schedules.slice((this.currentPage - 1) * this.perPage, this.currentPage * this.perPage);
     },
+    //サーバー側に投げた処理が成功したかどうかを返す
     apiStatus () {
       return this.$store.state.data.apiStatus;
     },
-    // checkTerm(){
-    //   if(this.lemainDay >= 0){
-    //     return true;
-    //   }
-    //   else{
-    //     return false;
-    //   }
-    // },
-    // //予定の残り日数を算出するメソッド
-    // lemainDay(){
-    //   //期限と現在時刻をgetTime()でエポックミリ秒を取得して差分を出す
-    //   let term = new Date(this.schedule.term); 
-    //   let diff = term.getTime() - Date.now();
-    //   //日付けになるように、diffを割って変換。
-    //   var day = diff/(1000*60*60*24);
-    //   return parseInt(day);
-    // },
-    // //予定の進捗率を算出するメソッド
-    // progress(){
-    //   //達成済みタスク一覧とすべてのタスク一覧のデータがないときは処理を行わない
-    //   if(!this.clearTasks || !this.allTasks){
-    //     return;
-    //   }
-    //   //クリア済みタスクが1つ以上あるときのみ進捗率の計算を行う
-    //   if(this.clearTasks.length > 0){
-    //     return parseInt(this.clearTasks.length / this.allTasks.length * 100);
-    //   }
-    //   else{
-    //     return 0;
-    //   }
-    // },
-    
   },
 }
 </script>
+
 <style>
   .el-dropdown-link {
     cursor: pointer;
