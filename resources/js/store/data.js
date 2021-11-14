@@ -52,12 +52,10 @@ const actions = {
       context.commit('error/setCode', response.status, {root: true})
     }
   },
-  //タスクの取得
+  //未達成タスクの取得
   async getTask(context, id){
     context.commit('setApiStatus', null);
-    //未達成予定のタスクを取得する場合
     const response = await axios.get(`/api/tasks/getdata/${id}`);
-    console.log(response.data);
     if(response.status === OK){
       context.commit('setTasks', response.data);
       context.commit('setApiStatus', true);

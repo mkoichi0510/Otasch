@@ -11,17 +11,17 @@
           <el-form-item label="ユーザー名">
             <el-input v-model="updateForm.name"></el-input>
           </el-form-item>
-          <div v-if="updateErrors">
+          <div v-if="updateErrors" class="errors">
             <ul v-if="updateErrors.name">
-              <li :style="errors" v-for="msg in updateErrors.name" :key="msg" >{{ msg }}</li>
+              <li  v-for="msg in updateErrors.name" :key="msg" >{{ msg }}</li>
             </ul>
           </div>
           <el-form-item label="メールアドレス">
             <el-input v-model="updateForm.email"></el-input>
           </el-form-item>
-           <div v-if="updateErrors">
+           <div v-if="updateErrors" class="errors">
             <ul v-if="updateErrors.email">
-              <li :style="errors" v-for="msg in updateErrors.email" :key="msg" >{{ msg }}</li>
+              <li  v-for="msg in updateErrors.email" :key="msg">{{ msg }}</li>
             </ul>
           </div>
             <div class="form__button">
@@ -43,9 +43,6 @@ export default {
          name:this.$store.getters['auth/username'],
          email:this.$store.getters['auth/mail'],
        },
-        errors: {
-          color: "red",
-        },
     }
   },
   props:{
@@ -63,13 +60,14 @@ export default {
         this.clearError();
         this.updateForm.name = this.$store.getters['auth/username'];
         this.updateForm.email = this.$store.getters['auth/mail'];
-        return
+        return;
     },
     clearError(){
         this.$store.commit('auth/setUpdateErrorMessages', null);
     },
   },
   computed: {
+    //エラーメッセージの取得
     updateErrors () {
       return this.$store.state.auth.updateErrorMessages;
     },
@@ -78,9 +76,7 @@ export default {
 }
 </script>
 <style>
-  .body{
-    padding:0; 
-    margin:0;
-    height: 100%;
+  .errors{
+   color: red;
   }
 </style>

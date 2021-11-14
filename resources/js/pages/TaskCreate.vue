@@ -38,63 +38,63 @@
 
 <script>
 export default {
-  name:'createForm',
   data () {
-      
     return {
+      //タスクの新規作成時にユーザーからの入力値を格納する変数
       createForm: {
-        name: '',
-        Text: '',
-        priority: 1,
-        schedule_id: null,
+        name: '', //タスク名
+        Text: '', //タスクの詳細
+        priority: 1, //タスクの優先度
+        schedule_id: null, //タスクの結び付いているスケジュールのid
       },
+      //エラーメッセージの色
       errors: {
-          color: "red",
-        },
+        color: "red",
+      },
     }
   },
   props:{
-      createFormVisible:{
-          type:Boolean,
-          default:false,
-      },
+    //タスク新規作成ダイアログの表示非表示を管理する変数
+    createFormVisible:{
+        type:Boolean,
+        default:false,
+    },
   },
   methods:{
+    //ダイアログを閉じる処理を親コンポーネントに投げる
     handleClose() {
         this.$emit('create-form-close');
         return;
     },
+    //ダイアログに入力した値でタスクの新規作成処理を行う命令を親コンポーネントに投げる
     registerTask(){
-      console.log(this.createForm);
         this.$emit('register-task',this.createForm);
     },
+    //ダイアログのフォームを初期化するメソッド
     initialzleCreateForm(){
       this.createForm.name = '';
       this.createForm.Text = '';
       this.createForm.priority = 1;
     },
+    //エラーメッセージをリセット
     clearError(){
       this.$store.commit('data/setCreateTaskErrorMessages', null);
     },
   },
-  created(){
-    // this.clearError();
-  },
   computed: {
-    apiStatus () {
-      return this.$store.state.data.apiStatus;
-    },
+    //エラーメッセージをdataストアから取得するメソッド
     createTaskErrors () {
       return this.$store.state.data.createTaskErrorMessages;
     }
   },
   watch:{
-      createFormVisible(newValue){
-        if(newValue){
-          this.clearError();
-          this.initialzleCreateForm();
-        }
+    //タスク新規作成ダイアログが非表示から表示に切り替わった際に実行
+    createFormVisible(newValue){
+      if(newValue){
+        this.clearError();
+        this.initialzleCreateForm();
       }
+    }
   }
 }
 </script>

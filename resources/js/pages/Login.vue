@@ -22,7 +22,6 @@
               <el-row>
                 <el-button type="primary"@click="login">Login</el-button>
               </el-row>
-              <!--<button type="submit" class="button button--inverse">login</button>-->
             </div>
         </el-form>
     </div>
@@ -46,24 +45,27 @@ export default {
   methods:{
     async login(){
       // authストアのloginアクションを呼び出す
-      await this.$store.dispatch('auth/login', this.loginForm)
+      await this.$store.dispatch('auth/login', this.loginForm);
         
       if (this.apiStatus) {
         // トップページに移動する
-        this.$router.push('/home')
+        this.$router.push('/home');
       }
     },
-    clearError(){
-      this.$store.commit('auth/setLoginErrorMessages', null)
+    //エラーメッセージのリセット
+    clearErrorMessage(){
+      this.$store.commit('auth/setLoginErrorMessages', null);
     },
   },
   created(){
-    this.clearError();
+    this.clearErrorMessage();
   },
   computed: {
+    //サーバー側に投げた処理が成功したかどうかを返す
     apiStatus () {
-      return this.$store.state.auth.apiStatus
+      return this.$store.state.auth.apiStatus;
     },
+    //エラーメッセージの取得
     loginErrors () {
       return this.$store.state.auth.loginErrorMessages;
     }

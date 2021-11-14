@@ -25,35 +25,30 @@
 
 <script>
 export default {
-  name:'sortForm',
   data () {
-      
     return {
-      type: '1',
-      order: '1',
+      type: '1',//ソートの種類を示す変数　1:優先度 2:期限
+      order: '1', //ソートの順序を示す変数 1:昇順 2:降順
     }
   },
   props:{
-      sortFormVisible:{
-          type:Boolean,
-          default:false,
-      },
-      sortSchedules:{
-        type:Function,
-      }
-  },
-  methods:{
-    handleClose() {
-        this.$emit('sort-form-close');
-        return
+    //ソートダイアログの表示非表示を管理する変数
+    sortFormVisible:{
+        type:Boolean,
+        default:false,
     },
-  },
-  computed: {
-    apiStatus () {
-      return this.$store.state.auth.apiStatus
+    //ソート処理を行うメソッド
+    sortSchedules:{
+      type:Function,
     }
   },
-  
+  methods:{
+    //ダイアログを閉じる処理を親コンポーネントに投げる
+    handleClose() {
+        this.$emit('sort-form-close');
+        return;
+    },
+  },
 }
 </script>
 

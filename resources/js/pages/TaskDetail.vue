@@ -62,60 +62,63 @@ export default {
   },
   data(){
     return{
-      editForm: this.detailData,
-      detailMode:true,
-      checkFormVisible:false,
-      checkMessage:"",
+      editForm: this.detailData,//タスクの詳細画面で表示する予定データを格納する変数
+      detailMode:true, //タスクの詳細ダイアログの表示非表示を管理する変数
+      checkFormVisible:false, //確認画面ダイアログの表示非表示を管理する変数
+      checkMessage:"", //確認画面ダイアログで表示するメッセージを格納する変数
+      //エラーメッセージの色
       errors: {
-          color: "red",
-        },
+        color: "red",
+      },
     }
   },
 
   props:{
-      detailFormVisible:{
-          type:Boolean,
-          default:false,
-      },
-      detailData:{
-        type:Object,
-        default:null,
-      },
-      schedule:{
-        type:Object,
-        default:null,
-      }
+    //タスク詳細ダイアログの表示非表示を管理する変数
+    detailFormVisible:{
+        type:Boolean,
+        default:false,
+    },
+    //選択した予定データ
+    detailData:{
+      type:Object,
+      default:null,
+    },
   },
   methods:{
+    //タスク詳細ダイアログを閉じる処理をする命令を親コンポーネントに投げるメソッド
     handleClose() {
-        this.$emit('detail-form-close');
-        return;
+      this.$emit('detail-form-close');
+      return;
     },
+    //タスクの達成処理をする命令を親コンポーネントに投げるメソッド
     deleteTask(){
-      console.log(this.editForm);
-        this.$emit('delete-task',this.editForm);
+      this.$emit('delete-task',this.editForm);
     },
+    //タスクの更新処理をする命令を親コンポーネントに投げるメソッド
     updateTask(){
       this.$emit('update-task',this.editForm);
     },
+    //タスクの物理削除をする命令を親コンポーネントに投げるメソッド
     forceDelete(){
       this.$emit('force-delete', this.editForm);
     },
+    //確認ダイアログに表示するメッセージを設定し、確認ダイアログを表示するメソッド
     openCheckForm(){
       this.checkMessage = "本当にこのタスクを削除してもよろしいですか。"
       this.checkFormVisible = true;
     },
+    //エラーメッセージのリセット
     clearError(){
       this.$store.commit('data/setCreateTaskErrorMessages', null);
     },
   },
   computed: {
-    apiStatus () {
-      return this.$store.state.data.apiStatus;
-    },
+    //更新処理のエラーメッセージを取得するメソッド
     updateTaskErrors () {
       return this.$store.state.data.createTaskErrorMessages;
     },
+    //propsで受け取ったタスクが達成済みかどうかを判定しその結果を返すメソッド　true:未達成　false:達成済み
     checkTaskState(){
       if(!this.editForm.deleted_at){
         return true;
@@ -123,24 +126,24 @@ export default {
         return false;
       }
     },
+    //scheduleに格納されている予定が達成済みかどうかを判定しその結果を返すメソッド　true:未達成　false:達成済み
     checkScheduleState(){
-      if(!this.schedule.deleted_at){
+      if(!this.$store.state.data.schedule.deleted_at){
         return true;
       }else{
         return false;
       }
     },
-    
   },
   watch:{
-      detailFormVisible(newValue){
-        if(newValue){
-          this.detailMode = true;
-          this.editForm = this.detailData;
-          this.clearError();
-        }
-      },
-      
+    //タスク詳細ダイアログが非表示から表示に切り替わった際に実行
+    detailFormVisible(newValue){
+      if(newValue){
+        this.detailMode = true;
+        this.editForm = this.detailData;
+        this.clearError();
+      }
+    },
   }
 }
 </script>

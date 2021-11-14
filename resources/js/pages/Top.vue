@@ -86,7 +86,7 @@
 export default {
   data () {
     return {
-      limitDay:10,
+      limitDay:10,　//期限が迫っている予定一覧で用いる
     }
   },
   methods:{

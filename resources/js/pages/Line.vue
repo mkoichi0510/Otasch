@@ -9,14 +9,14 @@ import { OK } from '../util'
   export default {
     data() {
       return {
-        state : this.createState(), //
+        state : this.createState(), //Lineログインで使うランダム文字列格納用
+        //Lineログインで用いるデータ群
         params : {
           url : null, //ユーザーがLineにログインする画面に遷移するためのURLを格納
           code : null,　//ユーザーがLineにログインした際に返されるcodeの値を格納
           state : null, //ユーザーがLineにログインした際に返されるstateの値を格納
           access_token : null, //取得したアクセストークンを格納
         },
-        responseData : null,
       };
     },
     props:{
