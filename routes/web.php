@@ -10,9 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Route::group(['middleware' => 'auth'], function() {
-//     Route::get('/home', fn() => view('index'));
-// });
-Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-
+// APIのURL以外のリクエストに対してはindexテンプレートを返す
+// 画面遷移はフロントエンドのVueRouterが制御する
 Route::get('/{any?}', fn() => view('index'))->where('any', '.+');

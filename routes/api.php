@@ -59,9 +59,4 @@ Route::prefix('tasks')->group(function(){
     Route::put('/update/{task}', 'TaskController@updateTask');
 });
 
-// //lineuserからのメッセージの受信
-// Route::post('/linemessage/message', 'LineMessageApiController@getUserMessage');
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
 
