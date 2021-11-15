@@ -73994,7 +73994,7 @@ var render = function() {
                               attrs: { type: "primary" },
                               on: { click: _vm.MoveTask }
                             },
-                            [_vm._v("小タスク一覧")]
+                            [_vm._v("タスク一覧")]
                           )
                         : _c(
                             "el-button",
