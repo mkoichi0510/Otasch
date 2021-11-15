@@ -26,8 +26,8 @@
 <p>[2]予定の完了ボタンを押すと予定の達成処理を行う</p>
 <p>また、予定の取り消しボタンを押すと確認ダイアログが開くので、ダイアログ内の続行ボタンを押すと予定が削除される</p>
 
-![2021-11-15 (23)](https://user-images.githubusercontent.com/85385454/141770929-c74bd8e2-ba33-49c2-8f39-2a4a38965c98.png)
-![2021-11-15 (25)](https://user-images.githubusercontent.com/85385454/141771078-ddac21d6-bf5d-4d8e-98d5-4c4a80269541.png)
+![2021-11-15 (55)](https://user-images.githubusercontent.com/85385454/141775939-7b9e0dbf-18f1-4f32-a0c9-fee766bab8dd.png)
+![2021-11-15 (56)](https://user-images.githubusercontent.com/85385454/141775947-b83eadeb-f0bb-41d0-b971-52f20d4b08a7.png)
 
 
 <h4>タスクの達成・削除</h4>
