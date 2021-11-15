@@ -4451,7 +4451,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       var taskDatas = null; //優先度が一番高いタスクを格納
 
-      while (!taskDatas && pri > 0) {
+      while ((!taskDatas || taskDatas.length == 0) && pri > 0) {
         taskDatas = this.tasks.filter(function (task) {
           return task.priority == pri;
         });

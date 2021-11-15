@@ -212,7 +212,7 @@ export default {
       //優先度が一番高いタスクの格納用変数
       let taskDatas = null;
       //優先度が一番高いタスクを格納
-      while(!taskDatas && pri > 0){
+      while((!taskDatas || taskDatas.length == 0) &&  pri > 0){
         taskDatas = this.tasks.filter(task => {
           return task.priority == pri;
         });
