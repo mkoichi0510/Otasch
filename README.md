@@ -10,8 +10,8 @@
 <p>[2]予定一覧から作成した予定を選択して詳細ダイアログを開き、タスク一覧ボタンを押してタスク一覧画面を開く</p>
 
 ![2021-11-15 (43)](https://user-images.githubusercontent.com/85385454/141775140-95e6cea3-50bf-4a74-96a3-b7c0a9ccd681.png)
-![2021-11-15 (23)](https://user-images.githubusercontent.com/85385454/141770754-ca790eea-eda3-4297-a42a-b340185d3f38.png)
-![2021-11-15 (33)](https://user-images.githubusercontent.com/85385454/141772357-7215fbb4-851b-4513-b718-ce2cfb7e05a6.png)
+![2021-11-15 (46)](https://user-images.githubusercontent.com/85385454/141775351-a04ca9ad-9d6b-46f4-8c51-2221fb388411.png)
+![2021-11-15 (47)](https://user-images.githubusercontent.com/85385454/141775358-a6f773eb-5c1a-480f-a8ea-058422ffdf75.png)
 
 <p>[3]タスク一覧のタスクの新規作成ボタンを押すとタスク新規作成ダイアログが開くので、「タスク名、タスクの優先度、タスクの詳細」の3項目を記入して作成ボタンを押す</p>
 
