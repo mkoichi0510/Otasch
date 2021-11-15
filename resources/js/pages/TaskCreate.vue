@@ -28,7 +28,7 @@
           </div>
             <div class="form__button">
               <el-row>
-                <el-button type="primary"@click="registerTask">タスクの新規作成</el-button>
+                <el-button type="primary"@click="registerTask">作成</el-button>
               </el-row>
             </div>
         </el-form>
