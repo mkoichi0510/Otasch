@@ -15,8 +15,8 @@
 
 <p>[3]タスク一覧のタスクの新規作成ボタンを押すとタスク新規作成ダイアログが開くので、「タスク名、タスクの優先度、タスクの詳細」の3項目を記入して作成ボタンを押す</p>
 
-![2021-11-15 (8)](https://user-images.githubusercontent.com/85385454/141726995-a5fa7e75-a452-4fa7-9c6e-749cc99c6a93.png)
-![2021-11-15 (10)](https://user-images.githubusercontent.com/85385454/141727195-a6e41e90-81c0-41b7-a933-af020c8bc625.png)
+![2021-11-15 (50)](https://user-images.githubusercontent.com/85385454/141775703-be86a09d-55ff-4222-822a-66194fd2558e.png)
+![2021-11-15 (51)](https://user-images.githubusercontent.com/85385454/141775713-7e022a3f-d3cd-4442-86dc-aa576a811391.png)
 
 <p>これらの操作で予定、タスクの新規作成が行える</p>
 
