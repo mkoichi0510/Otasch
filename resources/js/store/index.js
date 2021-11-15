@@ -1,9 +1,9 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
 
-import auth from './auth'
-import error from './error'
-import data from './data'
+import auth from './auth';
+import error from './error';
+import data from './data';
 
 Vue.use(Vuex);
 

@@ -1,19 +1,5 @@
 <template>
   <div　class="body">
-    <nav class="navbar">
-      <el-menu
-        default-active="activeIndex"
-        class="el-menu-demo"
-        mode="horizontal"
-        background-color="#545c64"
-        text-color="#fff"
-        active-text-color="#545c64"
-      >
-        <el-menu-item activeIndex="1">
-          Otasche
-        </el-menu-item>
-      </el-menu>
-    </nav>
     <div class="info">
       <p>
         <h2>このアプリは予定管理アプリです</h2>
@@ -92,7 +78,7 @@ export default {
   methods:{
      //ログイン/登録画面へ移動
     MoveLogin(){
-      this.$router.push("/login");
+      this.$router.push("/login").catch(() => {});;
     },
   }
 }
