@@ -36,7 +36,7 @@
             <el-dropdown-item @click.native="schedules=allSchedules, scheduleLabel='全'">全予定</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-button type="primary"@click="sortDialogVisible=true" v-if="schedules.length > 1">Sort</el-button>
+        <el-button type="primary"@click="sortDialogVisible=true" v-if="schedules.length > 1">並び替え</el-button>
         <el-button type="primary"@click="createDialogVisible=true" style="float: right">予定の新規作成</el-button>
       </h1>
         <ul v-if=schedules>

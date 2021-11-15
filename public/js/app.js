@@ -72550,7 +72550,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("Sort")]
+                      [_vm._v("並び替え")]
                     )
                   : _vm._e(),
                 _vm._v(" "),
