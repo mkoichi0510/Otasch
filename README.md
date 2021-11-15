@@ -9,7 +9,7 @@
 
 <p>[2]予定一覧から作成した予定を選択して詳細ダイアログを開き、タスク一覧ボタンを押してタスク一覧画面を開く</p>
 
-![2021-11-15 (4)](https://user-images.githubusercontent.com/85385454/141726638-7fde5d57-1def-42dd-8aeb-aeda01556e1a.png)
+![2021-11-15 (43)](https://user-images.githubusercontent.com/85385454/141775140-95e6cea3-50bf-4a74-96a3-b7c0a9ccd681.png)
 ![2021-11-15 (23)](https://user-images.githubusercontent.com/85385454/141770754-ca790eea-eda3-4297-a42a-b340185d3f38.png)
 ![2021-11-15 (33)](https://user-images.githubusercontent.com/85385454/141772357-7215fbb4-851b-4513-b718-ce2cfb7e05a6.png)
 
