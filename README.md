@@ -37,7 +37,7 @@
 <p>[4]タスクの完了ボタンを押すとタスクの達成処理を行う</p>
 <p>また、タスクの取り消しボタンを押すと確認ダイアログが開くので、ダイアログ内の続行ボタンを押すとタスクが削除される</p>
 
-![2021-11-15 (23)](https://user-images.githubusercontent.com/85385454/141770929-c74bd8e2-ba33-49c2-8f39-2a4a38965c98.png)
+![2021-11-15 (55)](https://user-images.githubusercontent.com/85385454/141776139-bb7fd1c2-5608-45bf-8616-72168d6e5d58.png)
 ![2021-11-15 (27)](https://user-images.githubusercontent.com/85385454/141771798-207ea075-feac-4321-8e0c-15490d641bf1.png)
 ![2021-11-15 (29)](https://user-images.githubusercontent.com/85385454/141771884-e46f299d-1b20-4dd2-b879-fe528656aded.png)
 ![2021-11-15 (31)](https://user-images.githubusercontent.com/85385454/141771978-8986dc25-a7f0-415c-8fc1-85bba1fd53cb.png)
