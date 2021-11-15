@@ -3,5 +3,7 @@
 <h3>(2)詳細</h3>
 <h4>2-1:利用方法</h4>
 <p>[1]予定新規作成ダイアログから、「予定名、予定の優先度、予定の期限、予定の詳細」の4項目を記入して作成ボタンを押す</p>
-
-![2021-11-15 (2)](https://user-images.githubusercontent.com/85385454/141724813-51739bc5-7601-4d2c-9052-d135ca1d3dbd.png)
+![2021-11-15 (2)](https://user-images.githubusercontent.com/85385454/141726449-f6205534-12bb-4f24-80a1-392069bfa661.png)
+<p>[2]予定一覧から作成した予定を選択して詳細ダイアログを開き、タスク一覧ボタンを押してタスク一覧画面を開く</p>
+![2021-11-15 (4)](https://user-images.githubusercontent.com/85385454/141726638-7fde5d57-1def-42dd-8aeb-aeda01556e1a.png)
+![2021-11-15 (6)](https://user-images.githubusercontent.com/85385454/141726697-e02a2b7c-c821-495d-b191-4941b9dfbc14.png)
