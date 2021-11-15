@@ -3709,6 +3709,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     //トップ画面に移動
@@ -3736,6 +3737,10 @@ __webpack_require__.r(__webpack_exports__);
     //ユーザーがログインしているかの判定
     isLogin: function isLogin() {
       return this.$store.getters['auth/check'];
+    },
+    //現在のページのインデックス番号を取得
+    getIndex: function getIndex() {
+      return this.$store.state.data.pageIndex;
     }
   }
 });
@@ -3905,6 +3910,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     isLineLogin: function isLineLogin() {
       return this.$store.getters['auth/checkLineLogin'];
     }
+  },
+  created: function created() {
+    //現在のページを表す値の設定
+    this.$store.commit('data/setPageIndex', "5");
   }
 });
 
@@ -4083,6 +4092,10 @@ __webpack_require__.r(__webpack_exports__);
     return {
       activeName: 'first'
     };
+  },
+  created: function created() {
+    //現在のページを表す値の設定
+    this.$store.commit('data/setPageIndex', "1");
   }
 });
 
@@ -4557,7 +4570,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   created: function created() {
     //予定およびタスクの初期設定
-    this.InitializeData();
+    this.InitializeData(); //現在のページを表す値の設定
+
+    this.$store.commit('data/setPageIndex', "2");
   },
   watch: {
     limitDay: function limitDay() {
@@ -5024,7 +5039,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   created: function created() {
     //達成済み予定の取得
-    this.initializeData();
+    this.initializeData(); //現在のページを表す値の設定
+
+    this.$store.commit('data/setPageIndex', "4");
   },
   watch: {
     //selectDateの値が変わるたびに予定の格納を行う
@@ -5529,7 +5546,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   created: function created() {
-    this.updateScheduleData();
+    this.updateScheduleData(); //現在のページを表す値の設定
+
+    this.$store.commit('data/setPageIndex', "3");
   },
   computed: {
     //1ページあたりのschedulesデータを返す
@@ -6043,7 +6062,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   created: function created() {
     //dataストアにstateに設定されているscheduleをこのvueファイル内のschedule変数に格納
-    this.schedule = this.$store.state.data.schedule; //dataストアのstateにscheduleのデータが入っていない場合には/previewに遷移させる
+    this.schedule = this.$store.state.data.schedule; //現在のページを表す値の設定
+
+    this.$store.commit('data/setPageIndex', "3"); //dataストアのstateにscheduleのデータが入っていない場合には/previewに遷移させる
 
     if (!this.schedule) {
       this.MovePreview();
@@ -6920,6 +6941,10 @@ __webpack_require__.r(__webpack_exports__);
       this.$router.push("/login")["catch"](function () {});
       ;
     }
+  },
+  created: function created() {
+    //現在のページを表す値の設定
+    this.$store.commit('data/setPageIndex', "1");
   }
 });
 
@@ -71196,7 +71221,8 @@ var render = function() {
             mode: "horizontal",
             "background-color": "#545c64",
             "text-color": "#fff",
-            "active-text-color": "#ffd04b"
+            "active-text-color": "#ffd04b",
+            "default-active": _vm.getIndex
           }
         },
         [
@@ -93380,6 +93406,7 @@ var routes = [{
   path: '/task',
   name: 'task',
   component: _pages_PreviewTask_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+  // props:true,
   beforeEnter: function beforeEnter(to, from, next) {
     if (_store__WEBPACK_IMPORTED_MODULE_4__["default"].getters['auth/check']) {
       next();
@@ -93844,7 +93871,8 @@ var state = {
   createScheduleErrorMessages: null,
   schedules: null,
   schedule: null,
-  tasks: null
+  tasks: null,
+  pageIndex: "1"
 };
 var getters = {};
 var mutations = {
@@ -93865,6 +93893,9 @@ var mutations = {
   },
   setCreateScheduleErrorMessages: function setCreateScheduleErrorMessages(state, messages) {
     state.createScheduleErrorMessages = messages;
+  },
+  setPageIndex: function setPageIndex(state, index) {
+    state.pageIndex = index;
   }
 };
 var actions = {

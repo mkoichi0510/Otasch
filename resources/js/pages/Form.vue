@@ -23,6 +23,10 @@ import lineApi from './Line.vue';
       return {
         activeName: 'first'
       };
-    }
+    },
+    created(){
+      //現在のページを表す値の設定
+      this.$store.commit('data/setPageIndex', "1");
+  },
   };
 </script>

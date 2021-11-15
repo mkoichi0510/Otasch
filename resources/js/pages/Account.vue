@@ -112,7 +112,11 @@ export default {
       return this.$store.getters['auth/checkLineLogin'];
     },
     
-  }
+  },
+  created(){
+    //現在のページを表す値の設定
+    this.$store.commit('data/setPageIndex', "5");
+  },
   
 }
 </script>

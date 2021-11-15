@@ -80,6 +80,10 @@ export default {
     MoveLogin(){
       this.$router.push("/login").catch(() => {});;
     },
-  }
+  },
+  created(){
+    //現在のページを表す値の設定
+    this.$store.commit('data/setPageIndex', "1");
+  },
 }
 </script>
