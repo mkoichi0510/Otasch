@@ -122,7 +122,7 @@
 <h2>DB</h2>
 <p>MySQL</p>
 <h2>インフラ・その他</h2>
-<p>heroku,Lineログイン</p>
+<p>heroku,LineログインAPI</p>
 <h2>開発環境</h2>
 AWS Cloud9
 <h1>(6)使用した技術の選定理由</h1>
