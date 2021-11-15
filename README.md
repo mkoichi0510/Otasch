@@ -54,15 +54,15 @@
 ![2021-11-15 (15)](https://user-images.githubusercontent.com/85385454/141729704-fa17f262-c1c6-4680-a77c-dbd06e80a185.png)
 
 
-<h4>予定一覧の構成</h4>
+<h4>予定一覧画面の構成</h4>
 <p>この画面では未達成予定、達成済み予定、全予定の3種類の予定一覧を表示する</p>
 <p>表示切替にカーソルを合わせると未達成予定、達成済み予定、全予定の3種類が選択でき、選択した種類の予定一覧を画面に表示する</p>
 
-![2021-11-15 (37)](https://user-images.githubusercontent.com/85385454/141773573-c5c1f7f9-13db-4421-9810-a127f74ef1ce.png)
+![2021-11-15 (59)](https://user-images.githubusercontent.com/85385454/141776367-e75042e2-f74b-48b2-a003-99e4dbe5fc06.png)
 
 <p>また、ソートボタンを押すとダイアログが開くので、ソートさせたい条件を選択し、実行ボタンを押すと表示している予定一覧がソートされる</p>
 
-![2021-11-15 (39)](https://user-images.githubusercontent.com/85385454/141774167-a5b271bc-133b-44e5-9119-5f33ab6e7cbe.png)
+![2021-11-15 (60)](https://user-images.githubusercontent.com/85385454/141776377-a9740c96-69c6-41c1-8fee-ecd4dff2d4b5.png)
 
 
 <p>ホーム画面下部では、期限が迫っている予定一覧を表示する</p>
