@@ -54,7 +54,7 @@
             <div class="form__button">
               <el-row>
                 <el-button v-if="detailMode && checkScheduleState" type="primary"@click="deleteSchedule">予定の完了</el-button>
-                <el-button v-if="detailMode" type="danger" @click="openCheckForm" style="float: center">タスクの取り消し</el-button>
+                <el-button v-if="detailMode" type="danger" @click="openCheckForm" style="float: center">予定の取り消し</el-button>
                 <el-button v-if="detailMode" type="primary"@click="MoveTask"　style="float: right">小タスク一覧</el-button>
                 <el-button v-else type="primary"@click="updateSchedule">更新</el-button>
               </el-row>

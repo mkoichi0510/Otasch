@@ -73982,7 +73982,7 @@ var render = function() {
                               attrs: { type: "danger" },
                               on: { click: _vm.openCheckForm }
                             },
-                            [_vm._v("タスクの取り消し")]
+                            [_vm._v("予定の取り消し")]
                           )
                         : _vm._e(),
                       _vm._v(" "),
