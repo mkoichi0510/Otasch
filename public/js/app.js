@@ -73285,7 +73285,7 @@ var render = function() {
                           attrs: { type: "primary" },
                           on: { click: _vm.registerTask }
                         },
-                        [_vm._v("タスクの新規作成")]
+                        [_vm._v("作成")]
                       )
                     ],
                     1
@@ -73729,7 +73729,7 @@ var render = function() {
                           attrs: { type: "primary" },
                           on: { click: _vm.registerSchedule }
                         },
-                        [_vm._v("Create")]
+                        [_vm._v("作成")]
                       )
                     ],
                     1
