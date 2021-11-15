@@ -328,6 +328,8 @@ export default {
   created(){
     //予定およびタスクの初期設定
     this.InitializeData();
+    //現在のページを表す値の設定
+    this.$store.commit('data/setPageIndex', "2");
   },
   watch:{
       limitDay(){

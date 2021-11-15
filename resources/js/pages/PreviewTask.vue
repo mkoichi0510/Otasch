@@ -316,6 +316,8 @@ export default {
   created(){
     //dataストアにstateに設定されているscheduleをこのvueファイル内のschedule変数に格納
     this.schedule = this.$store.state.data.schedule;
+    //現在のページを表す値の設定
+    this.$store.commit('data/setPageIndex', "3");
     //dataストアのstateにscheduleのデータが入っていない場合には/previewに遷移させる
     if(!this.schedule){
       this.MovePreview();

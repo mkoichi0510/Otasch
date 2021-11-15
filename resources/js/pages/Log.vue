@@ -168,6 +168,8 @@ export default {
   created(){
     //達成済み予定の取得
     this.initializeData();
+    //現在のページを表す値の設定
+    this.$store.commit('data/setPageIndex', "4");
   },
   watch:{
      //selectDateの値が変わるたびに予定の格納を行う

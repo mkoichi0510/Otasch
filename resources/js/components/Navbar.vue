@@ -6,6 +6,7 @@
       background-color="#545c64"
       text-color="#fff"
       active-text-color="#ffd04b"
+      :default-active="getIndex"
     >
     <el-menu-item index="1" @click="MoveTop">
       Otasche
@@ -55,6 +56,10 @@ export default {
     isLogin () {
       return this.$store.getters['auth/check'];
     },
+    //現在のページのインデックス番号を取得
+    getIndex(){
+      return this.$store.state.data.pageIndex;
+    }
   }
 }
 </script>

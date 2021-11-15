@@ -7,6 +7,7 @@ const state = {
     schedules:null,
     schedule:null,
     tasks:null,
+    pageIndex:"1",
 }
 
 const getters = {
@@ -32,6 +33,9 @@ const mutations = {
   setCreateScheduleErrorMessages (state, messages) {
     state.createScheduleErrorMessages = messages;
   },
+  setPageIndex (state, index){
+    state.pageIndex = index;
+  }
 }
 
 const actions = {
