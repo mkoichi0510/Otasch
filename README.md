@@ -1,7 +1,7 @@
 <h1>アプリケーション名</h1>
 <h3>Otasche</h3>
 <h1>アプリケーションのURL</h1>
-<h3><a :href="https://otasche.herokuapp.com/">Otasche<a></h3>
+<h3>https://otasche.herokuapp.com/</h3>
 <h1>(1)概要</h1>
 <p>ユーザーの予定の管理、達成、記録をサポートするアプリ</p>
 <h1>(2)詳細</h1>
