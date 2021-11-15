@@ -10,6 +10,7 @@
 
 ![2021-11-15 (4)](https://user-images.githubusercontent.com/85385454/141726638-7fde5d57-1def-42dd-8aeb-aeda01556e1a.png)
 ![2021-11-15 (23)](https://user-images.githubusercontent.com/85385454/141770754-ca790eea-eda3-4297-a42a-b340185d3f38.png)
+![2021-11-15 (33)](https://user-images.githubusercontent.com/85385454/141772357-7215fbb4-851b-4513-b718-ce2cfb7e05a6.png)
 
 
 <p>[3]タスク新規作成ダイアログから、「タスク名、タスクの優先度、タスクの詳細」の3項目を記入して作成ボタンを押す</p>
