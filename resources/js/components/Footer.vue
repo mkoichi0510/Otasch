@@ -1,12 +1,17 @@
 <template>
   <el-footer  class="footer">
     <div class="button_wrapper">
-      <div class="logined"  v-if="isLogin">
-        <button  @click="logout">Logout</button>
-      </div>
-      <RouterLink v-else class="button button--link" to="/login">
-        Login / Register
-      </RouterLink>
+      <span>
+        <div style="float: right">©2021 町田晃一</div>
+        <div class="logined"  v-if="isLogin">
+          <button  @click="logout">Logout</button>
+        </div>
+        <div v-else class="unLogin" >
+          <RouterLink to="/login">
+            Login / Register
+          </RouterLink>
+        </div>
+      </span>
     </div>
   </el-footer>
 </template>
@@ -37,9 +42,8 @@ export default {
 
 <style>
   .el-footer{
-    background-color: #31a9ee; /* フッターの背景色を指定する */
+    background-color: #545c64; /* フッターの背景色を指定する */
     color: #FFFFFF; /* フッターのフォントの色を指定する */
-    
   }
   .button_wrapper{
      text-align:center;

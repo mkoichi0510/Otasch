@@ -1,4 +1,4 @@
-import { OK, CREATED, UNPROCESSABLE_ENTITY} from '../util'
+import { OK, CREATED, UNPROCESSABLE_ENTITY} from '../util';
 
 const state = {
     user: null,
@@ -40,7 +40,6 @@ const mutations = {
     state.createTaskErrorMessages = messages;
   },
   setLineClientData(state, data){
-    console.log(data.client_id);
     state.line_client_id = data.client_id;
     state.line_client_callback = data.callback;
     state.line_client_secret = data.client_secret;
@@ -61,9 +60,9 @@ const actions = {
     
     context.commit('setApiStatus', false)
     if(response.status === UNPROCESSABLE_ENTITY){
-      context.commit('setRegisterErrorMessages', response.data.errors)
+      context.commit('setRegisterErrorMessages', response.data.errors);
     }else{
-      context.commit('error/setCode', response.status, {root: true})
+      context.commit('error/setCode', response.status, {root: true});
     }
   },
   //ラインアカウントでの会員登録
@@ -71,57 +70,53 @@ const actions = {
     context.commit('setApiStatus', null);
     const response = await axios.post('/api/linelogin/register', data);
     const response2 = await axios.post('/api/register', response.data);
-    console.log(response2.status);
     
     //登録またはログイン成功時
     if(response2.status === CREATED || response2.status === OK){
       context.commit('setUser', response2.data);
       context.commit('setApiStatus', true);
-      console.log(response2.data);
       return false;
     }
     
     context.commit('setApiStatus', false)
     if(response2.status === UNPROCESSABLE_ENTITY){
-      context.commit('setRegisterErrorMessages', response2.data.errors)
+      context.commit('setRegisterErrorMessages', response2.data.errors);
     }else{
-      context.commit('error/setCode', response2.status, {root: true})
+      context.commit('error/setCode', response2.status, {root: true});
     }
   },
   
   //通常ログイン
   async login (context, data) {
     context.commit('setApiStatus', null)
-    const response = await axios.post('/api/login', data)
-    .catch(err => err.response || err)
+    const response = await axios.post('/api/login', data);
     if (response.status === OK) {
-      context.commit('setUser', response.data)
-      context.commit('setApiStatus', true)
-      console.log(response.data);//ユーザーオブジェクトを渡せればOK
-      return false
+      context.commit('setUser', response.data);
+      context.commit('setApiStatus', true);
+      return false;
     }
 
-    context.commit('setApiStatus', false)
+    context.commit('setApiStatus', false);
     if (response.status === UNPROCESSABLE_ENTITY) {
-      context.commit('setLoginErrorMessages', response.data.errors)
+      context.commit('setLoginErrorMessages', response.data.errors);
     } else {
-      context.commit('error/setCode', response.status, { root: true })
+      context.commit('error/setCode', response.status, { root: true });
     }
   },
   
   //ログアウト
   async logout (context) {
-    context.commit('setApiStatus', null)
-    const response = await axios.post('/api/logout')
+    context.commit('setApiStatus', null);
+    const response = await axios.post('/api/logout');
     
     if(response.status === OK){
-      context.commit('setApiStatus', true)
-      context.commit('setUser', null)
-      return false
+      context.commit('setApiStatus', true);
+      context.commit('setUser', null);
+      return false;
     }
     
-    context.commit('setApiStatus', false)
-    context.commit('error/setCode', response.status, {root: true })
+    context.commit('setApiStatus', false);
+    context.commit('error/setCode', response.status, {root: true });
   },
   
   //ラインアカウントの物理削除
@@ -143,37 +138,33 @@ const actions = {
   async getLineClientData(context){
     context.commit('setApiStatus', null);
     const response = await axios.get(`/api/linelogin/data`);
-    console.log(response.data);
     if(response.status === OK){
       context.commit('setLineClientData', response.data);
       context.commit('setApiStatus', true);
-      return false
+      return false;
     }
     
-    context.commit('setApiStatus', false)
+    context.commit('setApiStatus', false);
     if(response.status === UNPROCESSABLE_ENTITY){
-      //context.commit('setUpdateErrorMessages', response.data.errors)
     }else{
-      context.commit('error/setCode', response.status, {root: true})
+      context.commit('error/setCode', response.status, {root: true});
     }
   },
   
   //ログインユーザーチェック
   async currentUser (context) {
-    console.log("ログインユーザーチェック");
-    context.commit('setApiStatus', null)
-    const response = await axios.get('/api/user')
-    console.log(response.data);
-    const user = response.data || null
+    context.commit('setApiStatus', null);
+    const response = await axios.get('/api/user');
+    const user = response.data || null;
     
     if(response.status === OK){
-      context.commit('setUser', user)
-      context.commit('setApiStatus', true)
-      return false
+      context.commit('setUser', user);
+      context.commit('setApiStatus', true);
+      return false;
     }
     
-    context.commit('setApiStatus', false)
-    context.commit('error/setCode', response.status, { root: true} )
+    context.commit('setApiStatus', false);
+    context.commit('error/setCode', response.status, { root: true} );
   },
   
   //ユーザー名の変更
@@ -181,16 +172,16 @@ const actions = {
     context.commit('setApiStatus', null);
     const response = await axios.put('/api/update', data);
     if(response.status === OK){
-      context.commit('setUser', response.data)
-      context.commit('setApiStatus', true)
-      return false
+      context.commit('setUser', response.data);
+      context.commit('setApiStatus', true);
+      return false;
     }
     
     context.commit('setApiStatus', false)
     if(response.status === UNPROCESSABLE_ENTITY){
-      context.commit('setUpdateErrorMessages', response.data.errors)
+      context.commit('setUpdateErrorMessages', response.data.errors);
     }else{
-      context.commit('error/setCode', response.status, {root: true})
+      context.commit('error/setCode', response.status, {root: true});
     }
   },
 }

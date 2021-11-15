@@ -1,4 +1,4 @@
-import { OK, CREATED, UNPROCESSABLE_ENTITY} from '../util'
+import { OK, CREATED, UNPROCESSABLE_ENTITY} from '../util';
 
 const state = {
     apiStatus: null,
@@ -39,17 +39,16 @@ const actions = {
   async registerTask (context, data) {
     context.commit('setApiStatus', null);
     const response = await axios.post('/api/tasks/register', data);
-    console.log(response.status);
     if(response.status === CREATED){
       context.commit('setApiStatus', true);
       return false;
     }
     
-    context.commit('setApiStatus', false)
+    context.commit('setApiStatus', false);
     if(response.status === UNPROCESSABLE_ENTITY){
       context.commit('setCreateTaskErrorMessages', response.data.errors);
     }else{
-      context.commit('error/setCode', response.status, {root: true})
+      context.commit('error/setCode', response.status, {root: true});
     }
   },
   //未達成タスクの取得
@@ -59,14 +58,13 @@ const actions = {
     if(response.status === OK){
       context.commit('setTasks', response.data);
       context.commit('setApiStatus', true);
-      return false
+      return false;
     }
     
     context.commit('setApiStatus', false)
     if(response.status === UNPROCESSABLE_ENTITY){
-      //context.commit('setUpdateErrorMessages', response.data.errors)
     }else{
-      context.commit('error/setCode', response.status, {root: true})
+      context.commit('error/setCode', response.status, {root: true});
     }
   },
   
@@ -77,14 +75,13 @@ const actions = {
     if(response.status === OK){
       context.commit('setTasks', response.data);
       context.commit('setApiStatus', true);
-      return false
+      return false;
     }
     
     context.commit('setApiStatus', false)
     if(response.status === UNPROCESSABLE_ENTITY){
-      //context.commit('setUpdateErrorMessages', response.data.errors)
     }else{
-      context.commit('error/setCode', response.status, {root: true})
+      context.commit('error/setCode', response.status, {root: true});
     }
   },
   
@@ -95,14 +92,13 @@ const actions = {
     if(response.status === OK){
       context.commit('setTasks', response.data);
       context.commit('setApiStatus', true);
-      return false
+      return false;
     }
     
     context.commit('setApiStatus', false);
     if(response.status === UNPROCESSABLE_ENTITY){
-      //context.commit('setUpdateErrorMessages', response.data.errors)
     }else{
-      context.commit('error/setCode', response.status, {root: true})
+      context.commit('error/setCode', response.status, {root: true});
     }
   },
   
@@ -119,7 +115,7 @@ const actions = {
     if(response.status === UNPROCESSABLE_ENTITY) {
       context.commit('setCreateTaskErrorMessages', response.data.errors);
     }else{
-      context.commit('error/setCode', response.status, {root: true})
+      context.commit('error/setCode', response.status, {root: true});
     }
   },
   
@@ -136,13 +132,12 @@ const actions = {
     if(response.status === UNPROCESSABLE_ENTITY) {
       context.commit('setCreateTaskErrorMessages', response.data.errors);
     }else{
-      context.commit('error/setCode', response.status, {root: true})
+      context.commit('error/setCode', response.status, {root: true});
     }
   },
   //タスクの物理削除
   async forceDeleteTask(context, data){
     context.commit('setApiStatus', null);
-    console.log(data.id);
     const response = await axios.post('/api/tasks/forcedelete', data);
     if(response.status === OK){
       context.commit('setApiStatus', true);
@@ -153,7 +148,7 @@ const actions = {
     if(response.status === UNPROCESSABLE_ENTITY) {
       context.commit('setCreateTaskErrorMessages', response.data.errors);
     }else{
-      context.commit('error/setCode', response.status, {root: true})
+      context.commit('error/setCode', response.status, {root: true});
     }
   },
   
@@ -163,7 +158,6 @@ const actions = {
   async registerSchedule (context, data) {
     context.commit('setApiStatus', null);
     const response = await axios.post('/api/schedules/register', data);
-    console.log(response.status);
     if(response.status === CREATED){
       context.commit('setApiStatus', true);
       return false;
@@ -173,7 +167,7 @@ const actions = {
     if(response.status === UNPROCESSABLE_ENTITY){
       context.commit('setCreateScheduleErrorMessages', response.data.errors);
     }else{
-      context.commit('error/setCode', response.status, {root: true})
+      context.commit('error/setCode', response.status, {root: true});
     }
   },
   
@@ -181,7 +175,6 @@ const actions = {
   async getSchedules(context){
     context.commit('setApiStatus', null);
     const response = await axios.get('/api/schedules/getdata');
-    console.log(response.data);
     if(response.status === OK){
       context.commit('setSchedules', response.data);
       context.commit('setApiStatus', true);
@@ -190,9 +183,8 @@ const actions = {
     
     context.commit('setApiStatus', false)
     if(response.status === UNPROCESSABLE_ENTITY){
-      //context.commit('setUpdateErrorMessages', response.data.errors)
     }else{
-      context.commit('error/setCode', response.status, {root: true})
+      context.commit('error/setCode', response.status, {root: true});
     }
   },
   
@@ -200,18 +192,16 @@ const actions = {
   async getAllSchedule(context){
     context.commit('setApiStatus', null);
     const response = await axios.get('/api/schedules/getallschedule');
-    console.log(response.data);
     if(response.status === OK){
       context.commit('setSchedules', response.data);
       context.commit('setApiStatus', true);
-      return false
+      return false;
     }
     
     context.commit('setApiStatus', false)
     if(response.status === UNPROCESSABLE_ENTITY){
-      //context.commit('setUpdateErrorMessages', response.data.errors)
     }else{
-      context.commit('error/setCode', response.status, {root: true})
+      context.commit('error/setCode', response.status, {root: true});
     }
   },
   
@@ -219,18 +209,16 @@ const actions = {
   async getClearSchedule(context){
     context.commit('setApiStatus', null);
     const response = await axios.get('/api/schedules/getsoftdelete');
-    console.log(response.data);
     if(response.status === OK){
       context.commit('setSchedules', response.data);
       context.commit('setApiStatus', true);
-      return false
+      return false;
     }
     
     context.commit('setApiStatus', false);
     if(response.status === UNPROCESSABLE_ENTITY){
-      //context.commit('setUpdateErrorMessages', response.data.errors)
     }else{
-      context.commit('error/setCode', response.status, {root: true})
+      context.commit('error/setCode', response.status, {root: true});
     }
   },
   
@@ -247,7 +235,7 @@ const actions = {
     if(response.status === UNPROCESSABLE_ENTITY) {
       context.commit('setCreateScheduleErrorMessages', response.data.errors);
     }else{
-      context.commit('error/setCode', response.status, {root: true})
+      context.commit('error/setCode', response.status, {root: true});
     }
   },
   
@@ -264,7 +252,7 @@ const actions = {
     if(response.status === UNPROCESSABLE_ENTITY) {
       context.commit('setCreateScheduleErrorMessages', response.data.errors);
     }else{
-      context.commit('error/setCode', response.status, {root: true})
+      context.commit('error/setCode', response.status, {root: true});
     }
   },
   
@@ -272,7 +260,6 @@ const actions = {
   async forceDeleteSchedule(context, data){
     context.commit('setApiStatus', null);
     const response = await axios.post('/api/schedules/forcedelete', data);
-    console.log(response.status);
     if(response.status === OK){
       context.commit('setApiStatus', true);
       return false;
@@ -282,7 +269,7 @@ const actions = {
     if(response.status === UNPROCESSABLE_ENTITY) {
       context.commit('setCreateScheduleErrorMessages', response.data.errors);
     }else{
-      context.commit('error/setCode', response.status, {root: true})
+      context.commit('error/setCode', response.status, {root: true});
     }
   },
 }

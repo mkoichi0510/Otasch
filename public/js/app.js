@@ -3625,6 +3625,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     //ログアウトする処理をサーバー側に投げる
@@ -3701,8 +3706,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
+    //トップ画面に移動
+    MoveTop: function MoveTop() {
+      this.$router.push("/")["catch"](function () {});
+    },
     //ホーム画面に移動
     MoveHome: function MoveHome() {
       this.$router.push("/home")["catch"](function () {});
@@ -6895,20 +6907,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -6919,7 +6917,8 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     //ログイン/登録画面へ移動
     MoveLogin: function MoveLogin() {
-      this.$router.push("/login");
+      this.$router.push("/login")["catch"](function () {});
+      ;
     }
   }
 });
@@ -8799,7 +8798,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.el-footer{\n  background-color: #31a9ee; /* フッターの背景色を指定する */\n  color: #FFFFFF; /* フッターのフォントの色を指定する */\n}\n.button_wrapper{\n   text-align:center;\n   padding: 20px;\n}\n", ""]);
+exports.push([module.i, "\n.el-footer{\n  background-color: #545c64; /* フッターの背景色を指定する */\n  color: #FFFFFF; /* フッターのフォントの色を指定する */\n}\n.button_wrapper{\n   text-align:center;\n   padding: 20px;\n}\n", ""]);
 
 // exports
 
@@ -71139,22 +71138,28 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("el-footer", { staticClass: "footer" }, [
-    _c(
-      "div",
-      { staticClass: "button_wrapper" },
-      [
+    _c("div", { staticClass: "button_wrapper" }, [
+      _c("span", [
+        _c("div", { staticStyle: { float: "right" } }, [
+          _vm._v("©2021 町田晃一")
+        ]),
+        _vm._v(" "),
         _vm.isLogin
           ? _c("div", { staticClass: "logined" }, [
               _c("button", { on: { click: _vm.logout } }, [_vm._v("Logout")])
             ])
           : _c(
-              "RouterLink",
-              { staticClass: "button button--link", attrs: { to: "/login" } },
-              [_vm._v("\n      Login / Register\n    ")]
+              "div",
+              { staticClass: "unLogin" },
+              [
+                _c("RouterLink", { attrs: { to: "/login" } }, [
+                  _vm._v("\n          Login / Register\n        ")
+                ])
+              ],
+              1
             )
-      ],
-      1
-    )
+      ])
+    ])
   ])
 }
 var staticRenderFns = []
@@ -71179,45 +71184,65 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.isLogin
-    ? _c(
-        "nav",
-        { staticClass: "navbar" },
+  return _c(
+    "nav",
+    { staticClass: "navbar" },
+    [
+      _c(
+        "el-menu",
+        {
+          staticClass: "el-menu-demo",
+          attrs: {
+            mode: "horizontal",
+            "background-color": "#545c64",
+            "text-color": "#fff",
+            "active-text-color": "#ffd04b"
+          }
+        },
         [
           _c(
-            "el-menu",
-            {
-              staticClass: "el-menu-demo",
-              attrs: {
-                mode: "horizontal",
-                "background-color": "#545c64",
-                "text-color": "#fff",
-                "active-text-color": "#ffd04b"
-              }
-            },
-            [
-              _c("el-menu-item", { on: { click: _vm.MoveHome } }, [
-                _vm._v("\n    ホーム\n  ")
-              ]),
-              _vm._v(" "),
-              _c("el-menu-item", { on: { click: _vm.MovePreview } }, [
-                _vm._v("\n    予定一覧\n  ")
-              ]),
-              _vm._v(" "),
-              _c("el-menu-item", { on: { click: _vm.MoveLog } }, [
-                _vm._v("\n    記録\n  ")
-              ]),
-              _vm._v(" "),
-              _c("el-menu-item", { on: { click: _vm.MoveAccount } }, [
-                _vm._v("\n    アカウント\n  ")
-              ])
-            ],
-            1
-          )
+            "el-menu-item",
+            { attrs: { index: "1" }, on: { click: _vm.MoveTop } },
+            [_vm._v("\n    Otasche\n  ")]
+          ),
+          _vm._v(" "),
+          _vm.isLogin
+            ? _c(
+                "el-menu-item",
+                { attrs: { index: "2" }, on: { click: _vm.MoveHome } },
+                [_vm._v("\n    ホーム\n  ")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.isLogin
+            ? _c(
+                "el-menu-item",
+                { attrs: { index: "3" }, on: { click: _vm.MovePreview } },
+                [_vm._v("\n    予定一覧\n  ")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.isLogin
+            ? _c(
+                "el-menu-item",
+                { attrs: { index: "4" }, on: { click: _vm.MoveLog } },
+                [_vm._v("\n    記録\n  ")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.isLogin
+            ? _c(
+                "el-menu-item",
+                { attrs: { index: "5" }, on: { click: _vm.MoveAccount } },
+                [_vm._v("\n    アカウント\n  ")]
+              )
+            : _vm._e()
         ],
         1
       )
-    : _vm._e()
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -74135,33 +74160,6 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "body" }, [
-    _c(
-      "nav",
-      { staticClass: "navbar" },
-      [
-        _c(
-          "el-menu",
-          {
-            staticClass: "el-menu-demo",
-            attrs: {
-              "default-active": "activeIndex",
-              mode: "horizontal",
-              "background-color": "#545c64",
-              "text-color": "#fff",
-              "active-text-color": "#545c64"
-            }
-          },
-          [
-            _c("el-menu-item", { attrs: { activeIndex: "1" } }, [
-              _vm._v("\n        Otasche\n      ")
-            ])
-          ],
-          1
-        )
-      ],
-      1
-    ),
-    _vm._v(" "),
     _c(
       "div",
       { staticClass: "info" },
@@ -91743,7 +91741,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(element_ui__WEBPACK_IMPORTED_MODULE_6___default.a);
-vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(vue_paginate__WEBPACK_IMPORTED_MODULE_9___default.a); //Vue.use(axios,VueAxios);
+vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(vue_paginate__WEBPACK_IMPORTED_MODULE_9___default.a);
 
 var createApp = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -93327,14 +93325,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 
 var routes = [{
   path: '',
-  component: _pages_Top_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
-  beforeEnter: function beforeEnter(to, from, next) {
-    if (_store__WEBPACK_IMPORTED_MODULE_4__["default"].getters['auth/check']) {
-      next('home');
-    } else {
-      next();
-    }
-  }
+  component: _pages_Top_vue__WEBPACK_IMPORTED_MODULE_12__["default"]
 }, {
   path: '/home',
   component: _pages_Home_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
@@ -93389,7 +93380,6 @@ var routes = [{
   path: '/task',
   name: 'task',
   component: _pages_PreviewTask_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
-  // props:true,
   beforeEnter: function beforeEnter(to, from, next) {
     if (_store__WEBPACK_IMPORTED_MODULE_4__["default"].getters['auth/check']) {
       next();
@@ -93400,13 +93390,7 @@ var routes = [{
 }, {
   path: '/500',
   component: _pages_errors_System_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
-} // {
-//   path:'/home/:id',
-//   name:"schedule-url",
-//   component: TodoDetail,
-//   props:true
-// }
-]; // VueRouterインスタンスを作成する
+}]; // VueRouterインスタンスを作成する
 
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',
@@ -93485,7 +93469,6 @@ var mutations = {
     state.createTaskErrorMessages = messages;
   },
   setLineClientData: function setLineClientData(state, data) {
-    console.log(data.client_id);
     state.line_client_id = data.client_id;
     state.line_client_callback = data.callback;
     state.line_client_secret = data.client_secret;
@@ -93554,19 +93537,17 @@ var actions = {
 
             case 6:
               response2 = _context2.sent;
-              console.log(response2.status); //登録またはログイン成功時
 
               if (!(response2.status === _util__WEBPACK_IMPORTED_MODULE_1__["CREATED"] || response2.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context2.next = 13;
+                _context2.next = 11;
                 break;
               }
 
               context.commit('setUser', response2.data);
               context.commit('setApiStatus', true);
-              console.log(response2.data);
               return _context2.abrupt("return", false);
 
-            case 13:
+            case 11:
               context.commit('setApiStatus', false);
 
               if (response2.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {
@@ -93577,7 +93558,7 @@ var actions = {
                 });
               }
 
-            case 15:
+            case 13:
             case "end":
               return _context2.stop();
           }
@@ -93595,25 +93576,21 @@ var actions = {
             case 0:
               context.commit('setApiStatus', null);
               _context3.next = 3;
-              return axios.post('/api/login', data)["catch"](function (err) {
-                return err.response || err;
-              });
+              return axios.post('/api/login', data);
 
             case 3:
               response = _context3.sent;
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context3.next = 9;
+                _context3.next = 8;
                 break;
               }
 
               context.commit('setUser', response.data);
               context.commit('setApiStatus', true);
-              console.log(response.data); //ユーザーオブジェクトを渡せればOK
-
               return _context3.abrupt("return", false);
 
-            case 9:
+            case 8:
               context.commit('setApiStatus', false);
 
               if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {
@@ -93624,7 +93601,7 @@ var actions = {
                 });
               }
 
-            case 11:
+            case 10:
             case "end":
               return _context3.stop();
           }
@@ -93722,10 +93699,9 @@ var actions = {
 
             case 3:
               response = _context6.sent;
-              console.log(response.data);
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context6.next = 9;
+                _context6.next = 8;
                 break;
               }
 
@@ -93733,17 +93709,16 @@ var actions = {
               context.commit('setApiStatus', true);
               return _context6.abrupt("return", false);
 
-            case 9:
+            case 8:
               context.commit('setApiStatus', false);
 
-              if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {//context.commit('setUpdateErrorMessages', response.data.errors)
-              } else {
+              if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {} else {
                 context.commit('error/setCode', response.status, {
                   root: true
                 });
               }
 
-            case 11:
+            case 10:
             case "end":
               return _context6.stop();
           }
@@ -93759,18 +93734,16 @@ var actions = {
         while (1) {
           switch (_context7.prev = _context7.next) {
             case 0:
-              console.log("ログインユーザーチェック");
               context.commit('setApiStatus', null);
-              _context7.next = 4;
+              _context7.next = 3;
               return axios.get('/api/user');
 
-            case 4:
+            case 3:
               response = _context7.sent;
-              console.log(response.data);
               user = response.data || null;
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context7.next = 11;
+                _context7.next = 9;
                 break;
               }
 
@@ -93778,13 +93751,13 @@ var actions = {
               context.commit('setApiStatus', true);
               return _context7.abrupt("return", false);
 
-            case 11:
+            case 9:
               context.commit('setApiStatus', false);
               context.commit('error/setCode', response.status, {
                 root: true
               });
 
-            case 13:
+            case 11:
             case "end":
               return _context7.stop();
           }
@@ -93909,17 +93882,16 @@ var actions = {
 
             case 3:
               response = _context.sent;
-              console.log(response.status);
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["CREATED"])) {
-                _context.next = 8;
+                _context.next = 7;
                 break;
               }
 
               context.commit('setApiStatus', true);
               return _context.abrupt("return", false);
 
-            case 8:
+            case 7:
               context.commit('setApiStatus', false);
 
               if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {
@@ -93930,7 +93902,7 @@ var actions = {
                 });
               }
 
-            case 10:
+            case 9:
             case "end":
               return _context.stop();
           }
@@ -93965,8 +93937,7 @@ var actions = {
             case 8:
               context.commit('setApiStatus', false);
 
-              if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {//context.commit('setUpdateErrorMessages', response.data.errors)
-              } else {
+              if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {} else {
                 context.commit('error/setCode', response.status, {
                   root: true
                 });
@@ -94007,8 +93978,7 @@ var actions = {
             case 8:
               context.commit('setApiStatus', false);
 
-              if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {//context.commit('setUpdateErrorMessages', response.data.errors)
-              } else {
+              if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {} else {
                 context.commit('error/setCode', response.status, {
                   root: true
                 });
@@ -94049,8 +94019,7 @@ var actions = {
             case 8:
               context.commit('setApiStatus', false);
 
-              if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {//context.commit('setUpdateErrorMessages', response.data.errors)
-              } else {
+              if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {} else {
                 context.commit('error/setCode', response.status, {
                   root: true
                 });
@@ -94157,22 +94126,21 @@ var actions = {
           switch (_context7.prev = _context7.next) {
             case 0:
               context.commit('setApiStatus', null);
-              console.log(data.id);
-              _context7.next = 4;
+              _context7.next = 3;
               return axios.post('/api/tasks/forcedelete', data);
 
-            case 4:
+            case 3:
               response = _context7.sent;
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context7.next = 8;
+                _context7.next = 7;
                 break;
               }
 
               context.commit('setApiStatus', true);
               return _context7.abrupt("return", false);
 
-            case 8:
+            case 7:
               context.commit('setApiStatus', false);
 
               if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {
@@ -94183,7 +94151,7 @@ var actions = {
                 });
               }
 
-            case 10:
+            case 9:
             case "end":
               return _context7.stop();
           }
@@ -94207,17 +94175,16 @@ var actions = {
 
             case 3:
               response = _context8.sent;
-              console.log(response.status);
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["CREATED"])) {
-                _context8.next = 8;
+                _context8.next = 7;
                 break;
               }
 
               context.commit('setApiStatus', true);
               return _context8.abrupt("return", false);
 
-            case 8:
+            case 7:
               context.commit('setApiStatus', false);
 
               if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {
@@ -94228,7 +94195,7 @@ var actions = {
                 });
               }
 
-            case 10:
+            case 9:
             case "end":
               return _context8.stop();
           }
@@ -94250,10 +94217,9 @@ var actions = {
 
             case 3:
               response = _context9.sent;
-              console.log(response.data);
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context9.next = 9;
+                _context9.next = 8;
                 break;
               }
 
@@ -94261,17 +94227,16 @@ var actions = {
               context.commit('setApiStatus', true);
               return _context9.abrupt("return", false);
 
-            case 9:
+            case 8:
               context.commit('setApiStatus', false);
 
-              if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {//context.commit('setUpdateErrorMessages', response.data.errors)
-              } else {
+              if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {} else {
                 context.commit('error/setCode', response.status, {
                   root: true
                 });
               }
 
-            case 11:
+            case 10:
             case "end":
               return _context9.stop();
           }
@@ -94293,10 +94258,9 @@ var actions = {
 
             case 3:
               response = _context10.sent;
-              console.log(response.data);
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context10.next = 9;
+                _context10.next = 8;
                 break;
               }
 
@@ -94304,17 +94268,16 @@ var actions = {
               context.commit('setApiStatus', true);
               return _context10.abrupt("return", false);
 
-            case 9:
+            case 8:
               context.commit('setApiStatus', false);
 
-              if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {//context.commit('setUpdateErrorMessages', response.data.errors)
-              } else {
+              if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {} else {
                 context.commit('error/setCode', response.status, {
                   root: true
                 });
               }
 
-            case 11:
+            case 10:
             case "end":
               return _context10.stop();
           }
@@ -94336,10 +94299,9 @@ var actions = {
 
             case 3:
               response = _context11.sent;
-              console.log(response.data);
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context11.next = 9;
+                _context11.next = 8;
                 break;
               }
 
@@ -94347,17 +94309,16 @@ var actions = {
               context.commit('setApiStatus', true);
               return _context11.abrupt("return", false);
 
-            case 9:
+            case 8:
               context.commit('setApiStatus', false);
 
-              if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {//context.commit('setUpdateErrorMessages', response.data.errors)
-              } else {
+              if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {} else {
                 context.commit('error/setCode', response.status, {
                   root: true
                 });
               }
 
-            case 11:
+            case 10:
             case "end":
               return _context11.stop();
           }
@@ -94463,17 +94424,16 @@ var actions = {
 
             case 3:
               response = _context14.sent;
-              console.log(response.status);
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context14.next = 8;
+                _context14.next = 7;
                 break;
               }
 
               context.commit('setApiStatus', true);
               return _context14.abrupt("return", false);
 
-            case 8:
+            case 7:
               context.commit('setApiStatus', false);
 
               if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {
@@ -94484,7 +94444,7 @@ var actions = {
                 });
               }
 
-            case 10:
+            case 9:
             case "end":
               return _context14.stop();
           }
