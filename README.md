@@ -10,7 +10,7 @@
 
 ![2021-11-15 (4)](https://user-images.githubusercontent.com/85385454/141726638-7fde5d57-1def-42dd-8aeb-aeda01556e1a.png)
 ![2021-11-15 (6)](https://user-images.githubusercontent.com/85385454/141726697-e02a2b7c-c821-495d-b191-4941b9dfbc14.png)
-<p>[3]タスク新規作成ダイアログから、「予定名、予定の優先度、予定の期限、予定の詳細」の4項目を記入して作成ボタンを押す</p>
+<p>[3]タスク新規作成ダイアログから、「タスク名、タスクの優先度、タスクの詳細」の3項目を記入して作成ボタンを押す</p>
 
 ![2021-11-15 (8)](https://user-images.githubusercontent.com/85385454/141726995-a5fa7e75-a452-4fa7-9c6e-749cc99c6a93.png)
 ![2021-11-15 (10)](https://user-images.githubusercontent.com/85385454/141727195-a6e41e90-81c0-41b7-a933-af020c8bc625.png)
