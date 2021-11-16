@@ -57426,6 +57426,143 @@ exports.default = { use: use, t: t, i18n: i18n };
 
 /***/ }),
 
+/***/ "./node_modules/element-ui/lib/locale/lang/ja.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/element-ui/lib/locale/lang/ja.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = {
+  el: {
+    colorpicker: {
+      confirm: 'OK',
+      clear: 'クリア'
+    },
+    datepicker: {
+      now: '現在',
+      today: '今日',
+      cancel: 'キャンセル',
+      clear: 'クリア',
+      confirm: 'OK',
+      selectDate: '日付を選択',
+      selectTime: '時間を選択',
+      startDate: '開始日',
+      startTime: '開始時間',
+      endDate: '終了日',
+      endTime: '終了時間',
+      prevYear: '前年',
+      nextYear: '翌年',
+      prevMonth: '前月',
+      nextMonth: '翌月',
+      year: '年',
+      month1: '1月',
+      month2: '2月',
+      month3: '3月',
+      month4: '4月',
+      month5: '5月',
+      month6: '6月',
+      month7: '7月',
+      month8: '8月',
+      month9: '9月',
+      month10: '10月',
+      month11: '11月',
+      month12: '12月',
+      // week: '週次',
+      weeks: {
+        sun: '日',
+        mon: '月',
+        tue: '火',
+        wed: '水',
+        thu: '木',
+        fri: '金',
+        sat: '土'
+      },
+      months: {
+        jan: '1月',
+        feb: '2月',
+        mar: '3月',
+        apr: '4月',
+        may: '5月',
+        jun: '6月',
+        jul: '7月',
+        aug: '8月',
+        sep: '9月',
+        oct: '10月',
+        nov: '11月',
+        dec: '12月'
+      }
+    },
+    select: {
+      loading: 'ロード中',
+      noMatch: 'データなし',
+      noData: 'データなし',
+      placeholder: '選択してください'
+    },
+    cascader: {
+      noMatch: 'データなし',
+      loading: 'ロード中',
+      placeholder: '選択してください',
+      noData: 'データなし'
+    },
+    pagination: {
+      goto: '',
+      pagesize: '件/ページ',
+      total: '総計 {total} 件',
+      pageClassifier: 'ページ目へ'
+    },
+    messagebox: {
+      title: 'メッセージ',
+      confirm: 'OK',
+      cancel: 'キャンセル',
+      error: '正しくない入力'
+    },
+    upload: {
+      deleteTip: 'Delキーを押して削除する',
+      delete: '削除する',
+      preview: 'プレビュー',
+      continue: '続行する'
+    },
+    table: {
+      emptyText: 'データなし',
+      confirmFilter: '確認',
+      resetFilter: '初期化',
+      clearFilter: 'すべて',
+      sumText: '合計'
+    },
+    tree: {
+      emptyText: 'データなし'
+    },
+    transfer: {
+      noMatch: 'データなし',
+      noData: 'データなし',
+      titles: ['リスト 1', 'リスト 2'],
+      filterPlaceholder: 'キーワードを入力',
+      noCheckedFormat: '総計 {total} 件',
+      hasCheckedFormat: '{checked}/{total} を選択した'
+    },
+    image: {
+      error: 'FAILED' // to be translated
+    },
+    pageHeader: {
+      title: 'Back' // to be translated
+    },
+    popconfirm: {
+      confirmButtonText: 'Yes', // to be translated
+      cancelButtonText: 'No' // to be translated
+    },
+    empty: {
+      description: 'データなし'
+    }
+  }
+};
+
+/***/ }),
+
 /***/ "./node_modules/element-ui/lib/locale/lang/zh-CN.js":
 /*!**********************************************************!*\
   !*** ./node_modules/element-ui/lib/locale/lang/zh-CN.js ***!
@@ -91752,14 +91889,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./store/index */ "./resources/js/store/index.js");
 /* harmony import */ var element_ui__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! element-ui */ "./node_modules/element-ui/lib/element-ui.common.js");
 /* harmony import */ var element_ui__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(element_ui__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue-axios */ "./node_modules/vue-axios/dist/vue-axios.es5.js");
-/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(vue_axios__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var vue_paginate__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vue-paginate */ "./node_modules/vue-paginate/dist/vue-paginate.js");
-/* harmony import */ var vue_paginate__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(vue_paginate__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var element_ui_lib_theme_chalk_index_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! element-ui/lib/theme-chalk/index.css */ "./node_modules/element-ui/lib/theme-chalk/index.css");
-/* harmony import */ var element_ui_lib_theme_chalk_index_css__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(element_ui_lib_theme_chalk_index_css__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var element_ui_lib_locale_lang_ja__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! element-ui/lib/locale/lang/ja */ "./node_modules/element-ui/lib/locale/lang/ja.js");
+/* harmony import */ var element_ui_lib_locale_lang_ja__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(element_ui_lib_locale_lang_ja__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vue-axios */ "./node_modules/vue-axios/dist/vue-axios.es5.js");
+/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(vue_axios__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var vue_paginate__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vue-paginate */ "./node_modules/vue-paginate/dist/vue-paginate.js");
+/* harmony import */ var vue_paginate__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(vue_paginate__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var element_ui_lib_theme_chalk_index_css__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! element-ui/lib/theme-chalk/index.css */ "./node_modules/element-ui/lib/theme-chalk/index.css");
+/* harmony import */ var element_ui_lib_theme_chalk_index_css__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(element_ui_lib_theme_chalk_index_css__WEBPACK_IMPORTED_MODULE_11__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -91778,8 +91917,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(element_ui__WEBPACK_IMPORTED_MODULE_6___default.a);
-vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(vue_paginate__WEBPACK_IMPORTED_MODULE_9___default.a);
+
+vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(element_ui__WEBPACK_IMPORTED_MODULE_6___default.a, {
+  locale: element_ui_lib_locale_lang_ja__WEBPACK_IMPORTED_MODULE_7___default.a
+});
+vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(vue_paginate__WEBPACK_IMPORTED_MODULE_10___default.a);
 
 var createApp = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
