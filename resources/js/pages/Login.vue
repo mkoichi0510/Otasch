@@ -2,7 +2,7 @@
   <div class="container--small">
     <div class="panel">
       <el-form ref="form" :model="loginForm" label-width="120px" @submit.prevent="login">
-          <el-form-item label="Email">
+          <el-form-item label="メールアドレス">
             <el-input v-model="loginForm.email"></el-input>
           </el-form-item>
           <div :style="errors"  v-if="loginErrors" >
@@ -10,7 +10,7 @@
               <li v-for="msg in loginErrors.email" :key="msg">{{ msg }}</li>
             </ul>
           </div>
-          <el-form-item label="Password">
+          <el-form-item label="パスワード">
             <el-input type="password"　v-model="loginForm.password"></el-input>
           </el-form-item>
           <div :style="errors" v-if="loginErrors">
@@ -20,7 +20,7 @@
           </div>
             <div class="form__button">
               <el-row>
-                <el-button type="primary"@click="login">Login</el-button>
+                <el-button type="primary"@click="login">ログイン</el-button>
               </el-row>
             </div>
         </el-form>

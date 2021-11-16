@@ -1,6 +1,6 @@
 <template>
  <div>
-   <a :href="params.url">Lineアカウントで登録またはログイン</a>
+   <a :href="params.url"><el-button type="success">Lineアカウントで{{setLineMessage}}</el-button></a>
  </div>
 </template>
 
@@ -18,13 +18,6 @@ import { OK } from '../util'
           access_token : null, //取得したアクセストークンを格納
         },
       };
-    },
-    props:{
-      //ログイン画面で用いられているか、新規登録画面で用いられているかを判定するためのpropsデータ
-      componentType:{
-        type:Boolean,//true:ログイン画面、false:新規登録画面
-      },
-      
     },
     methods:{
       //Lineアカウントを連携するためのacceseTokenをフロント側で取得
@@ -110,25 +103,24 @@ import { OK } from '../util'
       }
     },
     mounted : function(){
-      //ログイン画面でこのvueファイルが読み込まれた場合
-      if(this.componentType){
-        this.lavel = "LINEアカウントでログイン"
-      }
-      //新規登録画面でこのvueファイルが読み込まれた場合
-      else{
-        this.lavel = "LINEアカウントで登録"
-      }
       //このvueファイルを表示するのに必要なデータの取得
       this.initilizeData();
-      
     },
     
     computed: {
       //vuexを用いてサーバーに投げた処理が正常に行われたかの結果を取得
       apiStatus () {
         return this.$store.state.auth.apiStatus;
-        
       },
+      //画面に表示するLineボタンのメッセージを設定する
+      setLineMessage(){
+        if(this.$store.state.auth.formStatus){
+          return "ログイン";
+        }
+        else{
+          return "新規登録";
+        }
+      }
     },
   };
 </script>

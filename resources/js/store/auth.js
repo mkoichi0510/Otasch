@@ -3,6 +3,7 @@ import { OK, CREATED, UNPROCESSABLE_ENTITY} from '../util';
 const state = {
     user: null,
     apiStatus: null,
+    formStatus: true,
     loginErrorMessages: null,
     registerErrorMessages: null,
     updateErrorMessages:null,
@@ -26,6 +27,9 @@ const mutations = {
   },
   setApiStatus (state, status) {
     state.apiStatus = status;
+  },
+  setFormStatus (state, form){
+    state.formStatus = form;
   },
   setLoginErrorMessages (state, messages) {
     state.loginErrorMessages = messages;

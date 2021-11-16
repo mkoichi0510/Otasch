@@ -4,11 +4,11 @@
       <span>
         <div style="float: right">©2021 町田晃一</div>
         <div class="logined"  v-if="isLogin">
-          <button  @click="logout">Logout</button>
+          <button  @click="logout">ログアウト</button>
         </div>
         <div v-else class="unLogin" >
           <RouterLink to="/login">
-            Login / Register
+            ログイン/新規登録
           </RouterLink>
         </div>
       </span>

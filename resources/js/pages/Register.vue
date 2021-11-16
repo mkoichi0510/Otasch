@@ -1,8 +1,8 @@
 <template>
   <div class="container--small">
     <div class="panel">
-        <el-form ref="form" :model="registerForm" label-width="120px" @submit.prevent="register">
-          <el-form-item label="Name">
+        <el-form ref="form" :model="registerForm" label-width="150px" @submit.prevent="register">
+          <el-form-item label="アカウント名">
             <el-input v-model="registerForm.name"></el-input>
           </el-form-item>
           <div v-if="registerErrors">
@@ -10,7 +10,7 @@
               <li :style="errors" v-for="msg in registerErrors.name" :key="msg" >{{ msg }}</li>
             </ul>
           </div>
-          <el-form-item label="Email">
+          <el-form-item label="メールアドレス">
             <el-input v-model="registerForm.email"></el-input>
           </el-form-item>
           <div v-if="registerErrors" >
@@ -18,7 +18,7 @@
               <li :style="errors" v-for="msg in registerErrors.email" :key="msg">{{ msg }}</li>
             </ul>
           </div>
-          <el-form-item label="Password">
+          <el-form-item label="パスワード">
             <el-input type="password" v-model="registerForm.password"></el-input>
           </el-form-item>
           <div v-if="registerErrors" >
@@ -26,12 +26,12 @@
               <li :style="errors" v-for="msg in registerErrors.password" :key="msg">{{ msg }}</li>
             </ul>
           </div>
-          <el-form-item label="Password (confirm)">
+          <el-form-item label="確認用パスワード">
             <el-input type="password" v-model="registerForm.password_confirmation"></el-input>
           </el-form-item>
             <div class="form__button">
               <el-row>
-                <el-button type="primary"@click="register">Register</el-button>
+                <el-button type="primary"@click="register">新規登録</el-button>
               </el-row>
             </div>
         </el-form>

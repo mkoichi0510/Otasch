@@ -4096,6 +4096,16 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     //現在のページを表す値の設定
     this.$store.commit('data/setPageIndex', "1");
+  },
+  watch: {
+    //画面にログインフォームが表示されるときはtrue,新規登録フォームが表示されるときはfalseを設定する
+    activeName: function activeName(newVal) {
+      if (newVal == "first") {
+        this.$store.commit('auth/setFormStatus', true);
+      } else if (newVal == "second") {
+        this.$store.commit('auth/setFormStatus', false);
+      }
+    }
   }
 });
 
@@ -4626,13 +4636,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
     };
   },
-  props: {
-    //ログイン画面で用いられているか、新規登録画面で用いられているかを判定するためのpropsデータ
-    componentType: {
-      type: Boolean //true:ログイン画面、false:新規登録画面
-
-    }
-  },
   methods: {
     //Lineアカウントを連携するためのacceseTokenをフロント側で取得
     getAccessToken: function getAccessToken() {
@@ -4788,21 +4791,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   mounted: function mounted() {
-    //ログイン画面でこのvueファイルが読み込まれた場合
-    if (this.componentType) {
-      this.lavel = "LINEアカウントでログイン";
-    } //新規登録画面でこのvueファイルが読み込まれた場合
-    else {
-      this.lavel = "LINEアカウントで登録";
-    } //このvueファイルを表示するのに必要なデータの取得
-
-
+    //このvueファイルを表示するのに必要なデータの取得
     this.initilizeData();
   },
   computed: {
     //vuexを用いてサーバーに投げた処理が正常に行われたかの結果を取得
     apiStatus: function apiStatus() {
       return this.$store.state.auth.apiStatus;
+    },
+    //画面に表示するLineボタンのメッセージを設定する
+    setLineMessage: function setLineMessage() {
+      if (this.$store.state.auth.formStatus) {
+        return "ログイン";
+      } else {
+        return "新規登録";
+      }
     }
   }
 });
@@ -71171,14 +71174,16 @@ var render = function() {
         _vm._v(" "),
         _vm.isLogin
           ? _c("div", { staticClass: "logined" }, [
-              _c("button", { on: { click: _vm.logout } }, [_vm._v("Logout")])
+              _c("button", { on: { click: _vm.logout } }, [
+                _vm._v("ログアウト")
+              ])
             ])
           : _c(
               "div",
               { staticClass: "unLogin" },
               [
                 _c("RouterLink", { attrs: { to: "/login" } }, [
-                  _vm._v("\n          Login / Register\n        ")
+                  _vm._v("\n          ログイン/新規登録\n        ")
                 ])
               ],
               1
@@ -71637,7 +71642,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("h1", [_vm._v("Form")]),
+      _c("h1", [_vm._v("ログイン・新規登録")]),
       _vm._v(" "),
       _c(
         "el-tabs",
@@ -71653,14 +71658,14 @@ var render = function() {
         [
           _c(
             "el-tab-pane",
-            { attrs: { label: "Login", name: "first" } },
+            { attrs: { label: "ログイン", name: "first" } },
             [_c("login")],
             1
           ),
           _vm._v(" "),
           _c(
             "el-tab-pane",
-            { attrs: { label: "Register", name: "second" } },
+            { attrs: { label: "新規登録", name: "second" } },
             [_c("register")],
             1
           )
@@ -72033,9 +72038,16 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("a", { attrs: { href: _vm.params.url } }, [
-      _vm._v("Lineアカウントで登録またはログイン")
-    ])
+    _c(
+      "a",
+      { attrs: { href: _vm.params.url } },
+      [
+        _c("el-button", { attrs: { type: "success" } }, [
+          _vm._v("Lineアカウントで" + _vm._s(_vm.setLineMessage))
+        ])
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = []
@@ -72317,7 +72329,7 @@ var render = function() {
           [
             _c(
               "el-form-item",
-              { attrs: { label: "Email" } },
+              { attrs: { label: "メールアドレス" } },
               [
                 _c("el-input", {
                   model: {
@@ -72348,7 +72360,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "el-form-item",
-              { attrs: { label: "Password" } },
+              { attrs: { label: "パスワード" } },
               [
                 _c("el-input", {
                   attrs: { type: "password" },
@@ -72388,7 +72400,7 @@ var render = function() {
                     _c(
                       "el-button",
                       { attrs: { type: "primary" }, on: { click: _vm.login } },
-                      [_vm._v("Login")]
+                      [_vm._v("ログイン")]
                     )
                   ],
                   1
@@ -72985,7 +72997,7 @@ var render = function() {
           "el-form",
           {
             ref: "form",
-            attrs: { model: _vm.registerForm, "label-width": "120px" },
+            attrs: { model: _vm.registerForm, "label-width": "150px" },
             on: {
               submit: function($event) {
                 $event.preventDefault()
@@ -72996,7 +73008,7 @@ var render = function() {
           [
             _c(
               "el-form-item",
-              { attrs: { label: "Name" } },
+              { attrs: { label: "アカウント名" } },
               [
                 _c("el-input", {
                   model: {
@@ -73029,7 +73041,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "el-form-item",
-              { attrs: { label: "Email" } },
+              { attrs: { label: "メールアドレス" } },
               [
                 _c("el-input", {
                   model: {
@@ -73062,7 +73074,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "el-form-item",
-              { attrs: { label: "Password" } },
+              { attrs: { label: "パスワード" } },
               [
                 _c("el-input", {
                   attrs: { type: "password" },
@@ -73096,7 +73108,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "el-form-item",
-              { attrs: { label: "Password (confirm)" } },
+              { attrs: { label: "確認用パスワード" } },
               [
                 _c("el-input", {
                   attrs: { type: "password" },
@@ -73125,7 +73137,7 @@ var render = function() {
                         attrs: { type: "primary" },
                         on: { click: _vm.register }
                       },
-                      [_vm._v("Register")]
+                      [_vm._v("新規登録")]
                     )
                   ],
                   1
@@ -93451,6 +93463,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var state = {
   user: null,
   apiStatus: null,
+  formStatus: true,
   loginErrorMessages: null,
   registerErrorMessages: null,
   updateErrorMessages: null,
@@ -93482,6 +93495,9 @@ var mutations = {
   },
   setApiStatus: function setApiStatus(state, status) {
     state.apiStatus = status;
+  },
+  setFormStatus: function setFormStatus(state, form) {
+    state.formStatus = form;
   },
   setLoginErrorMessages: function setLoginErrorMessages(state, messages) {
     state.loginErrorMessages = messages;
