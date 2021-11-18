@@ -4709,8 +4709,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 2:
                 //成功時
                 if (_this2.apiStatus) {
-                  console.log(_this2.loading); // ホーム画面に移動する
-
+                  // ホーム画面に移動する
                   _this2.$router.push('/home');
                 }
 

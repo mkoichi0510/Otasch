@@ -50,7 +50,6 @@ import { OK } from '../util'
         await this.$store.dispatch('auth/registerLineAccount', this.params);
         //成功時
         if(this.apiStatus){
-          console.log(this.loading);
           // ホーム画面に移動する
           this.$router.push('/home');
         }
