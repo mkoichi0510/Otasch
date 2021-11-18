@@ -5267,6 +5267,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -5615,6 +5616,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
 //
 //
 //
@@ -71872,102 +71875,32 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "body" }, [
-    _vm.schedule
-      ? _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "loading",
-                rawName: "v-loading.fullscreen.lock",
-                value: _vm.loading,
-                expression: "loading",
-                modifiers: { fullscreen: true, lock: true }
-              }
-            ],
-            staticClass: "info"
-          },
-          [
-            _c("p"),
-            _vm._v(" "),
-            _c(
-              "el-card",
-              { staticClass: "box-card" },
-              [
-                _c(
-                  "div",
-                  {
-                    staticClass: "clearfix",
-                    attrs: { slot: "header" },
-                    slot: "header"
-                  },
-                  [_c("h1", [_vm._v("推奨予定：" + _vm._s(_vm.schedule.name))])]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "progress" },
-                  [
-                    _c("h2", [
-                      _c("span", [_vm._v("進捗率")]),
-                      _vm._v(" "),
-                      _vm.checkTerm(_vm.schedule) && _vm.checkDay
-                        ? _c("span", { staticStyle: { float: "right" } }, [
-                            _vm._v(
-                              "残り" +
-                                _vm._s(_vm.lemainDay(_vm.schedule)) +
-                                "日"
-                            )
-                          ])
-                        : _vm.checkTerm(_vm.schedule) && !_vm.checkDay
-                        ? _c("span", { staticStyle: { float: "right" } }, [
-                            _vm._v(
-                              "残り" +
-                                _vm._s(_vm.lemainDay(_vm.schedule)) +
-                                "時間"
-                            )
-                          ])
-                        : _c("span", { staticStyle: { float: "right" } }, [
-                            _vm._v("期限切れ")
-                          ])
-                    ]),
-                    _vm._v(" "),
-                    _c("el-progress", { attrs: { percentage: _vm.progress } })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c("h2", { attrs: { type: "text" } }, [
-                  _vm._v("次にする推奨タスク:" + _vm._s(_vm.nextTaskName))
-                ]),
-                _vm._v(" "),
-                _c(
-                  "el-button",
-                  {
-                    staticStyle: { float: "right", padding: "10px" },
-                    attrs: { type: "primary" },
-                    on: {
-                      click: function($event) {
-                        return _vm.MoveTask(_vm.schedule)
-                      }
-                    }
-                  },
-                  [_vm._v("予定の調整")]
-                ),
-                _vm._v(" "),
-                _c("br")
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("p"),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "todayList" },
-              [
-                _c("el-card", { staticClass: "box-card" }, [
+  return _c(
+    "div",
+    {
+      directives: [
+        {
+          name: "loading",
+          rawName: "v-loading.fullscreen.lock",
+          value: _vm.loading,
+          expression: "loading",
+          modifiers: { fullscreen: true, lock: true }
+        }
+      ],
+      staticClass: "body"
+    },
+    [
+      _vm.schedule
+        ? _c(
+            "div",
+            { staticClass: "info" },
+            [
+              _c("p"),
+              _vm._v(" "),
+              _c(
+                "el-card",
+                { staticClass: "box-card" },
+                [
                   _c(
                     "div",
                     {
@@ -71976,227 +71909,313 @@ var render = function() {
                       slot: "header"
                     },
                     [
-                      _c(
-                        "h1",
-                        [
-                          _c("span", [
-                            _vm._v(
-                              "期限が迫っている予定一覧(残り" +
-                                _vm._s(_vm.limitDay) +
-                                "日以内)"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "el-dropdown",
-                            [
-                              _c("span", { staticClass: "el-dropdown-link" }, [
-                                _vm._v("\n                表示切替"),
-                                _c("i", {
-                                  staticClass:
-                                    "el-icon-arrow-down el-icon--right"
-                                })
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "el-dropdown-menu",
-                                {
-                                  attrs: { slot: "dropdown" },
-                                  slot: "dropdown"
-                                },
-                                [
-                                  _c(
-                                    "el-dropdown-item",
-                                    {
-                                      nativeOn: {
-                                        click: function($event) {
-                                          _vm.limitDay = 1
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("残り1日以内")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "el-dropdown-item",
-                                    {
-                                      nativeOn: {
-                                        click: function($event) {
-                                          _vm.limitDay = 5
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("残り5日以内")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "el-dropdown-item",
-                                    {
-                                      nativeOn: {
-                                        click: function($event) {
-                                          _vm.limitDay = 10
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("残り10日以内")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "el-dropdown-item",
-                                    {
-                                      nativeOn: {
-                                        click: function($event) {
-                                          _vm.limitDay = 30
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("残り30日以内")]
-                                  )
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
+                      _c("h1", [
+                        _vm._v("推奨予定：" + _vm._s(_vm.schedule.name))
+                      ])
                     ]
                   ),
                   _vm._v(" "),
-                  _vm.limitSchedules
-                    ? _c(
-                        "div",
-                        { staticClass: "limitSchedules" },
-                        [
-                          _c(
-                            "ul",
-                            _vm._l(_vm.paginateSchedulesLimit, function(
-                              schedule,
-                              i
-                            ) {
-                              return _c(
-                                "li",
-                                { key: i },
-                                [
-                                  _c(
-                                    "el-link",
-                                    {
-                                      attrs: { type: "primary" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.MoveTask(schedule)
-                                        }
-                                      }
-                                    },
-                                    [_c("h2", [_vm._v(_vm._s(schedule.name))])]
-                                  )
-                                ],
-                                1
+                  _c(
+                    "div",
+                    { staticClass: "progress" },
+                    [
+                      _c("h2", [
+                        _c("span", [_vm._v("進捗率")]),
+                        _vm._v(" "),
+                        _vm.checkTerm(_vm.schedule) && _vm.checkDay
+                          ? _c("span", { staticStyle: { float: "right" } }, [
+                              _vm._v(
+                                "残り" +
+                                  _vm._s(_vm.lemainDay(_vm.schedule)) +
+                                  "日"
                               )
-                            }),
-                            0
-                          ),
-                          _vm._v(" "),
-                          _c("el-pagination", {
-                            attrs: {
-                              background: "",
-                              layout: "prev, pager, next",
-                              "current-page": _vm.currentPageScheduleLimit,
-                              "page-size": _vm.perPageScheduleLimit,
-                              total: _vm.limitSchedules.length
-                            },
-                            on: {
-                              "update:currentPage": function($event) {
-                                _vm.currentPageScheduleLimit = $event
-                              },
-                              "update:current-page": function($event) {
-                                _vm.currentPageScheduleLimit = $event
-                              }
-                            }
-                          })
-                        ],
-                        1
-                      )
-                    : _vm._e()
-                ]),
-                _vm._v(" "),
-                _c("p")
-              ],
-              1
-            )
-          ],
-          1
-        )
-      : _c(
-          "div",
-          { staticClass: "todayList" },
-          [
-            _c("p"),
-            _vm._v(" "),
-            _c("el-card", { staticClass: "box-card" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "clearfix",
-                  attrs: { slot: "header" },
-                  slot: "header"
-                },
-                [_c("h1", [_vm._v("推奨予定")])]
+                            ])
+                          : _vm.checkTerm(_vm.schedule) && !_vm.checkDay
+                          ? _c("span", { staticStyle: { float: "right" } }, [
+                              _vm._v(
+                                "残り" +
+                                  _vm._s(_vm.lemainDay(_vm.schedule)) +
+                                  "時間"
+                              )
+                            ])
+                          : _c("span", { staticStyle: { float: "right" } }, [
+                              _vm._v("期限切れ")
+                            ])
+                      ]),
+                      _vm._v(" "),
+                      _c("el-progress", { attrs: { percentage: _vm.progress } })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("h2", { attrs: { type: "text" } }, [
+                    _vm._v("次にする推奨タスク:" + _vm._s(_vm.nextTaskName))
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "el-button",
+                    {
+                      staticStyle: { float: "right", padding: "10px" },
+                      attrs: { type: "primary" },
+                      on: {
+                        click: function($event) {
+                          return _vm.MoveTask(_vm.schedule)
+                        }
+                      }
+                    },
+                    [_vm._v("予定の調整")]
+                  ),
+                  _vm._v(" "),
+                  _c("br")
+                ],
+                1
               ),
+              _vm._v(" "),
+              _c("p"),
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "task" },
+                { staticClass: "todayList" },
                 [
-                  _c(
-                    "el-empty",
-                    { attrs: { description: "NoData" } },
-                    [
-                      _c(
-                        "el-button",
-                        {
-                          attrs: { type: "primary" },
-                          on: { click: _vm.MoveSchedule }
-                        },
-                        [_vm._v("予定の追加")]
-                      ),
-                      _vm._v(" "),
-                      _c("h3", [_vm._v("予定を追加して管理を始めよう")])
-                    ],
-                    1
-                  )
+                  _c("el-card", { staticClass: "box-card" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "clearfix",
+                        attrs: { slot: "header" },
+                        slot: "header"
+                      },
+                      [
+                        _c(
+                          "h1",
+                          [
+                            _c("span", [
+                              _vm._v(
+                                "期限が迫っている予定一覧(残り" +
+                                  _vm._s(_vm.limitDay) +
+                                  "日以内)"
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "el-dropdown",
+                              [
+                                _c(
+                                  "span",
+                                  { staticClass: "el-dropdown-link" },
+                                  [
+                                    _vm._v("\n                表示切替"),
+                                    _c("i", {
+                                      staticClass:
+                                        "el-icon-arrow-down el-icon--right"
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "el-dropdown-menu",
+                                  {
+                                    attrs: { slot: "dropdown" },
+                                    slot: "dropdown"
+                                  },
+                                  [
+                                    _c(
+                                      "el-dropdown-item",
+                                      {
+                                        nativeOn: {
+                                          click: function($event) {
+                                            _vm.limitDay = 1
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("残り1日以内")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "el-dropdown-item",
+                                      {
+                                        nativeOn: {
+                                          click: function($event) {
+                                            _vm.limitDay = 5
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("残り5日以内")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "el-dropdown-item",
+                                      {
+                                        nativeOn: {
+                                          click: function($event) {
+                                            _vm.limitDay = 10
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("残り10日以内")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "el-dropdown-item",
+                                      {
+                                        nativeOn: {
+                                          click: function($event) {
+                                            _vm.limitDay = 30
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("残り30日以内")]
+                                    )
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _vm.limitSchedules
+                      ? _c(
+                          "div",
+                          { staticClass: "limitSchedules" },
+                          [
+                            _c(
+                              "ul",
+                              _vm._l(_vm.paginateSchedulesLimit, function(
+                                schedule,
+                                i
+                              ) {
+                                return _c(
+                                  "li",
+                                  { key: i },
+                                  [
+                                    _c(
+                                      "el-link",
+                                      {
+                                        attrs: { type: "primary" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.MoveTask(schedule)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("h2", [
+                                          _vm._v(_vm._s(schedule.name))
+                                        ])
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                )
+                              }),
+                              0
+                            ),
+                            _vm._v(" "),
+                            _c("el-pagination", {
+                              attrs: {
+                                background: "",
+                                layout: "prev, pager, next",
+                                "current-page": _vm.currentPageScheduleLimit,
+                                "page-size": _vm.perPageScheduleLimit,
+                                total: _vm.limitSchedules.length
+                              },
+                              on: {
+                                "update:currentPage": function($event) {
+                                  _vm.currentPageScheduleLimit = $event
+                                },
+                                "update:current-page": function($event) {
+                                  _vm.currentPageScheduleLimit = $event
+                                }
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      : _vm._e()
+                  ]),
+                  _vm._v(" "),
+                  _c("p")
                 ],
                 1
               )
-            ]),
-            _vm._v(" "),
-            _c("p"),
-            _vm._v(" "),
-            _c("el-card", { staticClass: "box-card" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "clearfix",
-                  attrs: { slot: "header" },
-                  slot: "header"
-                },
-                [_c("h1", [_vm._v("期限が迫っている予定一覧")])]
-              ),
+            ],
+            1
+          )
+        : _c(
+            "div",
+            { staticClass: "todayList" },
+            [
+              _c("p"),
               _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "task" },
-                [_c("el-empty", { attrs: { description: "NoData" } })],
-                1
-              )
-            ]),
-            _vm._v(" "),
-            _c("p")
-          ],
-          1
-        )
-  ])
+              _c("el-card", { staticClass: "box-card" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "clearfix",
+                    attrs: { slot: "header" },
+                    slot: "header"
+                  },
+                  [_c("h1", [_vm._v("推奨予定")])]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "task" },
+                  [
+                    _c(
+                      "el-empty",
+                      { attrs: { description: "NoData" } },
+                      [
+                        _c(
+                          "el-button",
+                          {
+                            attrs: { type: "primary" },
+                            on: { click: _vm.MoveSchedule }
+                          },
+                          [_vm._v("予定の追加")]
+                        ),
+                        _vm._v(" "),
+                        _c("h3", [_vm._v("予定を追加して管理を始めよう")])
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("p"),
+              _vm._v(" "),
+              _c("el-card", { staticClass: "box-card" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "clearfix",
+                    attrs: { slot: "header" },
+                    slot: "header"
+                  },
+                  [_c("h1", [_vm._v("期限が迫っている予定一覧")])]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "task" },
+                  [_c("el-empty", { attrs: { description: "NoData" } })],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("p")
+            ],
+            1
+          )
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -72268,231 +72287,235 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "body" }, [
-    _vm.schedules
-      ? _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "loading",
-                rawName: "v-loading.fullscreen.lock",
-                value: _vm.loading,
-                expression: "loading",
-                modifiers: { fullscreen: true, lock: true }
-              }
-            ],
-            staticClass: "scheduleList"
-          },
-          [
-            _c("p"),
-            _vm._v(" "),
-            _c("el-card", { staticClass: "box-card" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "clearfix",
-                  attrs: { slot: "header" },
-                  slot: "header"
-                },
-                [_c("h1", [_vm._v("今日の完了済み予定")])]
-              ),
+  return _c(
+    "div",
+    {
+      directives: [
+        {
+          name: "loading",
+          rawName: "v-loading.fullscreen.lock",
+          value: _vm.loading,
+          expression: "loading",
+          modifiers: { fullscreen: true, lock: true }
+        }
+      ],
+      staticClass: "body"
+    },
+    [
+      _vm.schedules
+        ? _c(
+            "div",
+            { staticClass: "scheduleList" },
+            [
+              _c("p"),
               _vm._v(" "),
-              _vm.clearScheduleToday
-                ? _c(
-                    "div",
-                    { staticClass: "result" },
-                    [
-                      _c(
-                        "ul",
-                        _vm._l(_vm.paginateSchedulesToday, function(
-                          schedule,
-                          i
-                        ) {
-                          return _c(
-                            "li",
-                            { key: i },
-                            [
-                              _c(
-                                "el-link",
-                                {
-                                  attrs: { type: "primary" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.MoveTask(schedule)
+              _c("el-card", { staticClass: "box-card" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "clearfix",
+                    attrs: { slot: "header" },
+                    slot: "header"
+                  },
+                  [_c("h1", [_vm._v("今日の完了済み予定")])]
+                ),
+                _vm._v(" "),
+                _vm.clearScheduleToday
+                  ? _c(
+                      "div",
+                      { staticClass: "result" },
+                      [
+                        _c(
+                          "ul",
+                          _vm._l(_vm.paginateSchedulesToday, function(
+                            schedule,
+                            i
+                          ) {
+                            return _c(
+                              "li",
+                              { key: i },
+                              [
+                                _c(
+                                  "el-link",
+                                  {
+                                    attrs: { type: "primary" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.MoveTask(schedule)
+                                      }
                                     }
-                                  }
-                                },
-                                [
-                                  _c("h2", { staticClass: "title" }, [
-                                    _vm._v(_vm._s(schedule.name))
-                                  ])
-                                ]
-                              )
-                            ],
-                            1
-                          )
-                        }),
-                        0
-                      ),
-                      _vm._v(" "),
-                      _vm.clearScheduleToday.length < 1
-                        ? _c(
-                            "div",
+                                  },
+                                  [
+                                    _c("h2", { staticClass: "title" }, [
+                                      _vm._v(_vm._s(schedule.name))
+                                    ])
+                                  ]
+                                )
+                              ],
+                              1
+                            )
+                          }),
+                          0
+                        ),
+                        _vm._v(" "),
+                        _vm.clearScheduleToday.length < 1
+                          ? _c(
+                              "div",
+                              [
+                                _c("el-empty", {
+                                  attrs: { description: "NoData" }
+                                })
+                              ],
+                              1
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c("el-pagination", {
+                          attrs: {
+                            background: "",
+                            layout: "prev, pager, next",
+                            "current-page": _vm.currentPageSchedule,
+                            "page-size": _vm.perPageSchedule,
+                            total: _vm.clearScheduleToday.length
+                          },
+                          on: {
+                            "update:currentPage": function($event) {
+                              _vm.currentPageSchedule = $event
+                            },
+                            "update:current-page": function($event) {
+                              _vm.currentPageSchedule = $event
+                            }
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  : _c(
+                      "div",
+                      [_c("el-empty", { attrs: { description: "NoData" } })],
+                      1
+                    )
+              ]),
+              _vm._v(" "),
+              _c("p"),
+              _vm._v(" "),
+              _c("el-card", { staticClass: "box-card" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "clearfix",
+                    attrs: { slot: "header" },
+                    slot: "header"
+                  },
+                  [_c("h1", [_vm._v("過去の完了済み予定")])]
+                ),
+                _vm._v(" "),
+                _vm.clearScheduleBefore
+                  ? _c(
+                      "div",
+                      { staticClass: "result" },
+                      [
+                        _c("h2", [
+                          _c("span", [
+                            _vm._v(
+                              _vm._s(_vm.getMonth(_vm.selectDate)) + "達成予定"
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "span",
                             [
-                              _c("el-empty", {
-                                attrs: { description: "NoData" }
+                              _c("el-date-picker", {
+                                attrs: {
+                                  type: "month",
+                                  format: "yyyy/MM",
+                                  "value-format": "yyyy-MM",
+                                  placeholder: "Pick a month"
+                                },
+                                model: {
+                                  value: _vm.selectDate,
+                                  callback: function($$v) {
+                                    _vm.selectDate = $$v
+                                  },
+                                  expression: "selectDate"
+                                }
                               })
                             ],
                             1
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c("el-pagination", {
-                        attrs: {
-                          background: "",
-                          layout: "prev, pager, next",
-                          "current-page": _vm.currentPageSchedule,
-                          "page-size": _vm.perPageSchedule,
-                          total: _vm.clearScheduleToday.length
-                        },
-                        on: {
-                          "update:currentPage": function($event) {
-                            _vm.currentPageSchedule = $event
-                          },
-                          "update:current-page": function($event) {
-                            _vm.currentPageSchedule = $event
-                          }
-                        }
-                      })
-                    ],
-                    1
-                  )
-                : _c(
-                    "div",
-                    [_c("el-empty", { attrs: { description: "NoData" } })],
-                    1
-                  )
-            ]),
-            _vm._v(" "),
-            _c("p"),
-            _vm._v(" "),
-            _c("el-card", { staticClass: "box-card" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "clearfix",
-                  attrs: { slot: "header" },
-                  slot: "header"
-                },
-                [_c("h1", [_vm._v("過去の完了済み予定")])]
-              ),
-              _vm._v(" "),
-              _vm.clearScheduleBefore
-                ? _c(
-                    "div",
-                    { staticClass: "result" },
-                    [
-                      _c("h2", [
-                        _c("span", [
-                          _vm._v(
-                            _vm._s(_vm.getMonth(_vm.selectDate)) + "達成予定"
                           )
                         ]),
                         _vm._v(" "),
                         _c(
-                          "span",
-                          [
-                            _c("el-date-picker", {
-                              attrs: {
-                                type: "month",
-                                format: "yyyy/MM",
-                                "value-format": "yyyy-MM",
-                                placeholder: "Pick a month"
-                              },
-                              model: {
-                                value: _vm.selectDate,
-                                callback: function($$v) {
-                                  _vm.selectDate = $$v
-                                },
-                                expression: "selectDate"
-                              }
-                            })
-                          ],
-                          1
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "ul",
-                        _vm._l(_vm.paginateSchedulesBefore, function(
-                          schedule,
-                          i
-                        ) {
-                          return _c(
-                            "li",
-                            { key: i },
-                            [
-                              _c(
-                                "el-link",
-                                {
-                                  attrs: { type: "primary" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.MoveTask(schedule)
+                          "ul",
+                          _vm._l(_vm.paginateSchedulesBefore, function(
+                            schedule,
+                            i
+                          ) {
+                            return _c(
+                              "li",
+                              { key: i },
+                              [
+                                _c(
+                                  "el-link",
+                                  {
+                                    attrs: { type: "primary" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.MoveTask(schedule)
+                                      }
                                     }
-                                  }
-                                },
-                                [_c("h2", [_vm._v(_vm._s(schedule.name))])]
-                              )
-                            ],
-                            1
-                          )
-                        }),
-                        0
-                      ),
-                      _vm._v(" "),
-                      _vm.clearScheduleBefore.length < 1
-                        ? _c(
-                            "div",
-                            [
-                              _c("el-empty", {
-                                attrs: { description: "NoData" }
-                              })
-                            ],
-                            1
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c("el-pagination", {
-                        attrs: {
-                          background: "",
-                          layout: "prev, pager, next",
-                          "current-page": _vm.currentPageScheduleBefore,
-                          "page-size": _vm.perPageScheduleBefore,
-                          total: _vm.clearScheduleBefore.length
-                        },
-                        on: {
-                          "update:currentPage": function($event) {
-                            _vm.currentPageScheduleBefore = $event
+                                  },
+                                  [_c("h2", [_vm._v(_vm._s(schedule.name))])]
+                                )
+                              ],
+                              1
+                            )
+                          }),
+                          0
+                        ),
+                        _vm._v(" "),
+                        _vm.clearScheduleBefore.length < 1
+                          ? _c(
+                              "div",
+                              [
+                                _c("el-empty", {
+                                  attrs: { description: "NoData" }
+                                })
+                              ],
+                              1
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c("el-pagination", {
+                          attrs: {
+                            background: "",
+                            layout: "prev, pager, next",
+                            "current-page": _vm.currentPageScheduleBefore,
+                            "page-size": _vm.perPageScheduleBefore,
+                            total: _vm.clearScheduleBefore.length
                           },
-                          "update:current-page": function($event) {
-                            _vm.currentPageScheduleBefore = $event
+                          on: {
+                            "update:currentPage": function($event) {
+                              _vm.currentPageScheduleBefore = $event
+                            },
+                            "update:current-page": function($event) {
+                              _vm.currentPageScheduleBefore = $event
+                            }
                           }
-                        }
-                      })
-                    ],
-                    1
-                  )
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _c("p")
-          ],
-          1
-        )
-      : _vm._e()
-  ])
+                        })
+                      ],
+                      1
+                    )
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("p")
+            ],
+            1
+          )
+        : _vm._e()
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -72645,228 +72668,233 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.schedules
-    ? _c(
-        "div",
+  return _c(
+    "div",
+    {
+      directives: [
         {
-          directives: [
-            {
-              name: "loading",
-              rawName: "v-loading.fullscreen.lock",
-              value: _vm.loading,
-              expression: "loading",
-              modifiers: { fullscreen: true, lock: true }
-            }
-          ],
-          staticClass: "container--small"
-        },
-        [
-          _c(
-            "div",
-            { staticClass: "components" },
-            [
-              _c("createForm", {
-                attrs: { createFormVisible: _vm.createDialogVisible },
-                on: {
-                  "register-schedule": _vm.register,
-                  "create-form-close": function($event) {
-                    _vm.createDialogVisible = false
+          name: "loading",
+          rawName: "v-loading.fullscreen.lock",
+          value: _vm.loading,
+          expression: "loading",
+          modifiers: { fullscreen: true, lock: true }
+        }
+      ],
+      staticClass: "body"
+    },
+    [
+      _vm.schedules
+        ? _c("div", { staticClass: "container--small" }, [
+            _c(
+              "div",
+              { staticClass: "components" },
+              [
+                _c("createForm", {
+                  attrs: { createFormVisible: _vm.createDialogVisible },
+                  on: {
+                    "register-schedule": _vm.register,
+                    "create-form-close": function($event) {
+                      _vm.createDialogVisible = false
+                    }
                   }
-                }
-              }),
-              _vm._v(" "),
-              _c("detailForm", {
-                attrs: {
-                  detailFormVisible: _vm.detailDialogVisible,
-                  detailData: _vm.detailData
-                },
-                on: {
-                  "delete-schedule": _vm.softDelete,
-                  "force-delete-schedule": _vm.forceDelete,
-                  "update-schedule": _vm.updateSchedule,
-                  "detail-form-close": function($event) {
-                    _vm.detailDialogVisible = false
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("sortForm", {
-                attrs: {
-                  sortFormVisible: _vm.sortDialogVisible,
-                  sortSchedules: _vm.sortSchedules
-                },
-                on: {
-                  "sort-form-close": function($event) {
-                    _vm.sortDialogVisible = false
-                  }
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "body" },
-            [
-              _c(
-                "h1",
-                [
-                  _c("span", [_vm._v(_vm._s(_vm.scheduleLabel) + "予定一覧")]),
-                  _vm._v(" "),
-                  _c(
-                    "el-dropdown",
-                    [
-                      _c("span", { staticClass: "el-dropdown-link" }, [
-                        _vm._v("\n            表示切替"),
-                        _c("i", {
-                          staticClass: "el-icon-arrow-down el-icon--right"
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "el-dropdown-menu",
-                        { attrs: { slot: "dropdown" }, slot: "dropdown" },
-                        [
-                          _c(
-                            "el-dropdown-item",
-                            {
-                              nativeOn: {
-                                click: function($event) {
-                                  ;(_vm.schedules = _vm.clearSchedules),
-                                    (_vm.scheduleLabel = "達成済み")
-                                }
-                              }
-                            },
-                            [_vm._v("達成済み予定")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-dropdown-item",
-                            {
-                              nativeOn: {
-                                click: function($event) {
-                                  _vm.getTodo(), (_vm.scheduleLabel = "未達成")
-                                }
-                              }
-                            },
-                            [_vm._v("未達成予定")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-dropdown-item",
-                            {
-                              nativeOn: {
-                                click: function($event) {
-                                  ;(_vm.schedules = _vm.allSchedules),
-                                    (_vm.scheduleLabel = "全")
-                                }
-                              }
-                            },
-                            [_vm._v("全予定")]
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _vm.schedules.length > 1
-                    ? _c(
-                        "el-button",
-                        {
-                          attrs: { type: "primary" },
-                          on: {
-                            click: function($event) {
-                              _vm.sortDialogVisible = true
-                            }
-                          }
-                        },
-                        [_vm._v("並び替え")]
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c(
-                    "el-button",
-                    {
-                      staticStyle: { float: "right" },
-                      attrs: { type: "primary" },
-                      on: {
-                        click: function($event) {
-                          _vm.createDialogVisible = true
-                        }
-                      }
-                    },
-                    [_vm._v("予定の新規作成")]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _vm.schedules
-                ? _c(
-                    "ul",
-                    _vm._l(_vm.paginateSchedules, function(schedule, i) {
-                      return _c(
-                        "li",
-                        { key: i },
-                        [
-                          _c(
-                            "el-link",
-                            {
-                              attrs: { type: "primary" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.showDetail(schedule)
-                                }
-                              }
-                            },
-                            [
-                              _c("h2", { staticClass: "title" }, [
-                                _vm._v(_vm._s(schedule.name))
-                              ])
-                            ]
-                          )
-                        ],
-                        1
-                      )
-                    }),
-                    0
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.schedules.length < 1
-                ? _c(
-                    "div",
-                    [_c("el-empty", { attrs: { description: "NoData" } })],
-                    1
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _c("el-pagination", {
-                attrs: {
-                  background: "",
-                  layout: "prev, pager, next",
-                  "current-page": _vm.currentPage,
-                  "page-size": _vm.perPage,
-                  total: _vm.schedules.length
-                },
-                on: {
-                  "update:currentPage": function($event) {
-                    _vm.currentPage = $event
+                }),
+                _vm._v(" "),
+                _c("detailForm", {
+                  attrs: {
+                    detailFormVisible: _vm.detailDialogVisible,
+                    detailData: _vm.detailData
                   },
-                  "update:current-page": function($event) {
-                    _vm.currentPage = $event
+                  on: {
+                    "delete-schedule": _vm.softDelete,
+                    "force-delete-schedule": _vm.forceDelete,
+                    "update-schedule": _vm.updateSchedule,
+                    "detail-form-close": function($event) {
+                      _vm.detailDialogVisible = false
+                    }
                   }
-                }
-              })
-            ],
-            1
-          )
-        ]
-      )
-    : _vm._e()
+                }),
+                _vm._v(" "),
+                _c("sortForm", {
+                  attrs: {
+                    sortFormVisible: _vm.sortDialogVisible,
+                    sortSchedules: _vm.sortSchedules
+                  },
+                  on: {
+                    "sort-form-close": function($event) {
+                      _vm.sortDialogVisible = false
+                    }
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "body" },
+              [
+                _c(
+                  "h1",
+                  [
+                    _c("span", [
+                      _vm._v(_vm._s(_vm.scheduleLabel) + "予定一覧")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "el-dropdown",
+                      [
+                        _c("span", { staticClass: "el-dropdown-link" }, [
+                          _vm._v("\n            表示切替"),
+                          _c("i", {
+                            staticClass: "el-icon-arrow-down el-icon--right"
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "el-dropdown-menu",
+                          { attrs: { slot: "dropdown" }, slot: "dropdown" },
+                          [
+                            _c(
+                              "el-dropdown-item",
+                              {
+                                nativeOn: {
+                                  click: function($event) {
+                                    ;(_vm.schedules = _vm.clearSchedules),
+                                      (_vm.scheduleLabel = "達成済み")
+                                  }
+                                }
+                              },
+                              [_vm._v("達成済み予定")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "el-dropdown-item",
+                              {
+                                nativeOn: {
+                                  click: function($event) {
+                                    _vm.getTodo(),
+                                      (_vm.scheduleLabel = "未達成")
+                                  }
+                                }
+                              },
+                              [_vm._v("未達成予定")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "el-dropdown-item",
+                              {
+                                nativeOn: {
+                                  click: function($event) {
+                                    ;(_vm.schedules = _vm.allSchedules),
+                                      (_vm.scheduleLabel = "全")
+                                  }
+                                }
+                              },
+                              [_vm._v("全予定")]
+                            )
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _vm.schedules.length > 1
+                      ? _c(
+                          "el-button",
+                          {
+                            attrs: { type: "primary" },
+                            on: {
+                              click: function($event) {
+                                _vm.sortDialogVisible = true
+                              }
+                            }
+                          },
+                          [_vm._v("並び替え")]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c(
+                      "el-button",
+                      {
+                        staticStyle: { float: "right" },
+                        attrs: { type: "primary" },
+                        on: {
+                          click: function($event) {
+                            _vm.createDialogVisible = true
+                          }
+                        }
+                      },
+                      [_vm._v("予定の新規作成")]
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _vm.schedules
+                  ? _c(
+                      "ul",
+                      _vm._l(_vm.paginateSchedules, function(schedule, i) {
+                        return _c(
+                          "li",
+                          { key: i },
+                          [
+                            _c(
+                              "el-link",
+                              {
+                                attrs: { type: "primary" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.showDetail(schedule)
+                                  }
+                                }
+                              },
+                              [
+                                _c("h2", { staticClass: "title" }, [
+                                  _vm._v(_vm._s(schedule.name))
+                                ])
+                              ]
+                            )
+                          ],
+                          1
+                        )
+                      }),
+                      0
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.schedules.length < 1
+                  ? _c(
+                      "div",
+                      [_c("el-empty", { attrs: { description: "NoData" } })],
+                      1
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("el-pagination", {
+                  attrs: {
+                    background: "",
+                    layout: "prev, pager, next",
+                    "current-page": _vm.currentPage,
+                    "page-size": _vm.perPage,
+                    total: _vm.schedules.length
+                  },
+                  on: {
+                    "update:currentPage": function($event) {
+                      _vm.currentPage = $event
+                    },
+                    "update:current-page": function($event) {
+                      _vm.currentPage = $event
+                    }
+                  }
+                })
+              ],
+              1
+            )
+          ])
+        : _vm._e()
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -72890,91 +72918,174 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.schedule
-    ? _c(
-        "div",
+  return _c(
+    "div",
+    {
+      directives: [
         {
-          directives: [
-            {
-              name: "loading",
-              rawName: "v-loading.fullscreen.lock",
-              value: _vm.loading,
-              expression: "loading",
-              modifiers: { fullscreen: true, lock: true }
-            }
-          ],
-          staticClass: "container--small"
-        },
-        [
-          _c("createForm", {
-            attrs: { createFormVisible: _vm.createDialogVisible },
-            on: {
-              "register-task": _vm.register,
-              "create-form-close": function($event) {
-                _vm.createDialogVisible = false
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("detailForm", {
-            attrs: {
-              detailFormVisible: _vm.detailDialogVisible,
-              detailData: _vm.detailData,
-              schedule: _vm.schedule
-            },
-            on: {
-              "delete-task": _vm.softDelete,
-              "update-task": _vm.updateTask,
-              "force-delete": _vm.forceDelete,
-              "detail-form-close": function($event) {
-                _vm.detailDialogVisible = false
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c(
+          name: "loading",
+          rawName: "v-loading.fullscreen.lock",
+          value: _vm.loading,
+          expression: "loading",
+          modifiers: { fullscreen: true, lock: true }
+        }
+      ],
+      staticClass: "body"
+    },
+    [
+      _vm.schedule
+        ? _c(
             "div",
-            { staticClass: "Body" },
+            { staticClass: "container--small" },
             [
-              _c("br"),
+              _c("createForm", {
+                attrs: { createFormVisible: _vm.createDialogVisible },
+                on: {
+                  "register-task": _vm.register,
+                  "create-form-close": function($event) {
+                    _vm.createDialogVisible = false
+                  }
+                }
+              }),
               _vm._v(" "),
-              _c(
-                "el-button",
-                {
-                  attrs: { type: "primary", icon: "el-icon-arrow-left" },
-                  on: { click: _vm.MovePreview }
+              _c("detailForm", {
+                attrs: {
+                  detailFormVisible: _vm.detailDialogVisible,
+                  detailData: _vm.detailData,
+                  schedule: _vm.schedule
                 },
-                [_vm._v("予定一覧へ")]
-              ),
+                on: {
+                  "delete-task": _vm.softDelete,
+                  "update-task": _vm.updateTask,
+                  "force-delete": _vm.forceDelete,
+                  "detail-form-close": function($event) {
+                    _vm.detailDialogVisible = false
+                  }
+                }
+              }),
               _vm._v(" "),
               _c(
-                "el-row",
+                "div",
+                { staticClass: "Body" },
                 [
-                  _vm.checkScheduleState
-                    ? _c(
-                        "el-button",
-                        {
-                          staticStyle: { float: "right" },
-                          attrs: { type: "primary" },
-                          on: {
-                            click: function($event) {
-                              _vm.createDialogVisible = true
-                            }
-                          }
-                        },
-                        [_vm._v("タスクの新規作成")]
-                      )
-                    : _vm._e()
+                  _c("br"),
+                  _vm._v(" "),
+                  _c(
+                    "el-button",
+                    {
+                      attrs: { type: "primary", icon: "el-icon-arrow-left" },
+                      on: { click: _vm.MovePreview }
+                    },
+                    [_vm._v("予定一覧へ")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-row",
+                    [
+                      _vm.checkScheduleState
+                        ? _c(
+                            "el-button",
+                            {
+                              staticStyle: { float: "right" },
+                              attrs: { type: "primary" },
+                              on: {
+                                click: function($event) {
+                                  _vm.createDialogVisible = true
+                                }
+                              }
+                            },
+                            [_vm._v("タスクの新規作成")]
+                          )
+                        : _vm._e()
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "info" },
+                    [
+                      _c("p"),
+                      _vm._v(" "),
+                      _c("el-card", { staticClass: "box-card" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "clearfix",
+                            attrs: { slot: "header" },
+                            slot: "header"
+                          },
+                          [_c("h1", [_vm._v(_vm._s(_vm.schedule.name))])]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "progress" },
+                          [
+                            _c("h2", [
+                              _c("span", [_vm._v("進捗率")]),
+                              _vm._v(" "),
+                              _vm.checkTerm && _vm.checkDay
+                                ? _c(
+                                    "span",
+                                    { staticStyle: { float: "right" } },
+                                    [
+                                      _vm._v(
+                                        "残り" + _vm._s(_vm.lemainDay) + "日"
+                                      )
+                                    ]
+                                  )
+                                : _vm.checkTerm && !_vm.checkDay
+                                ? _c(
+                                    "span",
+                                    { staticStyle: { float: "right" } },
+                                    [
+                                      _vm._v(
+                                        "残り" + _vm._s(_vm.lemainDay) + "時間"
+                                      )
+                                    ]
+                                  )
+                                : _c(
+                                    "span",
+                                    { staticStyle: { float: "right" } },
+                                    [_vm._v("期限切れ")]
+                                  )
+                            ]),
+                            _vm._v(" "),
+                            _c("el-progress", {
+                              attrs: { percentage: _vm.progress }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _vm.checkTerm
+                          ? _c("h2", { attrs: { type: "text" } }, [
+                              _vm._v("次にすること:" + _vm._s(_vm.nextTaskName))
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.schedule.deleted_at
+                          ? _c("h2", { attrs: { type: "text" } }, [
+                              _vm._v("達成日:" + _vm._s(_vm.getClearDate()))
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c("br")
+                      ]),
+                      _vm._v(" "),
+                      _c("p")
+                    ],
+                    1
+                  )
                 ],
                 1
               ),
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "info" },
+                { staticClass: "taskList" },
                 [
-                  _c("p"),
-                  _vm._v(" "),
                   _c("el-card", { staticClass: "box-card" }, [
                     _c(
                       "div",
@@ -72983,49 +73094,154 @@ var render = function() {
                         attrs: { slot: "header" },
                         slot: "header"
                       },
-                      [_c("h1", [_vm._v(_vm._s(_vm.schedule.name))])]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "progress" },
                       [
-                        _c("h2", [
-                          _c("span", [_vm._v("進捗率")]),
-                          _vm._v(" "),
-                          _vm.checkTerm && _vm.checkDay
-                            ? _c("span", { staticStyle: { float: "right" } }, [
-                                _vm._v("残り" + _vm._s(_vm.lemainDay) + "日")
-                              ])
-                            : _vm.checkTerm && !_vm.checkDay
-                            ? _c("span", { staticStyle: { float: "right" } }, [
-                                _vm._v("残り" + _vm._s(_vm.lemainDay) + "時間")
-                              ])
-                            : _c("span", { staticStyle: { float: "right" } }, [
-                                _vm._v("期限切れ")
-                              ])
-                        ]),
-                        _vm._v(" "),
-                        _c("el-progress", {
-                          attrs: { percentage: _vm.progress }
-                        })
-                      ],
-                      1
+                        _c(
+                          "h1",
+                          [
+                            _c("span", [
+                              _vm._v(_vm._s(_vm.taskLabel) + "タスク一覧")
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "el-dropdown",
+                              [
+                                _c(
+                                  "span",
+                                  { staticClass: "el-dropdown-link" },
+                                  [
+                                    _vm._v("\n                  表示切替"),
+                                    _c("i", {
+                                      staticClass:
+                                        "el-icon-arrow-down el-icon--right"
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "el-dropdown-menu",
+                                  {
+                                    attrs: { slot: "dropdown" },
+                                    slot: "dropdown"
+                                  },
+                                  [
+                                    _c(
+                                      "el-dropdown-item",
+                                      {
+                                        nativeOn: {
+                                          click: function($event) {
+                                            ;(_vm.tasks = _vm.clearTasks),
+                                              (_vm.taskLabel = "達成済み")
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("達成済みタスク")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "el-dropdown-item",
+                                      {
+                                        nativeOn: {
+                                          click: function($event) {
+                                            _vm.getData(),
+                                              (_vm.taskLabel = "未達成")
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("未達成タスク")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "el-dropdown-item",
+                                      {
+                                        nativeOn: {
+                                          click: function($event) {
+                                            ;(_vm.tasks = _vm.allTasks),
+                                              (_vm.taskLabel = "全")
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("全タスク")]
+                                    )
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ]
                     ),
                     _vm._v(" "),
-                    _vm.checkTerm
-                      ? _c("h2", { attrs: { type: "text" } }, [
-                          _vm._v("次にすること:" + _vm._s(_vm.nextTaskName))
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.schedule.deleted_at
-                      ? _c("h2", { attrs: { type: "text" } }, [
-                          _vm._v("達成日:" + _vm._s(_vm.getClearDate()))
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c("br")
+                    _vm.tasks
+                      ? _c(
+                          "div",
+                          { staticClass: "tasks" },
+                          [
+                            _c(
+                              "ul",
+                              _vm._l(_vm.paginateTasks, function(task, i) {
+                                return _c(
+                                  "li",
+                                  { key: i },
+                                  [
+                                    _c(
+                                      "el-link",
+                                      {
+                                        attrs: { type: "primary" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.showDetail(task)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("h2", { staticClass: "title" }, [
+                                          _vm._v(_vm._s(task.name))
+                                        ])
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                )
+                              }),
+                              0
+                            ),
+                            _vm._v(" "),
+                            _vm.tasks.length < 1
+                              ? _c(
+                                  "div",
+                                  [
+                                    _c("el-empty", {
+                                      attrs: { description: "NoData" }
+                                    })
+                                  ],
+                                  1
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c("el-pagination", {
+                              attrs: {
+                                background: "",
+                                layout: "prev, pager, next",
+                                "current-page": _vm.currentPage,
+                                "page-size": _vm.perPage,
+                                total: _vm.tasks.length
+                              },
+                              on: {
+                                "update:currentPage": function($event) {
+                                  _vm.currentPage = $event
+                                },
+                                "update:current-page": function($event) {
+                                  _vm.currentPage = $event
+                                }
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      : _vm._e()
                   ]),
                   _vm._v(" "),
                   _c("p")
@@ -73034,170 +73250,10 @@ var render = function() {
               )
             ],
             1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "taskList" },
-            [
-              _c("el-card", { staticClass: "box-card" }, [
-                _c(
-                  "div",
-                  {
-                    staticClass: "clearfix",
-                    attrs: { slot: "header" },
-                    slot: "header"
-                  },
-                  [
-                    _c(
-                      "h1",
-                      [
-                        _c("span", [
-                          _vm._v(_vm._s(_vm.taskLabel) + "タスク一覧")
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "el-dropdown",
-                          [
-                            _c("span", { staticClass: "el-dropdown-link" }, [
-                              _vm._v("\n                表示切替"),
-                              _c("i", {
-                                staticClass: "el-icon-arrow-down el-icon--right"
-                              })
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "el-dropdown-menu",
-                              { attrs: { slot: "dropdown" }, slot: "dropdown" },
-                              [
-                                _c(
-                                  "el-dropdown-item",
-                                  {
-                                    nativeOn: {
-                                      click: function($event) {
-                                        ;(_vm.tasks = _vm.clearTasks),
-                                          (_vm.taskLabel = "達成済み")
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("達成済みタスク")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "el-dropdown-item",
-                                  {
-                                    nativeOn: {
-                                      click: function($event) {
-                                        _vm.getData(),
-                                          (_vm.taskLabel = "未達成")
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("未達成タスク")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "el-dropdown-item",
-                                  {
-                                    nativeOn: {
-                                      click: function($event) {
-                                        ;(_vm.tasks = _vm.allTasks),
-                                          (_vm.taskLabel = "全")
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("全タスク")]
-                                )
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _vm.tasks
-                  ? _c(
-                      "div",
-                      { staticClass: "tasks" },
-                      [
-                        _c(
-                          "ul",
-                          _vm._l(_vm.paginateTasks, function(task, i) {
-                            return _c(
-                              "li",
-                              { key: i },
-                              [
-                                _c(
-                                  "el-link",
-                                  {
-                                    attrs: { type: "primary" },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.showDetail(task)
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _c("h2", { staticClass: "title" }, [
-                                      _vm._v(_vm._s(task.name))
-                                    ])
-                                  ]
-                                )
-                              ],
-                              1
-                            )
-                          }),
-                          0
-                        ),
-                        _vm._v(" "),
-                        _vm.tasks.length < 1
-                          ? _c(
-                              "div",
-                              [
-                                _c("el-empty", {
-                                  attrs: { description: "NoData" }
-                                })
-                              ],
-                              1
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _c("el-pagination", {
-                          attrs: {
-                            background: "",
-                            layout: "prev, pager, next",
-                            "current-page": _vm.currentPage,
-                            "page-size": _vm.perPage,
-                            total: _vm.tasks.length
-                          },
-                          on: {
-                            "update:currentPage": function($event) {
-                              _vm.currentPage = $event
-                            },
-                            "update:current-page": function($event) {
-                              _vm.currentPage = $event
-                            }
-                          }
-                        })
-                      ],
-                      1
-                    )
-                  : _vm._e()
-              ]),
-              _vm._v(" "),
-              _c("p")
-            ],
-            1
           )
-        ],
-        1
-      )
-    : _vm._e()
+        : _vm._e()
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

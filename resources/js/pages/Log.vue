@@ -1,6 +1,6 @@
 <template>
-  <div class="body">
-    <div class="scheduleList" v-if="schedules"　v-loading.fullscreen.lock="loading">
+  <div class="body" v-loading.fullscreen.lock="loading">
+    <div class="scheduleList" v-if="schedules">
       <p></p>
       <el-card class="box-card">
         <div slot="header" class="clearfix">

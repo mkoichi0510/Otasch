@@ -1,44 +1,45 @@
 <template>
-  <div class="container--small" v-if="schedules" v-loading.fullscreen.lock="loading">
-    <div class="components">
-      <createForm 
-      :createFormVisible='createDialogVisible'
-      @register-schedule="register" 
-      @create-form-close="createDialogVisible=false"
-      >
-      </createForm>
-      <detailForm 
-      :detailFormVisible='detailDialogVisible'
-      :detailData='detailData'
-      @delete-schedule="softDelete" 
-      @force-delete-schedule="forceDelete"
-      @update-schedule='updateSchedule'
-      @detail-form-close="detailDialogVisible=false"
-      >
-      </detailForm>
-      <sortForm
-        :sortFormVisible='sortDialogVisible'
-        :sortSchedules='sortSchedules'
-        @sort-form-close="sortDialogVisible=false"
-      >
-      </sortForm>
-    </div>
-    <div class="body">
-      <h1>
-        <span>{{scheduleLabel}}予定一覧</span>
-        <el-dropdown>
-          <span class="el-dropdown-link">
+  <div class="body" v-loading.fullscreen.lock="loading">
+    <div class="container--small" v-if="schedules">
+      <div class="components">
+        <createForm 
+        :createFormVisible='createDialogVisible'
+        @register-schedule="register" 
+        @create-form-close="createDialogVisible=false"
+        >
+        </createForm>
+        <detailForm 
+        :detailFormVisible='detailDialogVisible'
+        :detailData='detailData'
+        @delete-schedule="softDelete" 
+        @force-delete-schedule="forceDelete"
+        @update-schedule='updateSchedule'
+        @detail-form-close="detailDialogVisible=false"
+        >
+        </detailForm>
+        <sortForm
+          :sortFormVisible='sortDialogVisible'
+          :sortSchedules='sortSchedules'
+          @sort-form-close="sortDialogVisible=false"
+        >
+        </sortForm>
+      </div>
+      <div class="body">
+        <h1>
+          <span>{{scheduleLabel}}予定一覧</span>
+          <el-dropdown>
+            <span class="el-dropdown-link">
               表示切替<i class="el-icon-arrow-down el-icon--right"></i>
-          </span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item @click.native="schedules=clearSchedules,scheduleLabel='達成済み'">達成済み予定</el-dropdown-item>
-            <el-dropdown-item @click.native="getTodo(),scheduleLabel='未達成'">未達成予定</el-dropdown-item>
-            <el-dropdown-item @click.native="schedules=allSchedules, scheduleLabel='全'">全予定</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-        <el-button type="primary"@click="sortDialogVisible=true" v-if="schedules.length > 1">並び替え</el-button>
-        <el-button type="primary"@click="createDialogVisible=true" style="float: right">予定の新規作成</el-button>
-      </h1>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item @click.native="schedules=clearSchedules,scheduleLabel='達成済み'">達成済み予定</el-dropdown-item>
+              <el-dropdown-item @click.native="getTodo(),scheduleLabel='未達成'">未達成予定</el-dropdown-item>
+              <el-dropdown-item @click.native="schedules=allSchedules, scheduleLabel='全'">全予定</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+          <el-button type="primary"@click="sortDialogVisible=true" v-if="schedules.length > 1">並び替え</el-button>
+          <el-button type="primary"@click="createDialogVisible=true" style="float: right">予定の新規作成</el-button>
+        </h1>
         <ul v-if=schedules>
           <li v-for="(schedule, i) in paginateSchedules" :key="i">
             <el-link type="primary"@click="showDetail(schedule)">
@@ -56,9 +57,9 @@
           :page-size="perPage"
           :total="schedules.length">
         </el-pagination>
+      </div>
     </div>
   </div>
-  
 </template>
 
 <script>

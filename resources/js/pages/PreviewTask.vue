@@ -1,5 +1,6 @@
 <template>
-    <div class="container--small" v-if="schedule" v-loading.fullscreen.lock="loading">
+  <div class="body" v-loading.fullscreen.lock="loading">
+    <div class="container--small" v-if="schedule">
       <createForm 
         :createFormVisible='createDialogVisible'
         @register-task="register" 
@@ -79,6 +80,7 @@
           </el-card>
           <p></p>
         </div>
+      </div>
     </div>
 </template>
 
