@@ -1,5 +1,5 @@
 <template>
-  <div class="container--small" v-if="schedules">
+  <div class="container--small" v-if="schedules" v-loading.fullscreen.lock="loading">
     <div class="components">
       <createForm 
       :createFormVisible='createDialogVisible'
@@ -81,6 +81,7 @@ export default {
         scheduleLabel:"未達成", //画面に表示する予定の種類を表す文字列を格納する変数
         allSchedules: null, //全予定を格納する変数
         clearSchedules: null, //達成済み予定を格納する変数
+        loading : false, //画面のローディング表示を管理する変数
         //ぺジネーション用
         currentPage : 1,//現在のページ 
         perPage: 10, //1ページ毎の表示件数
@@ -125,6 +126,7 @@ export default {
       await this.getTodo();
       await this.getAllSchedule();
       await this.getClearSchedule();
+      this.loading = false;//ローディング表示を消す
     },
     //予定の新規登録
     async register(data){
@@ -208,6 +210,7 @@ export default {
   },
   
   created(){
+    this.loading = true;//ローディング表示を入れる
     this.updateScheduleData();
     //現在のページを表す値の設定
     this.$store.commit('data/setPageIndex', "3");

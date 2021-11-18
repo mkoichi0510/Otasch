@@ -1,6 +1,8 @@
 <template>
  <div>
-   <a :href="params.url"><el-button type="success">Lineアカウントで{{setLineMessage}}</el-button></a>
+   <a :href="params.url">
+     <el-button type="success" v-loading.fullscreen.lock="loading">Lineアカウントで{{setLineMessage}}</el-button>
+   </a>
  </div>
 </template>
 
@@ -10,6 +12,7 @@ import { OK } from '../util'
     data() {
       return {
         state : this.createState(), //Lineログインで使うランダム文字列格納用
+        loading : false, //画面のローディング表示を管理する変数
         //Lineログインで用いるデータ群
         params : {
           url : null, //ユーザーがLineにログインする画面に遷移するためのURLを格納
@@ -22,6 +25,7 @@ import { OK } from '../util'
     methods:{
       //Lineアカウントを連携するためのacceseTokenをフロント側で取得
       async getAccessToken(){
+        this.loading = true;
         var paramaters = new URLSearchParams();
         //パラメータの設定
         paramaters.append('grant_type', 'authorization_code');
@@ -38,7 +42,7 @@ import { OK } from '../util'
           this.registerLineAccount();
           return false;
         }
-        
+        this.loading = false;
        },
        
        //ラインアカウントで登録またはログイン処理をする命令をサーバー側に投げるメソッド
@@ -46,9 +50,11 @@ import { OK } from '../util'
         await this.$store.dispatch('auth/registerLineAccount', this.params);
         //成功時
         if(this.apiStatus){
+          console.log(this.loading);
           // ホーム画面に移動する
           this.$router.push('/home');
         }
+        this.loading = false;
        },
        
        //Lineクライアントデータをサーバー側で取得し、Lineのログイン画面に遷移するためのURLを設定するメソッド

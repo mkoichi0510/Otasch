@@ -1,6 +1,6 @@
 <template>
   <div class="body">
-    <div class="scheduleList" v-if="schedules">
+    <div class="scheduleList" v-if="schedules"　v-loading.fullscreen.lock="loading">
       <p></p>
       <el-card class="box-card">
         <div slot="header" class="clearfix">
@@ -80,7 +80,7 @@ export default {
       clearScheduleToday:null,　//当日の達成予定一覧格納用
       clearScheduleBefore:null, //特定月の達成予定一覧格納用
       selectDate:new Date(), //過去の完了済み予定でいつの完了済み予定を表示するのか指定するときに用いる
-    
+    　loading : false, //画面のローディング表示を管理する変数
       //ぺジネーション用
       currentPageSchedule : 1,//当日の達成済み予定の現在のページ 
       perPageSchedule: 5, //当日の達成済み予定の1ページ毎の表示件数
@@ -163,9 +163,11 @@ export default {
       await this.getClearSchedule();//達成済み予定の格納
       this.setTodayClearSchedule();//当日達成済み予定の格納
       this.setBeforeClearSchedule();//selectDateで指定した年月と等しい予定を格納
+      this.loading = false;
     },
   },
   created(){
+    this.loading = true;
     //達成済み予定の取得
     this.initializeData();
     //現在のページを表す値の設定

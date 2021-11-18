@@ -1,6 +1,6 @@
 <template>
   <div　class="body">
-    <div class="info" v-if="schedule">
+    <div class="info" v-if="schedule" v-loading.fullscreen.lock="loading">
       <p></p>
       <el-card class="box-card">
         <div slot="header" class="clearfix">
@@ -99,7 +99,7 @@ export default {
       nextTaskName: "",//推奨タスクの名前を格納する
       checkDay:null, //残り日数が1日以上か1日未満かを判定する　true:1日以上　false:1日未満
       limitDay:10,　//期限が迫っている予定一覧で用いる
-      
+      loading : false, //画面のローディング表示を管理する変数
       //ぺジネーション用
       currentPageScheduleLimit : 1,//現在のページ 
       perPageScheduleLimit: 5, //1ページ毎の表示件数
@@ -155,6 +155,7 @@ export default {
           this.updateTaskData();
         }
       }
+      this.loading = false; //ローディング表示を消す
     },
     
     //全タスク情報の更新
@@ -326,6 +327,7 @@ export default {
     
   },
   created(){
+    this.loading = true; //ローディング表示を入れる
     //予定およびタスクの初期設定
     this.InitializeData();
     //現在のページを表す値の設定

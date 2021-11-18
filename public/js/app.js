@@ -4237,6 +4237,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       //残り日数が1日以上か1日未満かを判定する　true:1日以上　false:1日未満
       limitDay: 10,
       //期限が迫っている予定一覧で用いる
+      loading: false,
+      //画面のローディング表示を管理する変数
       //ぺジネーション用
       currentPageScheduleLimit: 1,
       //現在のページ 
@@ -4373,7 +4375,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }
                 }
 
-              case 3:
+                _this5.loading = false; //ローディング表示を消す
+
+              case 4:
               case "end":
                 return _context5.stop();
             }
@@ -4579,7 +4583,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   created: function created() {
+    this.loading = true; //ローディング表示を入れる
     //予定およびタスクの初期設定
+
     this.InitializeData(); //現在のページを表す値の設定
 
     this.$store.commit('data/setPageIndex', "2");
@@ -4617,12 +4623,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       state: this.createState(),
       //Lineログインで使うランダム文字列格納用
+      loading: false,
+      //画面のローディング表示を管理する変数
       //Lineログインで用いるデータ群
       params: {
         url: null,
@@ -4647,6 +4657,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                _this.loading = true;
                 paramaters = new URLSearchParams(); //パラメータの設定
 
                 paramaters.append('grant_type', 'authorization_code');
@@ -4655,14 +4666,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 paramaters.append('client_id', _this.$store.state.auth.line_client_id);
                 paramaters.append('client_secret', _this.$store.state.auth.line_client_secret); //送信
 
-                _context.next = 8;
+                _context.next = 9;
                 return axios.post('https://api.line.me/oauth2/v2.1/token', paramaters);
 
-              case 8:
+              case 9:
                 response = _context.sent;
 
                 if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                  _context.next = 13;
+                  _context.next = 14;
                   break;
                 }
 
@@ -4672,7 +4683,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context.abrupt("return", false);
 
-              case 13:
+              case 14:
+                _this.loading = false;
+
+              case 15:
               case "end":
                 return _context.stop();
             }
@@ -4695,11 +4709,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 2:
                 //成功時
                 if (_this2.apiStatus) {
-                  // ホーム画面に移動する
+                  console.log(_this2.loading); // ホーム画面に移動する
+
                   _this2.$router.push('/home');
                 }
 
-              case 3:
+                _this2.loading = false;
+
+              case 4:
               case "end":
                 return _context2.stop();
             }
@@ -4914,6 +4931,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       //特定月の達成予定一覧格納用
       selectDate: new Date(),
       //過去の完了済み予定でいつの完了済み予定を表示するのか指定するときに用いる
+      loading: false,
+      //画面のローディング表示を管理する変数
       //ぺジネーション用
       currentPageSchedule: 1,
       //当日の達成済み予定の現在のページ 
@@ -5031,7 +5050,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this2.setBeforeClearSchedule(); //selectDateで指定した年月と等しい予定を格納
 
 
-              case 4:
+                _this2.loading = false;
+
+              case 5:
               case "end":
                 return _context2.stop();
             }
@@ -5041,7 +5062,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   created: function created() {
-    //達成済み予定の取得
+    this.loading = true; //達成済み予定の取得
+
     this.initializeData(); //現在のページを表す値の設定
 
     this.$store.commit('data/setPageIndex', "4");
@@ -5271,6 +5293,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       //全予定を格納する変数
       clearSchedules: null,
       //達成済み予定を格納する変数
+      loading: false,
+      //画面のローディング表示を管理する変数
       //ぺジネーション用
       currentPage: 1,
       //現在のページ 
@@ -5389,6 +5413,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this4.getClearSchedule();
 
               case 6:
+                _this4.loading = false; //ローディング表示を消す
+
+              case 7:
               case "end":
                 return _context4.stop();
             }
@@ -5549,6 +5576,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   created: function created() {
+    this.loading = true; //ローディング表示を入れる
+
     this.updateScheduleData(); //現在のページを表す値の設定
 
     this.$store.commit('data/setPageIndex', "3");
@@ -5699,6 +5728,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       //推奨タスク名を格納する変数
       checkDay: null,
       //残り日数が1日以上か1日未満かを判定する　true:1日以上　false:1日未満
+      loading: false,
+      //画面のローディング表示を管理する変数
       //タスク詳細ダイアログにpropsで渡すタスクデータ
       detailData: {
         name: '',
@@ -5870,6 +5901,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this5.nextTask();
 
               case 8:
+                _this5.loading = false; //ローディング表示を解除
+
+              case 9:
               case "end":
                 return _context4.stop();
             }
@@ -6064,7 +6098,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   created: function created() {
+    this.loading = true; //ローディング表示を入れる
     //dataストアにstateに設定されているscheduleをこのvueファイル内のschedule変数に格納
+
     this.schedule = this.$store.state.data.schedule; //現在のページを表す値の設定
 
     this.$store.commit('data/setPageIndex', "3"); //dataストアのstateにscheduleのデータが入っていない場合には/previewに遷移させる
@@ -71841,7 +71877,18 @@ var render = function() {
     _vm.schedule
       ? _c(
           "div",
-          { staticClass: "info" },
+          {
+            directives: [
+              {
+                name: "loading",
+                rawName: "v-loading.fullscreen.lock",
+                value: _vm.loading,
+                expression: "loading",
+                modifiers: { fullscreen: true, lock: true }
+              }
+            ],
+            staticClass: "info"
+          },
           [
             _c("p"),
             _vm._v(" "),
@@ -72179,9 +72226,22 @@ var render = function() {
       "a",
       { attrs: { href: _vm.params.url } },
       [
-        _c("el-button", { attrs: { type: "success" } }, [
-          _vm._v("Lineアカウントで" + _vm._s(_vm.setLineMessage))
-        ])
+        _c(
+          "el-button",
+          {
+            directives: [
+              {
+                name: "loading",
+                rawName: "v-loading.fullscreen.lock",
+                value: _vm.loading,
+                expression: "loading",
+                modifiers: { fullscreen: true, lock: true }
+              }
+            ],
+            attrs: { type: "success" }
+          },
+          [_vm._v("Lineアカウントで" + _vm._s(_vm.setLineMessage))]
+        )
       ],
       1
     )
@@ -72213,7 +72273,18 @@ var render = function() {
     _vm.schedules
       ? _c(
           "div",
-          { staticClass: "scheduleList" },
+          {
+            directives: [
+              {
+                name: "loading",
+                rawName: "v-loading.fullscreen.lock",
+                value: _vm.loading,
+                expression: "loading",
+                modifiers: { fullscreen: true, lock: true }
+              }
+            ],
+            staticClass: "scheduleList"
+          },
           [
             _c("p"),
             _vm._v(" "),
@@ -72576,211 +72647,226 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.schedules
-    ? _c("div", { staticClass: "container--small" }, [
-        _c(
-          "div",
-          { staticClass: "components" },
-          [
-            _c("createForm", {
-              attrs: { createFormVisible: _vm.createDialogVisible },
-              on: {
-                "register-schedule": _vm.register,
-                "create-form-close": function($event) {
-                  _vm.createDialogVisible = false
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("detailForm", {
-              attrs: {
-                detailFormVisible: _vm.detailDialogVisible,
-                detailData: _vm.detailData
-              },
-              on: {
-                "delete-schedule": _vm.softDelete,
-                "force-delete-schedule": _vm.forceDelete,
-                "update-schedule": _vm.updateSchedule,
-                "detail-form-close": function($event) {
-                  _vm.detailDialogVisible = false
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("sortForm", {
-              attrs: {
-                sortFormVisible: _vm.sortDialogVisible,
-                sortSchedules: _vm.sortSchedules
-              },
-              on: {
-                "sort-form-close": function($event) {
-                  _vm.sortDialogVisible = false
-                }
-              }
-            })
+    ? _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "loading",
+              rawName: "v-loading.fullscreen.lock",
+              value: _vm.loading,
+              expression: "loading",
+              modifiers: { fullscreen: true, lock: true }
+            }
           ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "body" },
-          [
-            _c(
-              "h1",
-              [
-                _c("span", [_vm._v(_vm._s(_vm.scheduleLabel) + "予定一覧")]),
-                _vm._v(" "),
-                _c(
-                  "el-dropdown",
-                  [
-                    _c("span", { staticClass: "el-dropdown-link" }, [
-                      _vm._v("\n            表示切替"),
-                      _c("i", {
-                        staticClass: "el-icon-arrow-down el-icon--right"
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "el-dropdown-menu",
-                      { attrs: { slot: "dropdown" }, slot: "dropdown" },
-                      [
-                        _c(
-                          "el-dropdown-item",
-                          {
-                            nativeOn: {
-                              click: function($event) {
-                                ;(_vm.schedules = _vm.clearSchedules),
-                                  (_vm.scheduleLabel = "達成済み")
-                              }
-                            }
-                          },
-                          [_vm._v("達成済み予定")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "el-dropdown-item",
-                          {
-                            nativeOn: {
-                              click: function($event) {
-                                _vm.getTodo(), (_vm.scheduleLabel = "未達成")
-                              }
-                            }
-                          },
-                          [_vm._v("未達成予定")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "el-dropdown-item",
-                          {
-                            nativeOn: {
-                              click: function($event) {
-                                ;(_vm.schedules = _vm.allSchedules),
-                                  (_vm.scheduleLabel = "全")
-                              }
-                            }
-                          },
-                          [_vm._v("全予定")]
-                        )
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _vm.schedules.length > 1
-                  ? _c(
-                      "el-button",
-                      {
-                        attrs: { type: "primary" },
-                        on: {
-                          click: function($event) {
-                            _vm.sortDialogVisible = true
-                          }
-                        }
-                      },
-                      [_vm._v("並び替え")]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                _c(
-                  "el-button",
-                  {
-                    staticStyle: { float: "right" },
-                    attrs: { type: "primary" },
-                    on: {
-                      click: function($event) {
-                        _vm.createDialogVisible = true
-                      }
-                    }
-                  },
-                  [_vm._v("予定の新規作成")]
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _vm.schedules
-              ? _c(
-                  "ul",
-                  _vm._l(_vm.paginateSchedules, function(schedule, i) {
-                    return _c(
-                      "li",
-                      { key: i },
-                      [
-                        _c(
-                          "el-link",
-                          {
-                            attrs: { type: "primary" },
-                            on: {
-                              click: function($event) {
-                                return _vm.showDetail(schedule)
-                              }
-                            }
-                          },
-                          [
-                            _c("h2", { staticClass: "title" }, [
-                              _vm._v(_vm._s(schedule.name))
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    )
-                  }),
-                  0
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.schedules.length < 1
-              ? _c(
-                  "div",
-                  [_c("el-empty", { attrs: { description: "NoData" } })],
-                  1
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _c("el-pagination", {
-              attrs: {
-                background: "",
-                layout: "prev, pager, next",
-                "current-page": _vm.currentPage,
-                "page-size": _vm.perPage,
-                total: _vm.schedules.length
-              },
-              on: {
-                "update:currentPage": function($event) {
-                  _vm.currentPage = $event
+          staticClass: "container--small"
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "components" },
+            [
+              _c("createForm", {
+                attrs: { createFormVisible: _vm.createDialogVisible },
+                on: {
+                  "register-schedule": _vm.register,
+                  "create-form-close": function($event) {
+                    _vm.createDialogVisible = false
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("detailForm", {
+                attrs: {
+                  detailFormVisible: _vm.detailDialogVisible,
+                  detailData: _vm.detailData
                 },
-                "update:current-page": function($event) {
-                  _vm.currentPage = $event
+                on: {
+                  "delete-schedule": _vm.softDelete,
+                  "force-delete-schedule": _vm.forceDelete,
+                  "update-schedule": _vm.updateSchedule,
+                  "detail-form-close": function($event) {
+                    _vm.detailDialogVisible = false
+                  }
                 }
-              }
-            })
-          ],
-          1
-        )
-      ])
+              }),
+              _vm._v(" "),
+              _c("sortForm", {
+                attrs: {
+                  sortFormVisible: _vm.sortDialogVisible,
+                  sortSchedules: _vm.sortSchedules
+                },
+                on: {
+                  "sort-form-close": function($event) {
+                    _vm.sortDialogVisible = false
+                  }
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "body" },
+            [
+              _c(
+                "h1",
+                [
+                  _c("span", [_vm._v(_vm._s(_vm.scheduleLabel) + "予定一覧")]),
+                  _vm._v(" "),
+                  _c(
+                    "el-dropdown",
+                    [
+                      _c("span", { staticClass: "el-dropdown-link" }, [
+                        _vm._v("\n            表示切替"),
+                        _c("i", {
+                          staticClass: "el-icon-arrow-down el-icon--right"
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "el-dropdown-menu",
+                        { attrs: { slot: "dropdown" }, slot: "dropdown" },
+                        [
+                          _c(
+                            "el-dropdown-item",
+                            {
+                              nativeOn: {
+                                click: function($event) {
+                                  ;(_vm.schedules = _vm.clearSchedules),
+                                    (_vm.scheduleLabel = "達成済み")
+                                }
+                              }
+                            },
+                            [_vm._v("達成済み予定")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-dropdown-item",
+                            {
+                              nativeOn: {
+                                click: function($event) {
+                                  _vm.getTodo(), (_vm.scheduleLabel = "未達成")
+                                }
+                              }
+                            },
+                            [_vm._v("未達成予定")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-dropdown-item",
+                            {
+                              nativeOn: {
+                                click: function($event) {
+                                  ;(_vm.schedules = _vm.allSchedules),
+                                    (_vm.scheduleLabel = "全")
+                                }
+                              }
+                            },
+                            [_vm._v("全予定")]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm.schedules.length > 1
+                    ? _c(
+                        "el-button",
+                        {
+                          attrs: { type: "primary" },
+                          on: {
+                            click: function($event) {
+                              _vm.sortDialogVisible = true
+                            }
+                          }
+                        },
+                        [_vm._v("並び替え")]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "el-button",
+                    {
+                      staticStyle: { float: "right" },
+                      attrs: { type: "primary" },
+                      on: {
+                        click: function($event) {
+                          _vm.createDialogVisible = true
+                        }
+                      }
+                    },
+                    [_vm._v("予定の新規作成")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _vm.schedules
+                ? _c(
+                    "ul",
+                    _vm._l(_vm.paginateSchedules, function(schedule, i) {
+                      return _c(
+                        "li",
+                        { key: i },
+                        [
+                          _c(
+                            "el-link",
+                            {
+                              attrs: { type: "primary" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.showDetail(schedule)
+                                }
+                              }
+                            },
+                            [
+                              _c("h2", { staticClass: "title" }, [
+                                _vm._v(_vm._s(schedule.name))
+                              ])
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    }),
+                    0
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.schedules.length < 1
+                ? _c(
+                    "div",
+                    [_c("el-empty", { attrs: { description: "NoData" } })],
+                    1
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _c("el-pagination", {
+                attrs: {
+                  background: "",
+                  layout: "prev, pager, next",
+                  "current-page": _vm.currentPage,
+                  "page-size": _vm.perPage,
+                  total: _vm.schedules.length
+                },
+                on: {
+                  "update:currentPage": function($event) {
+                    _vm.currentPage = $event
+                  },
+                  "update:current-page": function($event) {
+                    _vm.currentPage = $event
+                  }
+                }
+              })
+            ],
+            1
+          )
+        ]
+      )
     : _vm._e()
 }
 var staticRenderFns = []
@@ -72808,7 +72894,18 @@ var render = function() {
   return _vm.schedule
     ? _c(
         "div",
-        { staticClass: "container--small" },
+        {
+          directives: [
+            {
+              name: "loading",
+              rawName: "v-loading.fullscreen.lock",
+              value: _vm.loading,
+              expression: "loading",
+              modifiers: { fullscreen: true, lock: true }
+            }
+          ],
+          staticClass: "container--small"
+        },
         [
           _c("createForm", {
             attrs: { createFormVisible: _vm.createDialogVisible },
