@@ -1,5 +1,5 @@
 <template>
-    <div class="container--small" v-if="schedule">
+    <div class="container--small" v-if="schedule" v-loading.fullscreen.lock="loading">
       <createForm 
         :createFormVisible='createDialogVisible'
         @register-task="register" 
@@ -102,7 +102,7 @@ export default {
       taskLabel:"未達成", //画面に表示するタスクの種類を表す文字列を格納する変数
       nextTaskName: "", //推奨タスク名を格納する変数
       checkDay:null, //残り日数が1日以上か1日未満かを判定する　true:1日以上　false:1日未満
-      
+      loading : false, //画面のローディング表示を管理する変数
       //タスク詳細ダイアログにpropsで渡すタスクデータ
       detailData: {
           name: '',//タスク名
@@ -194,6 +194,7 @@ export default {
       await this.getAllData();
       await this.getClearData();
       await this.nextTask();
+      this.loading = false; //ローディング表示を解除
     },
     //新規タスクの取得
     async register(data){
@@ -314,6 +315,7 @@ export default {
     
   },
   created(){
+    this.loading = true;//ローディング表示を入れる
     //dataストアにstateに設定されているscheduleをこのvueファイル内のschedule変数に格納
     this.schedule = this.$store.state.data.schedule;
     //現在のページを表す値の設定
