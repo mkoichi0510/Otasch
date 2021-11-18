@@ -5405,15 +5405,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this4.getTodo();
 
               case 2:
-                _context4.next = 4;
+                _this4.loading = false; //ローディング表示を消す
+
+                _context4.next = 5;
                 return _this4.getAllSchedule();
 
-              case 4:
-                _context4.next = 6;
+              case 5:
+                _context4.next = 7;
                 return _this4.getClearSchedule();
-
-              case 6:
-                _this4.loading = false; //ローディング表示を消す
 
               case 7:
               case "end":

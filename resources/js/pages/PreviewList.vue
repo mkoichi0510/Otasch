@@ -125,9 +125,9 @@ export default {
     //全予定情報の更新
     async updateScheduleData(){
       await this.getTodo();
+      this.loading = false;//ローディング表示を消す
       await this.getAllSchedule();
       await this.getClearSchedule();
-      this.loading = false;//ローディング表示を消す
     },
     //予定の新規登録
     async register(data){
