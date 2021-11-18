@@ -4383,12 +4383,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   if (_this5.schedule) {
                     //推奨予定のタスクの更新
                     _this5.updateTaskData();
+                  } else {
+                    _this5.loading = false; //推奨予定がないときローディング表示を消す
                   }
+                } else {
+                  _this5.loading = false; //予定データがないときローディング表示を消す
                 }
 
-                _this5.loading = false; //ローディング表示を消す
-
-              case 4:
+              case 3:
               case "end":
                 return _context5.stop();
             }
@@ -4410,17 +4412,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 _context6.next = 4;
-                return _this6.nextTask();
+                return _this6.getAllData();
 
               case 4:
                 _context6.next = 6;
-                return _this6.getAllData();
+                return _this6.getClearData();
 
               case 6:
                 _context6.next = 8;
-                return _this6.getClearData();
+                return _this6.nextTask();
 
               case 8:
+                _this6.loading = false; //ローディング表示を消す
+
+              case 9:
               case "end":
                 return _context6.stop();
             }

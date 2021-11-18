@@ -153,17 +153,21 @@ export default {
         if(this.schedule){
           //推奨予定のタスクの更新
           this.updateTaskData();
+        }else{
+          this.loading = false;//推奨予定がないときローディング表示を消す
         }
+      }else{
+        this.loading = false; //予定データがないときローディング表示を消す
       }
-      this.loading = false; //ローディング表示を消す
     },
     
     //全タスク情報の更新
     async updateTaskData(){
       await this.getData();
-      await this.nextTask();
       await this.getAllData();
       await this.getClearData();
+      await this.nextTask();
+      this.loading = false;//ローディング表示を消す
     },
     
     //引数で与えられた予定の残り日数を算出するメソッド
