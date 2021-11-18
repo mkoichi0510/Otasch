@@ -3810,7 +3810,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       accountFormVisible: false,
       checkFormVisible: false,
-      checkMessage: ""
+      checkMessage: "",
+      loading: false //画面のローディング表示を管理する変数
+
     };
   },
   components: {
@@ -3827,10 +3829,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                _this.loading = true; //ローディング表示を入れる
+                //サーバー側に更新処理を投げる
+
+                _context.next = 3;
                 return _this.$store.dispatch('auth/changeUserName', data);
 
-              case 2:
+              case 3:
                 if (_this.apiStatus) {
                   // エラーメッセージを消してポップアップを閉じる
                   _this.accountFormVisible = false;
@@ -3838,7 +3843,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this.clearErrorMessage();
                 }
 
-              case 3:
+                _this.loading = false; //ローディング表示を消す
+
+              case 5:
               case "end":
                 return _context.stop();
             }
@@ -3859,15 +3866,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
+                _this2.loading = true; //ローディング表示を入れる
+
+                _context2.next = 3;
                 return _this2.$store.dispatch('auth/deleteLineAccount');
 
-              case 2:
+              case 3:
                 if (_this2.apiStatus) {
+                  _this2.loading = false; //ローディング表示を消す
+
                   _this2.$router.push('/login');
                 }
 
-              case 3:
+              case 4:
               case "end":
                 return _context2.stop();
             }
@@ -5431,18 +5442,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                _context5.next = 2;
+                _this5.loading = true; //ローディング表示を入れる
+
+                _context5.next = 3;
                 return _this5.$store.dispatch('data/registerSchedule', data);
 
-              case 2:
+              case 3:
                 if (_this5.apiStatus) {
                   //予定の作成後に予定一覧を更新
                   _this5.updateScheduleData();
 
                   _this5.createDialogVisible = false;
+                } else {
+                  _this5.loading = false; //失敗時にローディング表示を消す
                 }
 
-              case 3:
+              case 4:
               case "end":
                 return _context5.stop();
             }
@@ -5464,18 +5479,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
-                _context6.next = 2;
+                _this6.loading = true; //ローディング表示を入れる
+
+                _context6.next = 3;
                 return _this6.$store.dispatch('data/deleteSchedule', data);
 
-              case 2:
+              case 3:
                 if (_this6.apiStatus) {
                   //予定の達成処理後に予定一覧を再取得
                   _this6.updateScheduleData();
 
                   _this6.detailDialogVisible = false;
+                } else {
+                  _this6.loading = false; //失敗時にローディング表示を消す
                 }
 
-              case 3:
+              case 4:
               case "end":
                 return _context6.stop();
             }
@@ -5492,18 +5511,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context7.prev = _context7.next) {
               case 0:
-                _context7.next = 2;
+                _this7.loading = true; //ローディング表示を入れる
+
+                _context7.next = 3;
                 return _this7.$store.dispatch('data/forceDeleteSchedule', data);
 
-              case 2:
+              case 3:
                 if (_this7.apiStatus) {
                   //予定削除後にタスク一覧を更新
                   _this7.updateScheduleData();
 
                   _this7.detailDialogVisible = false;
+                } else {
+                  _this7.loading = false; //失敗時にローディング表示を消す
                 }
 
-              case 3:
+              case 4:
               case "end":
                 return _context7.stop();
             }
@@ -5520,10 +5543,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context8.prev = _context8.next) {
               case 0:
-                _context8.next = 2;
+                _this8.loading = true; //ローディング表示を入れる
+
+                _context8.next = 3;
                 return _this8.$store.dispatch('data/updateSchedule', data);
 
-              case 2:
+              case 3:
                 if (_this8.apiStatus) {
                   _this8.detailDialogVisible = false;
                 } //スケジュール更新後にスケジュール一覧を更新
@@ -5531,7 +5556,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this8.updateScheduleData();
 
-              case 4:
+              case 5:
               case "end":
                 return _context8.stop();
             }
@@ -5921,19 +5946,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
+                _this6.loading = true; //ローディング表示を入れる
+
                 data.schedule_id = _this6.schedule.id;
-                _context5.next = 3;
+                _context5.next = 4;
                 return _this6.$store.dispatch('data/registerTask', data);
 
-              case 3:
+              case 4:
                 if (_this6.apiStatus) {
                   //タスク作成後にタスク一覧を更新
                   _this6.updateTaskData();
 
                   _this6.createDialogVisible = false;
+                } else {
+                  _this6.loading = false; //失敗時にローディング表示を消す
                 }
 
-              case 4:
+              case 5:
               case "end":
                 return _context5.stop();
             }
@@ -5950,11 +5979,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
+                _this7.loading = true;
                 data.schedule_id = _this7.schedule.id;
-                _context6.next = 3;
+                _context6.next = 4;
                 return _this7.$store.dispatch('data/updateTask', data);
 
-              case 3:
+              case 4:
                 if (_this7.apiStatus) {
                   _this7.detailDialogVisible = false;
                 } //タスク更新後にタスク一覧を更新
@@ -5962,7 +5992,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this7.updateTaskData();
 
-              case 5:
+              case 6:
               case "end":
                 return _context6.stop();
             }
@@ -5979,19 +6009,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context7.prev = _context7.next) {
               case 0:
+                _this8.loading = true;
                 data.schedule_id = _this8.schedule.id;
-                _context7.next = 3;
+                _context7.next = 4;
                 return _this8.$store.dispatch('data/deleteTask', data);
 
-              case 3:
+              case 4:
                 if (_this8.apiStatus) {
                   //タスク完了処理後にタスク一覧を更新
                   _this8.updateTaskData();
 
                   _this8.detailDialogVisible = false;
+                } else {
+                  _this8.loading = false; //失敗時にローディング表示を消す
                 }
 
-              case 4:
+              case 5:
               case "end":
                 return _context7.stop();
             }
@@ -6008,19 +6041,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context8.prev = _context8.next) {
               case 0:
+                _this9.loading = true;
                 data.schedule_id = _this9.schedule.id;
-                _context8.next = 3;
+                _context8.next = 4;
                 return _this9.$store.dispatch('data/forceDeleteTask', data);
 
-              case 3:
+              case 4:
                 if (_this9.apiStatus) {
                   //タスク削除後にタスク一覧を更新
                   _this9.updateTaskData();
 
                   _this9.detailDialogVisible = false;
+                } else {
+                  _this9.loading = false; //失敗時にローディング表示を消す
                 }
 
-              case 4:
+              case 5:
               case "end":
                 return _context8.stop();
             }
@@ -71473,6 +71509,17 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    {
+      directives: [
+        {
+          name: "loading",
+          rawName: "v-loading.fullscreen.lock",
+          value: _vm.loading,
+          expression: "loading",
+          modifiers: { fullscreen: true, lock: true }
+        }
+      ]
+    },
     [
       _c("br"),
       _vm._v(" "),

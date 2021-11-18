@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-loading.fullscreen.lock="loading">
     <br>
     <check 
       :checkFormVisible='checkFormVisible'
@@ -44,6 +44,7 @@ export default {
       accountFormVisible:false,
       checkFormVisible:false,
       checkMessage:"",
+      loading : false, //画面のローディング表示を管理する変数
     }
   },
   components:{
@@ -53,6 +54,7 @@ export default {
   methods:{
     //ユーザー情報の更新
     async updateUserData(data){
+      this.loading = true;//ローディング表示を入れる
       //サーバー側に更新処理を投げる
       await this.$store.dispatch('auth/changeUserName', data);
         
@@ -61,6 +63,7 @@ export default {
         this.accountFormVisible=false;
         this.clearErrorMessage();
       }
+      this.loading = false;//ローディング表示を消す
     },
     //エラーメッセージをリセットする
     clearErrorMessage(){
@@ -68,8 +71,10 @@ export default {
     },
     //LINEアカウントのデータを物理削除する命令をサーバー側に投げる
     async forceDeleteLineAccount(){
+      this.loading = true;//ローディング表示を入れる
       await this.$store.dispatch('auth/deleteLineAccount');
       if(this.apiStatus){
+        this.loading = false;//ローディング表示を消す
         this.$router.push('/login');
       }
     },

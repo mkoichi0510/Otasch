@@ -131,12 +131,15 @@ export default {
     },
     //予定の新規登録
     async register(data){
+      this.loading = true;//ローディング表示を入れる
       await this.$store.dispatch('data/registerSchedule', data);
       
       if(this.apiStatus) {
         //予定の作成後に予定一覧を更新
         this.updateScheduleData();
         this.createDialogVisible = false;
+      }else{
+        this.loading = false;//失敗時にローディング表示を消す
       }
     },
     //propsで渡すデータの設定
@@ -146,26 +149,33 @@ export default {
     },
     //予定の達成処理
     async softDelete(data){
+      this.loading = true;//ローディング表示を入れる
       await this.$store.dispatch('data/deleteSchedule', data);
       
       if (this.apiStatus) {
         //予定の達成処理後に予定一覧を再取得
         this.updateScheduleData();
         this.detailDialogVisible = false;
+      }else{
+        this.loading = false;//失敗時にローディング表示を消す
       }
     },
     //予定の取り消し
     async forceDelete(data){
+      this.loading = true;//ローディング表示を入れる
       await this.$store.dispatch('data/forceDeleteSchedule', data);
       
       if (this.apiStatus) {
         //予定削除後にタスク一覧を更新
         this.updateScheduleData();
         this.detailDialogVisible = false;
+      }else{
+        this.loading = false;//失敗時にローディング表示を消す
       }
     },
     //データの更新
     async updateSchedule(data){
+      this.loading = true;//ローディング表示を入れる
       await this.$store.dispatch('data/updateSchedule', data);
       
       if (this.apiStatus) {

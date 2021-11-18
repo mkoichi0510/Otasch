@@ -200,6 +200,7 @@ export default {
     },
     //新規タスクの取得
     async register(data){
+      this.loading = true;//ローディング表示を入れる
       data.schedule_id = this.schedule.id;
       await this.$store.dispatch('data/registerTask', data);
       
@@ -207,10 +208,13 @@ export default {
           //タスク作成後にタスク一覧を更新
           this.updateTaskData();
           this.createDialogVisible = false;
+      }else{
+        this.loading = false;//失敗時にローディング表示を消す
       }
     },
     //タスクの更新
     async updateTask(data){
+      this.loading = true;
       data.schedule_id = this.schedule.id;
       await this.$store.dispatch('data/updateTask', data);
       
@@ -222,6 +226,7 @@ export default {
     },
     //登録タスクの達成処理
     async softDelete(data){
+      this.loading = true;
       data.schedule_id = this.schedule.id;
       await this.$store.dispatch('data/deleteTask', data);
       
@@ -229,10 +234,13 @@ export default {
         //タスク完了処理後にタスク一覧を更新
         this.updateTaskData();
         this.detailDialogVisible = false;
+      }else{
+        this.loading = false;//失敗時にローディング表示を消す
       }
     },
     //タスクの取り消し
     async forceDelete(data){
+      this.loading = true;
       data.schedule_id = this.schedule.id;
       await this.$store.dispatch('data/forceDeleteTask', data);
       
@@ -240,6 +248,8 @@ export default {
         //タスク削除後にタスク一覧を更新
         this.updateTaskData();
         this.detailDialogVisible = false;
+      }else{
+        this.loading = false;//失敗時にローディング表示を消す
       }
     },
     
