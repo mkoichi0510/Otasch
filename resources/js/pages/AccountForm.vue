@@ -2,7 +2,7 @@
   <div>
     <br>
     <el-dialog 
-        title="新たに追加する予定" 
+        title="新たに設定するアカウント情報" 
         :visible.sync="accountFormVisible" 
         width="70%"
         :before-close="handleClose"

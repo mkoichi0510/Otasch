@@ -71658,7 +71658,7 @@ var render = function() {
         "el-dialog",
         {
           attrs: {
-            title: "新たに追加する予定",
+            title: "新たに設定するアカウント情報",
             visible: _vm.accountFormVisible,
             width: "70%",
             "before-close": _vm.handleClose
