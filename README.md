@@ -102,7 +102,7 @@
 
 <h1>使用した技術</h1>
 <h2>利用言語</h2>
-<p>フロント・クライアント：HTML5,CSS,JavaScript</p>
+<p>フロント・クライアント：HTML5,JavaScript</p>
 <p>サーバー：PHP--version7.4.21</p>
 <h2>利用フレームワーク</h2>
 <p>Laravel--version6.20.38,Vue.js--version2.6.14</p>
