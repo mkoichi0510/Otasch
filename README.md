@@ -109,7 +109,7 @@
 <h2>DB</h2>
 <p>MySQL--version5.6.50</p>
 <h2>インフラ・その他</h2>
-<p>Heroku,LINEログインAPI</p>
+<p>Heroku,LINEログインAPI,Element</p>
 <h2>開発環境</h2>
 AWS Cloud9
 <h1>使用した技術の選定理由</h1>
